@@ -1,50 +1,68 @@
 import * as THREE from "three"
 
+import { World } from "./ecs/World";
+import { RenderSystem } from "./systems/RenderSystem";
+import { PostProcessingSystem } from "./systems/PostProcessingSystem";
+import { setupHomeScene, setupProjectsScene } from "./run/buildDesktop";
+import { loadAssets } from "./run/loadAssets";
+
 export default class Engine {
     constructor (canvas, isMobile = false, webGL = false) {
-        this.canvas = canvas;
+        
         this.webGL = webGL;
         this.isMobile = isMobile;
 
-        // core
+        this.canvas = canvas;
+
         this.camera = null;
         this.renderer = null;
 
-        // paginas 
+        this.assets = null;
         this.currentScene = null;
         this.currentWorld = null;
 
-
         this.lastTime = 0;
         this.isRunning = false;
-
     }
 
-    init() {
+    async init() {
+
         if (!this.webGL) {
             this.showNoWebGLFallback();
             return;
         }
+        this.assets = await loadAssets();
 
-        const renderer = new THREE.WebGLRenderer({
+
+
+        this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: true
         });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.shadowMap.enabled = true;
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.shadowMap.enabled = true;
+
+
 
 
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 
+
+
         window.addEventListener("resize", () => {
-            onWindowResize();
+            this.onWindowResize();
         })
+
+
+
 
         this.isRunning = true;
         this.lastTime = performance.now();
         this.mainLoop();
+
+        
     }
 
 
@@ -63,13 +81,40 @@ export default class Engine {
     }
 
 
+loadScene(sceneName) {
+        if (this.currentScene) {
+            this.currentScene.clear();
+        }
+        if (this.currentWorld) {
+            // inputSystem -> windowListener acumula!!
+            this.currentWorld = null; 
+        }
+
+        this.currentScene = new THREE.Scene();
+        this.currentWorld = new World();
+        
+
+        this.currentWorld.addSystem(new RenderSystem(this.renderer, this.currentScene, this.camera));
+        this.currentWorld.addSystem(new PostProcessingSystem(this.renderer, this.currentScene, this.camera));
+
+        
+        if (sceneName === '/') {
+            setupHomeScene(this.currentWorld, this.currentScene, this.assets);
+        } 
+        else if (sceneName === '/projects') {
+            setupProjectsScene(this.currentWorld, this.currentScene, this.assets);
+        }
+    }
+
+
+
 
 
     onWindowResize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
     showNoWebGLFallback() {
