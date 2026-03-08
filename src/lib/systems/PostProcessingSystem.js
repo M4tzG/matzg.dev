@@ -72,17 +72,16 @@ export class PostProcessingSystem extends System {
 
 
     update(world, deltaTime) {
-        // Query retorna um array de entidades
+
         const entities = Query.entitiesWith(world, PostProcessing);
 
-        // Se nenhuma entidade tem o componente, renderiza normal e sai
         if (entities.length === 0) {
             this.renderer.render(this.scene, this.camera);
             return;
         }
 
         if (entities.length > 1) {
-            console.warn("Aviso: Mais de um componente de pós-processamento na cena!");
+            console.warn("mais de um pos-processamento na cena...");
         }
 
         const entity = entities[0]; 

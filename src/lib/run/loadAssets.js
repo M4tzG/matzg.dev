@@ -6,6 +6,7 @@ export async function loadAssets() {
     const loadPromises = [
         assets.loadTexture("Raposo", "/assets/fox_default.png"),
         assets.loadTexture("dots", "/assets/dots_diagonal_right.png"),
+        assets.loadTexture("wit", "/assets/wit.png"),
 
     ];
 

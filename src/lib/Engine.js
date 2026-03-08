@@ -5,6 +5,8 @@ import { RenderSystem } from "./systems/RenderSystem";
 import { PostProcessingSystem } from "./systems/PostProcessingSystem";
 import { setupHomeScene, setupProjectsScene } from "./run/buildDesktop";
 import { loadAssets } from "./run/loadAssets";
+import { InputSystem } from "./systems/InputSystem";
+import { AnimationSystem } from "./systems/AnimationSystem";
 
 export default class Engine {
     constructor (canvas, isMobile = false, webGL = false) {
@@ -47,9 +49,10 @@ export default class Engine {
 
 
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera.position.z = 10;  
+        this.camera.lookAt(0, 0, 0);
 
-
-
+        this.renderer.setClearColor(new THREE.Color(0x000000), 1);
 
         window.addEventListener("resize", () => {
             this.onWindowResize();
@@ -93,7 +96,8 @@ loadScene(sceneName) {
         this.currentScene = new THREE.Scene();
         this.currentWorld = new World();
         
-
+        this.currentWorld.addSystem(new InputSystem());
+        this.currentWorld.addSystem(new AnimationSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new RenderSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new PostProcessingSystem(this.renderer, this.currentScene, this.camera));
 
