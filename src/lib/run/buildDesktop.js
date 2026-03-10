@@ -1,6 +1,9 @@
 import { createSprite } from "../factories/createSprite";
 import { createPostProcessing } from "../factories/createPostProcessing";
 import { createAnimatedSprite } from "../factories/createAnimatedSprite";
+import { createChain } from "../factories/createChain";
+
+import * as THREE from "three";
 
 export function setupHomeScene(world, scene, assets) {
 
@@ -24,6 +27,14 @@ export function setupHomeScene(world, scene, assets) {
             isHoverable: false,
             isDraggable: false,
             parallaxFactor: 1,
+        }
+    });
+
+    createChain(world, scene, assets, new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 10, 0), 5, {
+        interaction: {
+            isParallaxed: false,
+            isHoverable: false,
+            isDraggable: false,
         }
     });
 }

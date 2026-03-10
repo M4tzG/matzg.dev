@@ -14,7 +14,7 @@ export function createAnimatedSprite(world, scene, assets, imageName, x, y, z, b
     } = configs;
 
 
-    const originalTexture = assets.get(imageName);
+    const originalTexture = assets.getTexture(imageName);
     const texture = originalTexture.clone();
     texture.needsUpdate = true;
     texture.premultiplyAlpha = true;

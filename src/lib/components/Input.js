@@ -7,8 +7,8 @@ export class Input extends Component {
             x: 0,
             y: 0,
             isDown: false,
-
-
+            deltaX: 0,
+            deltaY: 0,
             initialX: undefined,
             initialY: undefined
         }

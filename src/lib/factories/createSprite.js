@@ -14,7 +14,7 @@ export function createSprite(world, scene, assets, imageName, x, y, z, baseHeigh
 
     
 
-    const texture = assets.get(imageName);
+    const texture = assets.getTexture(imageName);
 
     texture.premultiplyAlpha = true;
 

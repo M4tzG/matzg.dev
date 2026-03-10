@@ -11,7 +11,9 @@ export class InputSystem extends System {
         this.mouse = {
             x: 0,
             y: 0,
-            isDown: false
+            isDown: false,
+            dx: 0,
+            dy: 0
         };
 
         this.initListeners();
@@ -21,6 +23,8 @@ export class InputSystem extends System {
 
             this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
             this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+            this.mouse.dx = e.movementX; 
+            this.mouse.dy = e.movementY;
         });
 
         window.addEventListener('mousedown', () => this.mouse.isDown = true);
@@ -36,8 +40,12 @@ export class InputSystem extends System {
 
             input.mouse.x = this.mouse.x;
             input.mouse.y = this.mouse.y;
+            input.mouse.deltaX = this.mouse.dx;
+            input.mouse.deltaY = this.mouse.dy;
             // use the value stored on the local mouse state
             input.mouse.isDown = this.mouse.isDown;
+
+            // console.log(input.mouse.deltaX, input.mouse.deltaY)
 
         }
     }
