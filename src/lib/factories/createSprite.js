@@ -6,7 +6,13 @@ import { ThreeView } from "../components/ThreeView";
 import { MouseInteraction } from "../components/MouseInteraction";
 import { Input } from "../components/Input";
 
-export function createSprite(world, scene, assets, imageName, x, y, z, baseHeight = 1) {
+
+export function createSprite(world, scene, assets, imageName, x, y, z, baseHeight = 1, configs) {
+    const {
+        interaction = {}
+    } = configs;
+
+    
 
     const texture = assets.get(imageName);
 
@@ -26,12 +32,15 @@ export function createSprite(world, scene, assets, imageName, x, y, z, baseHeigh
     const sprite = new THREE.Sprite(material);
     scene.add(sprite);
 
+
+
     const entity = world.createEntity();
 
-    
+
+
     world.addComponent(entity, new Input()); 
     world.addComponent(entity, new Transform(x, y, z)); 
-    world.addComponent(entity, new MouseInteraction({isParallaxed: true, parallaxFactor: -1}));
+    world.addComponent(entity, new MouseInteraction(interaction));
     world.addComponent(entity, new Mesh2D(finalWidth, finalHeight)); 
     world.addComponent(entity, new ThreeView(sprite)); 
 

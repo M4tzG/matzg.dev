@@ -7,6 +7,8 @@ import { setupHomeScene, setupProjectsScene } from "./run/buildDesktop";
 import { loadAssets } from "./run/loadAssets";
 import { InputSystem } from "./systems/InputSystem";
 import { AnimationSystem } from "./systems/AnimationSystem";
+import { EffectSystem } from "./systems/EffectSystem";
+import { PickingSystem } from "./systems/PickingSystem";
 
 export default class Engine {
     constructor (canvas, isMobile = false, webGL = false) {
@@ -97,6 +99,8 @@ loadScene(sceneName) {
         this.currentWorld = new World();
         
         this.currentWorld.addSystem(new InputSystem());
+        this.currentWorld.addSystem(new EffectSystem());
+        this.currentWorld.addSystem(new PickingSystem(this.currentScene, this.camera));
         this.currentWorld.addSystem(new AnimationSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new RenderSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new PostProcessingSystem(this.renderer, this.currentScene, this.camera));
