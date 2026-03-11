@@ -12,21 +12,16 @@ export default class AssetsManager {
 
     load3Dmodel(name, path) {
         return new Promise((resolve, reject) => {
-
             this.gltfLoader.load(
                 path,
                 (gltf) => {
-
                     const model = gltf.scene;
-
-                    this.models[name] = model;
-
+                    this.models[name] = model; // Guarda a cena INTEIRA
                     resolve(model);
                 },
                 undefined,
                 (err) => reject(err)
             );
-
         });
     }
 

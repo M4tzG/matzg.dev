@@ -10,7 +10,7 @@ export function setupHomeScene(world, scene, assets) {
     createPostProcessing(world, {
         pincushion: { 
             active: true, 
-            strength: -0.9 
+            strength: -0.5
         }
     });
     createSprite(world, scene, assets, "dots", 0, 0, 0, 9, {
@@ -30,11 +30,20 @@ export function setupHomeScene(world, scene, assets) {
         }
     });
 
-    createChain(world, scene, assets, new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 10, 0), 5, {
+    createChain(world, scene, assets, {
+        chainConfig: {
+            // startPos: new THREE.Vector3(3, 10, -2),
+            // endPos: new THREE.Vector3(25, -12, -1),
+            startPos: new THREE.Vector3(3, 10, -2),
+            endPos: new THREE.Vector3(25, -12, -1),
+            numLinks : 15,
+            scale: 3
+        },
         interaction: {
             isParallaxed: false,
             isHoverable: false,
             isDraggable: false,
+            parallaxFactor: -1,
         }
     });
 }

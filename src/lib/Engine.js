@@ -52,6 +52,8 @@ export default class Engine {
 
 
 
+
+
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.z = 10;  
         this.camera.lookAt(0, 0, 0);
@@ -77,7 +79,10 @@ export default class Engine {
         if (!this.isRunning) return;
 
         const now = performance.now();
-        const deltaTime = (now - this.lastTime) / 1000;
+        let deltaTime = (now - this.lastTime) / 1000;
+
+        deltaTime = Math.min(deltaTime, 0.5);
+
         this.lastTime = now;
 
         if (this.currentWorld) {
@@ -99,6 +104,12 @@ loadScene(sceneName) {
 
         this.currentScene = new THREE.Scene();
         this.currentWorld = new World();
+
+
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(5, 5, 5);
+        this.currentScene.add(light);
+        this.currentScene.add(new THREE.AmbientLight(0xffffff, 0.5));
         
         this.currentWorld.addSystem(new InputSystem());
         this.currentWorld.addSystem(new EffectSystem());

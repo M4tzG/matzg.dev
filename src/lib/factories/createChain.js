@@ -1,63 +1,67 @@
 import * as THREE from "three";
-
 import { Input } from "../components/Input";
 import { MouseInteraction } from "../components/MouseInteraction";
 import { ThreeView } from "../components/ThreeView";
 import { VerletNode } from "../components/VerletNode";
 import { Constraint } from "../components/Constraint";
 
-export function createChain(world, scene, assets, startPos, endPos, numLinks, configs) {
+export function createChain (world, scene, assets, configs) {
 
-    const baseMesh = assets.getModel('elo');
+    const {
+        chainConfig = {},
+        interaction = {}
+    } = configs;
 
-
-    // 1. Cria a geometria e o material (reutilizados para todos os elos por performance)
-    // const geometry = baseMesh; 
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff }); // Ou o MeshToonMaterial!
+    
+    const baseModel = assets.getModel('elo'); 
+    
+    let baseMesh = baseModel;
+    baseModel.traverse((child) => {
+        if (child.isMesh) baseMesh = child;
+    });
 
     let previousEntity = null;
+    let previousNode = null;
 
-    for (let i = 0; i < numLinks; i++) {
+    // Distância matemática ideal entre um elo e outro (ajuste isso para eles se cruzarem certinho)
+    const linkDistance = chainConfig.startPos.distanceTo(chainConfig.endPos) / chainConfig.numLinks; 
 
-        
-        const light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(5, 5, 5);
-        scene.add(light);
+    // console.log(linkDistance)
 
-        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-
+    for (let i = 0; i < chainConfig.numLinks; i++) {
 
 
-        const mesh = baseMesh.clone(true);
-        mesh.traverse((child) => {
-            if (child.isMesh) {
-                 child.material.color.set(0xff0000);
-                console.log("é um mesh", child);
-            }
-        });
+        const mesh = baseMesh.clone();
+        mesh.scale.set(chainConfig.scale, chainConfig.scale, chainConfig.scale);
+
         scene.add(mesh);
 
         const entity = world.createEntity();
-        
-        // Interpola a posição inicial (apenas para nascerem em linha reta)
-        const x = startPos.x + ((endPos.x - startPos.x) * (i / (numLinks - 1)));
-        const y = startPos.y + ((endPos.y - startPos.y) * (i / (numLinks - 1)));
-        
-        // Os Componentes do Elo!
-        world.addComponent(entity, new Input()); 
-        world.addComponent(entity, new MouseInteraction(configs.interaction)); 
-        world.addComponent(entity, new ThreeView(mesh, i % 2 !== 0));
-        
-        // Aqui entra a física no lugar do Transform estático
-        const isPinned = (i === 0 || i === numLinks - 1); // Prende as pontas
-        world.addComponent(entity, new VerletNode(new THREE.Vector3(x, y, 0), isPinned)); 
 
-        // Cria a restrição (Constraint) ligando este elo ao anterior
+        const spawnPos = new THREE.Vector3().lerpVectors(chainConfig.startPos, chainConfig.endPos, i / chainConfig.numLinks);
+
+
+        const isPinned = (i === 0 || i === chainConfig.numLinks - 1); // primeira e ultima
+        const node = new VerletNode(spawnPos, isPinned);
+        
+        world.addComponent(entity, node);
+        
+        // impar para rotacionar
+        const view = new ThreeView(mesh);
+        view.isOdd = (i % 2 !== 0); 
+        world.addComponent(entity, view);
+
+        world.addComponent(entity, new Input());
+        world.addComponent(entity, new MouseInteraction(interaction));
+
+    
         if (previousEntity !== null) {
             const constraintEntity = world.createEntity();
-            world.addComponent(constraintEntity, new Constraint(entity, previousEntity, 2.0)); // 2.0 é a distância ideal
+            world.addComponent(constraintEntity, new Constraint(previousEntity, entity, linkDistance));
+            previousNode.nextNode = node;
         }
 
         previousEntity = entity;
+        previousNode = node;
     }
 }
