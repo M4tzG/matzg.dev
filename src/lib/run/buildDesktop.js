@@ -41,7 +41,7 @@ export function setupHomeScene(world, scene, assets) {
         },
         interaction: {
             isParallaxed: false,
-            isHoverable: false,
+            isHoverable: true,
             isDraggable: false,
             parallaxFactor: -1,
         }
