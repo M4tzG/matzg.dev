@@ -28,7 +28,7 @@ export function createSprite(world, scene, assets, imageName, x, y, z, baseHeigh
 
     // console.log(finalWidth, finalHeight);
 
-    const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
+    const material = new THREE.SpriteMaterial({ map: texture, transparent: true, alphaTest: 0.5 });
     const sprite = new THREE.Sprite(material);
     scene.add(sprite);
 

@@ -28,7 +28,7 @@ export class VerletPhysicsSystem extends System {
         }
 
 
-        const iterations = 1; 
+        const iterations = 5; 
         for (let i = 0; i < iterations; i++) {
             for (const c of constraints) {
                 const constraint = world.getComponent(c, Constraint);

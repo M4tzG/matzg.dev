@@ -7,7 +7,9 @@ export async function loadAssets() {
         assets.loadTexture("Raposo", "/assets/fox_default.png"),
         assets.loadTexture("dots", "/assets/dots_diagonal_right.png"),
         assets.loadTexture("wit", "/assets/wit.png"),
-        assets.load3Dmodel("elo", "/assets/elo.glb")
+        assets.loadTexture("chainLinkFull", "/assets/chainLinkFull.png"),
+        assets.loadTexture("chainLinkBack", "/assets/chainLinkBack.png"),
+        assets.loadTexture("chainLinkFront", "/assets/chainLinkFront.png")
 
     ];
 

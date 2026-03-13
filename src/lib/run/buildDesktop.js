@@ -10,7 +10,7 @@ export function setupHomeScene(world, scene, assets) {
     createPostProcessing(world, {
         pincushion: { 
             active: true, 
-            strength: -0.5
+            strength: -0.7
         }
     });
     createSprite(world, scene, assets, "dots", 0, 0, 0, 9, {
@@ -21,7 +21,7 @@ export function setupHomeScene(world, scene, assets) {
             isDraggable: false
         }
     });
-    createSprite(world, scene, assets, "Raposo", 0, 0, 0, 9, {
+    createSprite(world, scene, assets, "Raposo", 0, 0, 0, 11, {
         interaction: {
             isParallaxed: true,
             isHoverable: false,
@@ -31,17 +31,19 @@ export function setupHomeScene(world, scene, assets) {
     });
 
     createChain(world, scene, assets, {
+        chainLinkFull: "chainLinkFull",
+        chainLinkBack: "chainLinkFull",
+        chainLinkFront: "chainLinkFront",
         chainConfig: {
-            // startPos: new THREE.Vector3(3, 10, -2),
-            // endPos: new THREE.Vector3(25, -12, -1),
-            startPos: new THREE.Vector3(3, 10, -2),
-            endPos: new THREE.Vector3(25, -12, -1),
+            
+            startPos: new THREE.Vector3(3, 10, -5),
+            endPos: new THREE.Vector3(25, -12, 0),
             numLinks : 15,
-            scale: 3
+            scale: 3.2
         },
         interaction: {
             isParallaxed: false,
-            isHoverable: true,
+            isHoverable: false,
             isDraggable: false,
             parallaxFactor: -1,
         }

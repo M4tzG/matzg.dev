@@ -106,11 +106,6 @@ loadScene(sceneName) {
         this.currentWorld = new World();
 
 
-        const light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(5, 5, 5);
-        this.currentScene.add(light);
-        this.currentScene.add(new THREE.AmbientLight(0xffffff, 0.5));
-        
         this.currentWorld.addSystem(new InputSystem());
         this.currentWorld.addSystem(new EffectSystem());
         this.currentWorld.addSystem(new PickingSystem(this.currentScene, this.camera));
