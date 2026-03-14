@@ -64,7 +64,7 @@ export class PickingSystem extends System {
                 const verlet = world.getComponent(entityHit, VerletNode);
                 const input = world.getComponent(entityHit, Input);
 
-                if (verlet && !verlet.isPinned && interaction.isHoverable) {
+                if (verlet && !verlet.isPinned && input.isDraggable) {
                     // Pega a "velocidade" do mouse (o fallback || 0 evita o NaN)
                     const moveX = input.mouse.deltaX || 0;
                     const moveY = input.mouse.deltaY || 0;

@@ -6,10 +6,10 @@ import * as THREE from "three";
 
 export class VerletPhysicsSystem extends System {
     update(world, deltaTime) {
-        let dt = deltaTime || 0.016; 
-        if (dt > 0.1) {
-            dt = 0.016; 
-        }
+        // 1. IGNORAMOS O deltaTime VARIÁVEL!
+        // Travamos a física em um tempo constante para evitar explosões de energia.
+        const FIXED_DT = 0.016; 
+        
         const gravity = new THREE.Vector3(0, -9.8, 0);
 
         const nodes = Query.entitiesWith(world, VerletNode);
@@ -19,16 +19,21 @@ export class VerletPhysicsSystem extends System {
             const node = world.getComponent(e, VerletNode);
             if (node.isPinned) continue;
 
+            // A velocidade implícita baseada na distância anterior
             const velocity = new THREE.Vector3().subVectors(node.currentPosition, node.oldPosition);
+            
+            // 2. DAMPING (ATRITO) - O segredo para a corrente estabilizar!
+            // Multiplicamos por 0.99 para roubar 1% de energia a cada frame e evitar o moto perpétuo.
+            velocity.multiplyScalar(0.99); 
             
             node.oldPosition.copy(node.currentPosition); 
             
-            const acceleration = gravity.clone().multiplyScalar(dt * dt);
+            // Usamos o FIXED_DT em vez do dt variável
+            const acceleration = gravity.clone().multiplyScalar(FIXED_DT * FIXED_DT);
             node.currentPosition.add(velocity).add(acceleration);
         }
 
-
-        const iterations = 5; 
+        const iterations = 3; 
         for (let i = 0; i < iterations; i++) {
             for (const c of constraints) {
                 const constraint = world.getComponent(c, Constraint);
@@ -37,16 +42,12 @@ export class VerletPhysicsSystem extends System {
 
                 if (!nodeA || !nodeB) continue;
 
-                // Calcula a distância atual entre os dois elos
                 const delta = new THREE.Vector3().subVectors(nodeB.currentPosition, nodeA.currentPosition);
                 const currentDist = delta.length();
                 
-                if (currentDist === 0) continue; // Proteção contra divisão por zero (NaN)
+                if (currentDist === 0) continue; 
                 
-                // O quanto eles se esticaram além do permitido?
                 const diff = (currentDist - constraint.targetDistance) / currentDist;
-                
-                // Empurra um pouco de cada lado para voltarem pro tamanho certo
                 const offset = delta.multiplyScalar(diff * 0.5);
 
                 if (!nodeA.isPinned) nodeA.currentPosition.add(offset);

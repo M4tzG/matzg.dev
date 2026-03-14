@@ -31,20 +31,39 @@ export function setupHomeScene(world, scene, assets) {
     });
 
     createChain(world, scene, assets, {
-        chainLinkFull: "chainLinkFull",
-        chainLinkBack: "chainLinkFull",
-        chainLinkFront: "chainLinkFront",
+        chainLinkFull: "chainLinkFull_variation",
+        chainLinkBack: "chainLinkBack_link",
+        chainLinkFront: "chainLinkFront_link",
         chainConfig: {
             
             startPos: new THREE.Vector3(3, 10, -5),
             endPos: new THREE.Vector3(25, -12, 0),
-            numLinks : 15,
-            scale: 3.2
+            numLinks : 24,
+            scale: 2
         },
         interaction: {
             isParallaxed: false,
             isHoverable: false,
             isDraggable: false,
+            parallaxFactor: -1,
+        }
+    });
+
+    createChain(world, scene, assets, {
+        chainLinkFull: "chainLinkFull",
+        chainLinkBack: "chainLinkBack_link_variation",
+        chainLinkFront: "chainLinkFront_link_variation",
+        chainConfig: {
+            
+            startPos: new THREE.Vector3(9, 9, -5),
+            endPos: new THREE.Vector3(28, -9, 0),
+            numLinks : 14,
+            scale: 3
+        },
+        interaction: {
+            isParallaxed: false,
+            isHoverable: false,
+            isDraggable: true,
             parallaxFactor: -1,
         }
     });

@@ -63,6 +63,20 @@ export default class Engine {
         window.addEventListener("resize", () => {
             this.onWindowResize();
         })
+        
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                // O usuário saiu da aba: Para o loop de renderização e física
+                this.isRunning = false; 
+            } else {
+                // O usuário voltou: Atualiza o lastTime para evitar um delta gigante
+                this.lastTime = performance.now(); 
+                // Reinicia a engine e chama o loop novamente
+                this.isRunning = true;
+                this.mainLoop();
+            }
+        });
 
 
 
@@ -81,7 +95,7 @@ export default class Engine {
         const now = performance.now();
         let deltaTime = (now - this.lastTime) / 1000;
 
-        deltaTime = Math.min(deltaTime, 0.5);
+        deltaTime = Math.min(deltaTime, 0.1);
 
         this.lastTime = now;
 

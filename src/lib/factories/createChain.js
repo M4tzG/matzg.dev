@@ -8,67 +8,86 @@ import { Constraint } from "../components/Constraint";
 export function createChain(world, scene, assets, configs) {
     const {
         chainConfig = {},
-        interaction = {},
-        // Agora vamos pedir 3 nomes de imagens no config!
-        chainLinkFull, 
-        chainLinkBack,
-        chainLinkFront
+        interaction = {}
+        // Retiramos os nomes de imagens daqui!
     } = configs;
 
-    // 1. Pegando as 3 texturas
-    const texFull = assets.getTexture(chainLinkFull);
-    const texFront = assets.getTexture(chainLinkFront);
-    const texBack = assets.getTexture(chainLinkBack);
-    
-    texFull.premultiplyAlpha = true;
-    texFront.premultiplyAlpha = true;
-    texBack.premultiplyAlpha = true;
-
-    // 2. Calculando proporção (usando a inteira como base)
-    const imageWidth = texFull.image.width;
-    const imageHeight = texFull.image.height;
-    const aspectRatio = imageWidth / imageHeight;
+    // --- 1. PREPARAÇÃO DAS OPÇÕES VISUAIS ---
     const baseHeight = 1;
-    const finalWidth = baseHeight * aspectRatio;
-
-    // 3. Criando os 3 materiais (com alphaTest para o renderOrder funcionar bem com PNGs)
     const matOptions = { transparent: true, side: THREE.DoubleSide, depthWrite: false, alphaTest: 0.5 };
-    const matFull = new THREE.MeshBasicMaterial({ map: texFull, ...matOptions });
-    const matFront = new THREE.MeshBasicMaterial({ map: texFront, ...matOptions });
-    const matBack = new THREE.MeshBasicMaterial({ map: texBack, ...matOptions });
 
-    const geometry = new THREE.PlaneGeometry(finalWidth, baseHeight);
+    // Função que cria as geometrias e materiais para cada "conjunto" de texturas
+    function createVisualSet(fullName, backName, frontName) {
+        const texFull = assets.getTexture(fullName);
+        const texBack = assets.getTexture(backName);
+        const texFront = assets.getTexture(frontName);
 
+        // Aplica as configurações do Pixel Art e Alpha em todas
+        [texFull, texBack, texFront].forEach(tex => {
+            tex.minFilter = THREE.NearestFilter;
+            tex.magFilter = THREE.NearestFilter;
+            tex.premultiplyAlpha = true;
+        });
+
+        // Calcula a geometria exata baseada no tamanho da imagem (para não esticar)
+        const geoFull = new THREE.PlaneGeometry(baseHeight * (texFull.image.width / texFull.image.height), baseHeight);
+        const geoEven = new THREE.PlaneGeometry(baseHeight * (texFront.image.width / texFront.image.height), baseHeight);
+
+        return {
+            odd: { geometry: geoFull, material: new THREE.MeshBasicMaterial({ map: texFull, ...matOptions }) },
+            even: { 
+                geometry: geoEven, 
+                matBack: new THREE.MeshBasicMaterial({ map: texBack, ...matOptions }), 
+                matFront: new THREE.MeshBasicMaterial({ map: texFront, ...matOptions }) 
+            }
+        };
+    }
+
+    const setNormal = createVisualSet("chainLinkFull", "chainLinkBack", "chainLinkFront");
+    const setVariation = createVisualSet("chainLinkFull_variation", "chainLinkBack_variation", "chainLinkFront_variation");
+
+    const setLink = createVisualSet("chainLinkFull_link", "chainLinkBack_link", "chainLinkFront_link");
+    const setLinkVariation = createVisualSet("chainLinkFull_link_variation", "chainLinkBack_link_variation", "chainLinkFront_link_variation");
+
+    // Arrays de opções para sortear
+    const oddOptions = [setNormal.odd, setVariation.odd];
+    const evenOptions = [setLink.even];
+
+    // --- 2. CRIAÇÃO DA CORRENTE ---
     let previousEntity = null;
     let previousNode = null;
     const linkDistance = chainConfig.startPos.distanceTo(chainConfig.endPos) / chainConfig.numLinks; 
+    const gap = 0.001;
 
     for (let i = 0; i < chainConfig.numLinks; i++) {
-        let linkVisual; // Pode ser um Mesh ou um Group
+        let linkVisual;
 
         if (i % 2 !== 0) {
-            // ÍMPAR: Elo Inteiro no meio do sanduíche
-            linkVisual = new THREE.Mesh(geometry, matFull);
-            linkVisual.renderOrder = 2; // Fica no "meio"
+            // ÍMPAR: Sorteia uma das opções Ímpares
+            const choice = oddOptions[Math.floor(Math.random() * oddOptions.length)];
+            linkVisual = new THREE.Mesh(choice.geometry, choice.material);
+            linkVisual.renderOrder = 2; 
         } else {
-            // PAR: O Sanduíche (Duas metades no mesmo lugar)
+            // PAR: Sorteia uma das opções Pares (Sanduíche)
+            const choice = evenOptions[Math.floor(Math.random() * evenOptions.length)];
             linkVisual = new THREE.Group(); 
+
+            const meshBack = new THREE.Mesh(choice.geometry, choice.matBack);
+            meshBack.renderOrder = 1;
+            meshBack.position.z = -gap; 
             
-            const meshBack = new THREE.Mesh(geometry, matBack);
-            meshBack.renderOrder = 1; // Fica atrás de tudo
-            
-            const meshFront = new THREE.Mesh(geometry, matFront);
-            meshFront.renderOrder = 3; // Fica na frente de tudo
+            const meshFront = new THREE.Mesh(choice.geometry, choice.matFront);
+            meshFront.renderOrder = 3;
+            meshFront.position.z = gap; 
 
             linkVisual.add(meshBack);
             linkVisual.add(meshFront);
         }
 
-        // Arrumando a escala como você pediu
         linkVisual.scale.set(chainConfig.scale, chainConfig.scale, chainConfig.scale);
         scene.add(linkVisual);
 
-        // --- Resto da sua lógica do ECS / Verlet continua igual ---
+        // --- 3. ECS E VERLET (Tudo igual) ---
         const entity = world.createEntity();
         const spawnPos = new THREE.Vector3().lerpVectors(chainConfig.startPos, chainConfig.endPos, i / chainConfig.numLinks);
 
