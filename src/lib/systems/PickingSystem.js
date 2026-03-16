@@ -64,7 +64,7 @@ export class PickingSystem extends System {
                 const verlet = world.getComponent(entityHit, VerletNode);
                 const input = world.getComponent(entityHit, Input);
 
-                if (verlet && !verlet.isPinned && input.isDraggable) {
+                if (verlet && !verlet.isPinned && interaction.isHoverable) {
                     // Pega a "velocidade" do mouse (o fallback || 0 evita o NaN)
                     const moveX = input.mouse.deltaX || 0;
                     const moveY = input.mouse.deltaY || 0;
@@ -76,7 +76,7 @@ export class PickingSystem extends System {
                         // O multiplicador calibra a força. Como o deltaX/Y costuma ser
                         // um número em pixels (ex: 10, 50), você precisa de um valor bem
                         // pequeno para não chutar a corrente para fora da tela.
-                        const pushMultiplier = 0.003; 
+                        const pushMultiplier = 0.001; 
                         
                         verlet.currentPosition.x += moveX * pushMultiplier;
                         

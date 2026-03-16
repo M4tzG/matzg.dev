@@ -43,15 +43,15 @@ export function createChain(world, scene, assets, configs) {
         };
     }
 
-    const setNormal = createVisualSet("chainLinkFull", "chainLinkBack", "chainLinkFront");
-    const setVariation = createVisualSet("chainLinkFull_variation", "chainLinkBack_variation", "chainLinkFront_variation");
+    const setNormal = createVisualSet("chainLinkOddFull", "chainLinkOddBack", "chainLinkOddFront");
+    // const setVariation = createVisualSet("chainLinkFull_variation", "chainLinkBack_variation", "chainLinkFront_variation");
 
-    const setLink = createVisualSet("chainLinkFull_link", "chainLinkBack_link", "chainLinkFront_link");
-    const setLinkVariation = createVisualSet("chainLinkFull_link_variation", "chainLinkBack_link_variation", "chainLinkFront_link_variation");
+    // const setLink = createVisualSet("chainLinkFull_link", "chainLinkBack_link", "chainLinkFront_link");
+    const setLinkVariation = createVisualSet("chainLinkEvenFull", "chainLinkEvenBack", "chainLinkEvenFront");
 
-    // Arrays de opções para sortear
-    const oddOptions = [setNormal.odd, setVariation.odd];
-    const evenOptions = [setLink.even];
+    
+    const oddOptions = [setNormal.odd];
+    const evenOptions = [setLinkVariation.even];
 
     // --- 2. CRIAÇÃO DA CORRENTE ---
     let previousEntity = null;

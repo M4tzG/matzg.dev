@@ -33,7 +33,7 @@ export class VerletPhysicsSystem extends System {
             node.currentPosition.add(velocity).add(acceleration);
         }
 
-        const iterations = 3; 
+        const iterations = 1; 
         for (let i = 0; i < iterations; i++) {
             for (const c of constraints) {
                 const constraint = world.getComponent(c, Constraint);

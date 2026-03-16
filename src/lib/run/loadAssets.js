@@ -4,25 +4,19 @@ export async function loadAssets() {
     const assets = new AssetsManager();
 
     const loadPromises = [
-        assets.loadTexture("Raposo", "/assets/fox_default.png"),
-        assets.loadTexture("dots", "/assets/dots_diagonal_right.png"),
-        assets.loadTexture("wit", "/assets/wit.png"),
+        assets.loadTexture("Raposo", "/assets/homeAssets/fox_default.png"),
+        assets.loadTexture("dots", "/assets/homeAssets/dots_diagonal_right.png"),
+        assets.loadTexture("witSpriteSheet", "/assets/projectsAssets/witSpriteSheet.png"),
+        assets.loadTexture("witImage", "/assets/projectsAssets/witImage.png"),
 
-        assets.loadTexture("chainLinkFull", "/assets/chainLinkFull.png"),
-        assets.loadTexture("chainLinkBack", "/assets/chainLinkBack.png"),
-        assets.loadTexture("chainLinkFront", "/assets/chainLinkFront.png"),
+        assets.loadTexture("chainLinkEvenFull", "/assets/homeAssets/chain/chainLinkEvenFull.png"),
+        assets.loadTexture("chainLinkEvenBack", "/assets/homeAssets/chain/chainLinkEvenBack.png"),
+        assets.loadTexture("chainLinkEvenFront", "/assets/homeAssets/chain/chainLinkEvenFront.png"),
 
-        assets.loadTexture("chainLinkFull_variation", "/assets/chainLinkFull_variation.png"),
-        assets.loadTexture("chainLinkBack_variation", "/assets/chainLinkBack_variation.png"),
-        assets.loadTexture("chainLinkFront_variation", "/assets/chainLinkFront_variation.png"),
 
-        assets.loadTexture("chainLinkFull_link", "/assets/chainLinkFull_link.png"),
-        assets.loadTexture("chainLinkBack_link", "/assets/chainLinkBack_link.png"),
-        assets.loadTexture("chainLinkFront_link", "/assets/chainLinkFront_link.png"),
-
-        assets.loadTexture("chainLinkFull_link_variation", "/assets/chainLinkFull_link_variation.png"),
-        assets.loadTexture("chainLinkBack_link_variation", "/assets/chainLinkBack_link_variation.png"),
-        assets.loadTexture("chainLinkFront_link_variation", "/assets/chainLinkFront_link_variation.png"),
+        assets.loadTexture("chainLinkOddFull", "/assets/homeAssets/chain/chainLinkOddFull.png"),
+        assets.loadTexture("chainLinkOddFront", "/assets/homeAssets/chain/chainLinkOddFront.png"),
+        assets.loadTexture("chainLinkOddBack", "/assets/homeAssets/chain/chainLinkOddBack.png"),
 
 
 
