@@ -10,10 +10,8 @@ import { Input } from "../components/Input";
 export function createSprite(world, scene, assets, configs) {
     const {
         imageName,
-        x,
-        y,
-        z,
         baseHeight = 1,
+        transform = {},
         interaction = {}
     } = configs;
 
@@ -42,7 +40,7 @@ export function createSprite(world, scene, assets, configs) {
     const entity = world.createEntity();
 
     world.addComponent(entity, new Input()); 
-    world.addComponent(entity, new Transform(x, y, z)); 
+    world.addComponent(entity, new Transform(transform)); 
     world.addComponent(entity, new MouseInteraction(interaction));
     world.addComponent(entity, new Mesh2D(finalWidth, finalHeight)); 
     world.addComponent(entity, new ThreeView(sprite)); 

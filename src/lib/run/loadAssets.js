@@ -4,11 +4,24 @@ export async function loadAssets() {
     const assets = new AssetsManager();
 
     const loadPromises = [
+    // [=============================================================]  
+        // home
+        assets.loadTexture("backgroundFlower", "/assets/homeAssets/backgroundFlower.png"),
+        assets.loadTexture("backgroundX", "/assets/homeAssets/backgroundX.png"),
         assets.loadTexture("Raposo", "/assets/homeAssets/fox_default.png"),
-        assets.loadTexture("dots", "/assets/homeAssets/dots_diagonal_right.png"),
-        assets.loadTexture("witSpriteSheet", "/assets/projectsAssets/witSpriteSheet.png"),
-        assets.loadTexture("witImage", "/assets/projectsAssets/witImage.png"),
+        assets.loadTexture("leftDots", "/assets/homeAssets/leftDots.png"),
+        assets.loadTexture("leftFlower", "/assets/homeAssets/leftFlower.png"),
+        assets.loadTexture("leftRect", "/assets/homeAssets/leftRect.png"),
+        assets.loadTexture("middleRect", "/assets/homeAssets/middleRect.png"),
+        assets.loadTexture("middleFlower", "/assets/homeAssets/middleFlower.png"),
+        assets.loadTexture("rightDots", "/assets/homeAssets/rightDots.png"),
+        assets.loadTexture("rightFlower", "/assets/homeAssets/rightFlower.png"),                   
+        assets.loadTexture("rightRect", "/assets/homeAssets/rightRect.png"),    
+        
+        
 
+
+        // chain - home
         assets.loadTexture("chainLinkEvenFull", "/assets/homeAssets/chain/chainLinkEvenFull.png"),
         assets.loadTexture("chainLinkEvenBack", "/assets/homeAssets/chain/chainLinkEvenBack.png"),
         assets.loadTexture("chainLinkEvenFront", "/assets/homeAssets/chain/chainLinkEvenFront.png"),
@@ -18,6 +31,14 @@ export async function loadAssets() {
         assets.loadTexture("chainLinkOddFront", "/assets/homeAssets/chain/chainLinkOddFront.png"),
         assets.loadTexture("chainLinkOddBack", "/assets/homeAssets/chain/chainLinkOddBack.png"),
 
+
+
+    // [=============================================================]  
+        // projects
+        assets.loadTexture("witSpriteSheet", "/assets/projectsAssets/witSpriteSheet.png"),
+        assets.loadTexture("witImage", "/assets/projectsAssets/witImage.png"),
+
+    // [=============================================================]  
     ];
 
     try {

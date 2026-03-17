@@ -1,18 +1,18 @@
 import { Component } from "../ecs/Component";
 
 export class Transform extends Component {
-    constructor (px = 0, py = 0, pz = 0, scale = 1, rx = 0, ry = 0, rz = 0){
+    constructor(configs = {}) {
         super();
         this.position = {
-            x: px,
-            y: py,
-            z: pz
+            x: configs.px ?? 0,
+            y: configs.py ?? 0,
+            z: configs.pz ?? 0
         }
         this.rotation = {
-            x: rx,
-            y: ry,
-            z: rz
+            x: configs.rx ?? 0,
+            y: configs.ry ?? 0,
+            z: configs.rz ?? 0
         }
-        this.scale = scale
+        this.scale = configs.scale ?? 1
     }
 }
