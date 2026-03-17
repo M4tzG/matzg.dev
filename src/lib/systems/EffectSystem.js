@@ -6,6 +6,11 @@ import { Input } from "../components/Input";
 
 
 export class EffectSystem extends System {
+
+// [=============================================================]   
+    // por hora apenas implementaçao de um parallax
+// [=============================================================]   
+
     constructor() {
         super();
     }

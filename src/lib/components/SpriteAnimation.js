@@ -1,7 +1,7 @@
 import { Component } from "../ecs/Component";
 
 export class SpriteAnimation extends Component {
-    constructor(animConfig) {
+    constructor(animConfig = {}) {
         super();
         this.rows = animConfig.rows;
         this.columns = animConfig.columns;

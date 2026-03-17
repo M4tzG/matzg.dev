@@ -26,20 +26,10 @@ const PincushionShader = {
         varying vec2 vUv;
 
         void main() {
-            // Desloca o UV para que o centro seja (0, 0) em vez de (0.5, 0.5)
             vec2 uv = vUv - 0.5;
-            
-            // Calcula a distância do centro
             float distanceSq = dot(uv, uv); 
-            
-            // Aplica a distorção (quanto mais longe do centro, maior o efeito)
-            // Se strength for negativo, puxa para as bordas (Pincushion)
             float distortion = 1.0 + strength * distanceSq; 
-            
-            // Reposiciona o UV de volta para o espaço (0 a 1)
             vec2 distortedUv = uv * distortion + 0.5;
-
-            // Renderiza preto se a distorção puxar pixels de fora dos limites da textura
             if (distortedUv.x < 0.0 || distortedUv.x > 1.0 || distortedUv.y < 0.0 || distortedUv.y > 1.0) {
                 gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
             } else {
@@ -87,8 +77,10 @@ export class PostProcessingSystem extends System {
         const entity = entities[0]; 
         const config = world.getComponent(entity, PostProcessing);
 
-        this.pincushionPass.enabled = config.pincushion.active;
-        
+        // para n deixar as figuras com uma borda estranha branca
+        this.pincushionPass.enabled = config.pincushion.active; 
+
+        // aplica todos os tipos de pos-processamento, se nao tiver nenhum ativo, usa o render normal, sem composer
         if (config.pincushion.active) {
             this.pincushionPass.uniforms["strength"].value = config.pincushion.strength;
             this.composer.render();

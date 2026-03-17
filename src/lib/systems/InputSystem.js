@@ -4,6 +4,11 @@ import { Input } from "../components/Input";
 
 
 export class InputSystem extends System {
+    
+// [=============================================================]   
+    // pega os inputs do mouse, um delta para interaçao e click
+// [=============================================================]   
+
     constructor(camera) {
         super();
         this.camera = camera;

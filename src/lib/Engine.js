@@ -149,6 +149,8 @@ loadScene(sceneName) {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
+
+    // falbavk caaso n tenha webGL...
     showNoWebGLFallback() {
 
         const warningDiv = document.createElement('div');

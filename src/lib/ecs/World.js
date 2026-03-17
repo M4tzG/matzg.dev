@@ -3,7 +3,7 @@ export class World {
         this.nextEntityId = 0;
         this.entities = new Set();
         this.components = new Map;  // keys : value 
-                                    // component class : maps os entity ids to component instances
+                                    // component class : maps entity ids to component instances
 
         this.systems = [];
     }

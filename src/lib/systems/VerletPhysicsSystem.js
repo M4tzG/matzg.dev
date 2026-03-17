@@ -5,35 +5,41 @@ import { Constraint } from "../components/Constraint";
 import * as THREE from "three";
 
 export class VerletPhysicsSystem extends System {
+
+// [=============================================================]  
+    // algoritmo do Verlet, simula cordas correntes e trecidos
+    // formula:
+    //      newPosition = currentPosition + (currentPosition - previousPosition) + acceleration * dt²
+    // ou seja:
+    // 1. calcula movimento (Verlet)
+    // 2. aplica gravidade
+    // 3. aplica damping
+    // 4. corrige distância entre nós
+// [=============================================================]  
+
     update(world, deltaTime) {
-        // 1. IGNORAMOS O deltaTime VARIÁVEL!
-        // Travamos a física em um tempo constante para evitar explosões de energia.
-        const FIXED_DT = 0.016; 
         
         const gravity = new THREE.Vector3(0, -9.8, 0);
 
         const nodes = Query.entitiesWith(world, VerletNode);
         const constraints = Query.entitiesWith(world, Constraint);
 
+
         for (const e of nodes) {
             const node = world.getComponent(e, VerletNode);
             if (node.isPinned) continue;
 
-            // A velocidade implícita baseada na distância anterior
             const velocity = new THREE.Vector3().subVectors(node.currentPosition, node.oldPosition);
             
-            // 2. DAMPING (ATRITO) - O segredo para a corrente estabilizar!
-            // Multiplicamos por 0.99 para roubar 1% de energia a cada frame e evitar o moto perpétuo.
             velocity.multiplyScalar(0.99); 
             
             node.oldPosition.copy(node.currentPosition); 
             
-            // Usamos o FIXED_DT em vez do dt variável
-            const acceleration = gravity.clone().multiplyScalar(FIXED_DT * FIXED_DT);
+            const acceleration = gravity.clone().multiplyScalar(deltaTime * deltaTime);
             node.currentPosition.add(velocity).add(acceleration);
         }
 
-        const iterations = 1; 
+        const iterations = 15; 
         for (let i = 0; i < iterations; i++) {
             for (const c of constraints) {
                 const constraint = world.getComponent(c, Constraint);

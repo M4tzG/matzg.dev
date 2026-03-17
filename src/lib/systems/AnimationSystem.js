@@ -4,6 +4,11 @@ import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
 
 export class AnimationSystem extends System {
+
+// [=============================================================]   
+    // conta o timer, quando der o tempo, troca de frame
+// [=============================================================]  
+ 
     constructor(renderer, scene, camera){
         super();
         this.renderer = renderer;
@@ -25,7 +30,7 @@ export class AnimationSystem extends System {
             if (anim.timer >= anim.frameTime){
                 anim.timer = 0
                 anim.currentFrame = (anim.currentFrame + 1) % anim.totalFrames;
-                console.log(anim.currentFrame);
+                // console.log(anim.currentFrame);
 
 
                 const currentColumn = anim.currentFrame % anim.columns;

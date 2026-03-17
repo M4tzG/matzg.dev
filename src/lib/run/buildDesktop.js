@@ -5,6 +5,10 @@ import { createChain } from "../factories/createChain";
 
 import * as THREE from "three";
 
+
+const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
+
+
 export function setupHomeScene(world, scene, assets) {
 
     createPostProcessing(world, {
@@ -13,7 +17,14 @@ export function setupHomeScene(world, scene, assets) {
             strength: -0.7
         }
     });
-    createSprite(world, scene, assets, "dots", 0, 0, 0, 9, {
+
+    
+    createSprite(world, scene, assets, {
+        imageName: "dots",
+        x: 0,
+        y: 0,
+        z: 0,
+        baseHeight: 9,
         interaction: {
             isParallaxed: true,
             isHoverable: false,
@@ -21,7 +32,12 @@ export function setupHomeScene(world, scene, assets) {
             isDraggable: false
         }
     });
-    createSprite(world, scene, assets, "Raposo", 0, 0, 0, 11, {
+    createSprite(world, scene, assets, {
+        imageName: "Raposo",
+        x: 0,
+        y: 0,
+        z: 0,
+        baseHeight: 11,
         interaction: {
             isParallaxed: true,
             isHoverable: false,
@@ -30,34 +46,34 @@ export function setupHomeScene(world, scene, assets) {
         }
     });
 
+
+
     createChain(world, scene, assets, {
         chainConfig: {
-            
-            startPos: new THREE.Vector3(3, 10, -5),
-            endPos: new THREE.Vector3(25, -12, 0),
+            startPos: v3(3, 10, -5),
+            endPos: v3(25, -12, 0),
             numLinks : 22,
             scale: 2.9
         },
         interaction: {
             isParallaxed: false,
-            isHoverable: true,
+            isHoverable: false,
             isDraggable: false,
             parallaxFactor: -1,
         }
     });
 
     createChain(world, scene, assets, {
-        chainConfig: {
-            
-            startPos: new THREE.Vector3(8, 10, -5),
-            endPos: new THREE.Vector3(28, -9, 0),
+        chainConfig: {  
+            startPos: v3(8, 10, -5),
+            endPos: v3(28, -9, 0),
             numLinks : 14,
             scale: 4
         },
         interaction: {
             isParallaxed: false,
-            isHoverable: true,
-            isDraggable: true,
+            isHoverable: false,
+            isDraggable: false,
             parallaxFactor: -1,
         }
     });
@@ -74,7 +90,12 @@ export function setupProjectsScene(world, scene, assets) {
     });
 
 
-    createSprite(world, scene, assets, "witImage", 0, 0, 0, 11, {
+    createSprite(world, scene, assets, {
+        imageName: "witImage",
+        x: 0,
+        y: 0,
+        z: 0,
+        baseHeight: 11,
         interaction: {
             isParallaxed: true,
             isHoverable: false,
@@ -84,7 +105,12 @@ export function setupProjectsScene(world, scene, assets) {
     });
     
 
-    // createAnimatedSprite(world, scene, assets, "witSpriteSheet", 0, 0, 0, 8, {
+    // createAnimatedSprite(world, scene, assets, {
+    //     imageName: "witSpriteSheet",
+    //     x: 0,
+    //     y: 0,
+    //     z: 0,
+    //     baseHeight: 11,
     //     animation: {
     //         columns: 2,
     //         rows: 4,

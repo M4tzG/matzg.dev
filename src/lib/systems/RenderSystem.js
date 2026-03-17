@@ -39,7 +39,7 @@ export class RenderSystem extends System {
             sprite.material.rotation = transform.rotation.z;
 
         }
-
+        // esta no pos-processamento
         // this.renderer.render(this.scene, this.camera);
     }
 }

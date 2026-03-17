@@ -7,8 +7,13 @@ import { MouseInteraction } from "../components/MouseInteraction";
 import { Input } from "../components/Input";
 import { SpriteAnimation } from "../components/SpriteAnimation";
 
-export function createAnimatedSprite(world, scene, assets, imageName, x, y, z, baseHeight = 1, configs) {
+export function createAnimatedSprite(world, scene, assets, configs) {
     const { 
+        imageName,
+        x,
+        y,
+        z,
+        baseHeight = 1,
         animation = {}, 
         interaction = {} 
     } = configs;
@@ -19,10 +24,9 @@ export function createAnimatedSprite(world, scene, assets, imageName, x, y, z, b
     texture.needsUpdate = true;
     texture.premultiplyAlpha = true;
 
-    // janla
-    texture.repeat.set(1 / configs.animation.columns, 1 / configs.animation.rows);
+    texture.repeat.set(1 / configs.animation.columns, 1 / configs.animation.rows); // frame
 
-    
+
     const frameWidth = texture.image.width / configs.animation.columns;
     const frameHeight = texture.image.height / configs.animation.rows;
     const aspectRatio = frameWidth / frameHeight;
@@ -31,17 +35,14 @@ export function createAnimatedSprite(world, scene, assets, imageName, x, y, z, b
     const finalWidth = baseHeight * aspectRatio;
 
 
-
     const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
     const sprite = new THREE.Sprite(material);
+
     scene.add(sprite);
-    
     // console.log(sprite)
 
-    
+//  ==-=-=-=-=-== ECS ==-=-=-=-=-==
     const entity = world.createEntity();
-
-
 
     world.addComponent(entity, new Input()); 
     world.addComponent(entity, new Transform(x, y, z)); 

@@ -16,7 +16,7 @@ export default class AssetsManager {
                 path,
                 (gltf) => {
                     const model = gltf.scene;
-                    this.models[name] = model; // Guarda a cena INTEIRA
+                    this.models[name] = model;
                     resolve(model);
                 },
                 undefined,

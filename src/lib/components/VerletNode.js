@@ -7,7 +7,6 @@ export class VerletNode extends Component {
         this.currentPosition = currentPosition.clone();
         this.oldPosition = currentPosition.clone();
         
-        // Vai nos ajudar a girar o 3D depois!
         this.nextNode = null; 
     }
 }

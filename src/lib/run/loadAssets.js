@@ -18,9 +18,6 @@ export async function loadAssets() {
         assets.loadTexture("chainLinkOddFront", "/assets/homeAssets/chain/chainLinkOddFront.png"),
         assets.loadTexture("chainLinkOddBack", "/assets/homeAssets/chain/chainLinkOddBack.png"),
 
-
-
-
     ];
 
     try {

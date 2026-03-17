@@ -4,6 +4,13 @@ import { VerletNode } from "../components/VerletNode";
 import { ThreeView } from "../components/ThreeView";
 
 export class ChainRenderSystem extends System {
+    
+// [=============================================================]   
+    // posicao do VerletPhysicsSystem -> posiçao do mesh
+    // +
+    // ajusta rotaçao
+// [=============================================================]  
+
     update(world, deltaTime) {
         const entities = Query.entitiesWith(world, VerletNode, ThreeView);
 
