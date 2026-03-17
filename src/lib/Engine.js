@@ -31,34 +31,37 @@ export default class Engine {
         this.isRunning = false;
     }
 
+// [=============================================================]
+
     async init() {
 
         if (!this.webGL) {
             this.showNoWebGLFallback();
             return;
         }
+
         this.assets = await loadAssets();
-
-
 
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: true
         });
+
+// ----------------
+
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.shadowMap.enabled = true;
 
+        this.renderer.setClearColor(0x000000, 0);
 
-
-
-
+// ----------------
 
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.z = 10;  
         this.camera.lookAt(0, 0, 0);
 
-        this.renderer.setClearColor(new THREE.Color(0x000000), 1);
+// ----------------       
 
         window.addEventListener("resize", () => {
             this.onWindowResize();
@@ -67,20 +70,17 @@ export default class Engine {
 
         document.addEventListener("visibilitychange", () => {
             if (document.hidden) {
-                // O usuário saiu da aba: Para o loop de renderização e física
                 this.isRunning = false; 
             } else {
-                // O usuário voltou: Atualiza o lastTime para evitar um delta gigante
                 this.lastTime = performance.now(); 
-                // Reinicia a engine e chama o loop novamente
                 this.isRunning = true;
                 this.mainLoop();
             }
         });
 
+// ----------------
 
-
-
+        // location.reload();
         this.isRunning = true;
         this.lastTime = performance.now();
         this.mainLoop();
@@ -88,14 +88,15 @@ export default class Engine {
         
     }
 
+// [=============================================================]
 
     mainLoop = () => {
         if (!this.isRunning) return;
 
         const now = performance.now();
         let deltaTime = (now - this.lastTime) / 1000;
-
-        deltaTime = Math.min(deltaTime, 0.1);
+        // p n quebrar e acumular um delta gigantesdco de um avez so
+        deltaTime = Math.min(deltaTime, 0.5);
 
         this.lastTime = now;
 
@@ -106,13 +107,14 @@ export default class Engine {
         requestAnimationFrame(this.mainLoop);
     }
 
+// [=============================================================]
 
 loadScene(sceneName) {
         if (this.currentScene) {
             this.currentScene.clear();
         }
         if (this.currentWorld) {
-            // inputSystem -> windowListener acumula!!
+            // inputSystem -> windowListener acumula
             this.currentWorld = null; 
         }
 
@@ -138,9 +140,7 @@ loadScene(sceneName) {
         }
     }
 
-
-
-
+// [=============================================================]
 
     onWindowResize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -149,7 +149,7 @@ loadScene(sceneName) {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-
+// [=============================================================]
     // falbavk caaso n tenha webGL...
     showNoWebGLFallback() {
 

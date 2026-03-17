@@ -19,13 +19,12 @@ export default function CanvasContainer () {
 
         engineRef.current = new Engine(canvasRef.current, false, true);
 
-        console.log(pathname)
-        // Aguarda init() terminar ANTES de loadScene()
+        // console.log(pathname)
         engineRef.current.init().then(() => {
             isInitializedRef.current = true;
             engineRef.current.loadScene(pathname);
         }).catch((error) => {
-            console.error("Erro ao inicializar engine:", error);
+            console.error("erro inicializacao:", error);
         });
         
 
@@ -38,6 +37,6 @@ export default function CanvasContainer () {
     }, [pathname])
 
     return (
-        <canvas ref={canvasRef} className="fixed inset-0 z-0"></canvas>
+        <canvas ref={canvasRef} className="fixed inset-0 z-0 object-cover"></canvas>
     )
 }
