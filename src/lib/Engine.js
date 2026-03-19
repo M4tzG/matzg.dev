@@ -138,7 +138,12 @@ loadScene(sceneName) {
 
         this.currentWorld.addSystem(new InputSystem());
         this.currentWorld.addSystem(new EffectSystem());
-        this.currentWorld.addSystem(new GyroParallaxSystem())
+        
+
+        if (this.isMobile) {
+            this.currentWorld.addSystem(new GyroParallaxSystem());
+        }
+        
         this.currentWorld.addSystem(new PickingSystem(this.currentScene, this.camera));
         this.currentWorld.addSystem(new AnimationSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new VerletPhysicsSystem());
@@ -162,7 +167,7 @@ loadScene(sceneName) {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 
 
-        let lastIsMobile = window.innerWidth <= 1024
+        let lastIsMobile = window.innerWidth <= 768
 
         if(this.isMobile !== lastIsMobile){
             location.reload();

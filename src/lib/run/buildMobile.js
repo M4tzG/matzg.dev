@@ -19,38 +19,38 @@ export function setupHomeMobile(world, scene, assets) {
     });
 
     
-    // createSprite(world, scene, assets, {
-    //     imageName: "leftDots",
-    //     transform: {
-    //         px: -10,
-    //         py: 3,
-    //         pz: -5,
+    createSprite(world, scene, assets, {
+        imageName: "leftDots",
+        transform: {
+            px: -5,
+            py: 3,
+            pz: -5,
             
-    //     },
-    //     baseHeight: 15,
-    //     interaction: {
-    //         isParallaxed: true,
-    //         isHoverable: false,
-    //         parallaxFactor: -0.2,
-    //         isDraggable: false
-    //     }
-    // });
-    // createSprite(world, scene, assets, {
-    //     imageName: "rightDots",
-    //     transform: {
-    //         px: -2,
-    //         py: 0,
-    //         pz: -5,
+        },
+        baseHeight: 15,
+        interaction: {
+            isParallaxed: true,
+            isHoverable: false,
+            parallaxFactor: -0.2,
+            isDraggable: false
+        }
+    });
+    createSprite(world, scene, assets, {
+        imageName: "rightDots",
+        transform: {
+            px: -4,
+            py: 0,
+            pz: -5,
             
-    //     },
-    //     baseHeight: 26,
-    //     interaction: {
-    //         isParallaxed: true,
-    //         isHoverable: false,
-    //         parallaxFactor: -0.2,
-    //         isDraggable: false
-    //     }
-    // });
+        },
+        baseHeight: 26,
+        interaction: {
+            isParallaxed: true,
+            isHoverable: false,
+            parallaxFactor: -0.2,
+            isDraggable: false
+        }
+    });
 
     // createSprite(world, scene, assets, {
     //     imageName: "backgroundFlower",
@@ -69,56 +69,56 @@ export function setupHomeMobile(world, scene, assets) {
     //     }
     // });
 
-    // createSprite(world, scene, assets, {
-    //     imageName: "backgroundX",
-    //     transform: {
-    //         px: -6,
-    //         py: 2,
-    //         pz: 0,
-    //     },
+    createSprite(world, scene, assets, {
+        imageName: "backgroundX",
+        transform: {
+            px: -1,
+            py: 2,
+            pz: 0,
+        },
 
-    //     baseHeight: 18,
-    //     interaction: {
-    //         isParallaxed: true,
-    //         isHoverable: false,
-    //         parallaxFactor: -0.2,
-    //         isDraggable: false
-    //     }
-    // });
+        baseHeight: 12,
+        interaction: {
+            isParallaxed: true,
+            isHoverable: false,
+            parallaxFactor: -0.2,
+            isDraggable: false
+        }
+    });
 
-    // createSprite(world, scene, assets, {
-    //     imageName: "leftRect",
-    //     transform: {
-    //         px: -5.5,
-    //         py: -0,
-    //         pz: 0,
-    //     },
+    createSprite(world, scene, assets, {
+        imageName: "leftRect",
+        transform: {
+            px: -1,
+            py: 1,
+            pz: 0,
+        },
 
-    //     baseHeight: 9,
-    //     interaction: {
-    //         isParallaxed: true,
-    //         isHoverable: false,
-    //         parallaxFactor: 0.4,
-    //         isDraggable: false
-    //     }
-    // });
+        baseHeight: 5,
+        interaction: {
+            isParallaxed: true,
+            isHoverable: false,
+            parallaxFactor: 0.4,
+            isDraggable: false
+        }
+    });
 
-    // createSprite(world, scene, assets, {
-    //     imageName: "middleRect",
-    //     transform: {
-    //         px: 0.2,
-    //         py: 1.3,
-    //         pz: 0,
-    //     },
+    createSprite(world, scene, assets, {
+        imageName: "middleRect",
+        transform: {
+            px: 1.7,
+            py: -1,
+            pz: 0,
+        },
 
-    //     baseHeight: 9,
-    //     interaction: {
-    //         isParallaxed: true,
-    //         isHoverable: false,
-    //         parallaxFactor: 0.4,
-    //         isDraggable: false
-    //     }
-    // });
+        baseHeight: 5,
+        interaction: {
+            isParallaxed: true,
+            isHoverable: false,
+            parallaxFactor: 0.4,
+            isDraggable: false
+        }
+    });
 
     // createSprite(world, scene, assets, {
     //     imageName: "rightRect",
@@ -139,67 +139,67 @@ export function setupHomeMobile(world, scene, assets) {
 
 
 
-    // createSprite(world, scene, assets, {
-    //     imageName: "purpleBlueFlower",
-    //     transform: {
-    //         px: -10,
-    //         py: -2,
-    //         pz: 0,
-    //         rz: 70
-    //     },
-    //     baseHeight: 4,
-    //     interaction: {
-    //         isParallaxed: true,
-    //         isHoverable: false,
-    //         isDraggable: false,
-    //         parallaxFactor: -0.5,
-    //     }
-    // });
+    createSprite(world, scene, assets, {
+        imageName: "purpleBlueFlower",
+        transform: {
+            px: -2,
+            py: -2,
+            pz: 0,
+            rz: 70
+        },
+        baseHeight: 2.5,
+        interaction: {
+            isParallaxed: true,
+            isHoverable: false,
+            isDraggable: false,
+            parallaxFactor: -0.5,
+        }
+    });
 
 
-    // createSprite(world, scene, assets, {
-    //     imageName: "pinkFlower",
-    //     transform: {
-    //         px: -1.5,
-    //         py: 6,
-    //         pz: 0,
-    //     },
-    //     baseHeight: 3,
-    //     interaction: {
-    //         isParallaxed: true,
-    //         isHoverable: false,
-    //         isDraggable: false,
-    //         parallaxFactor: -0.5,
-    //     }
-    // });
+    createSprite(world, scene, assets, {
+        imageName: "pinkFlower",
+        transform: {
+            px: 1,
+            py: 3,
+            pz: 0,
+        },
+        baseHeight: 1,
+        interaction: {
+            isParallaxed: true,
+            isHoverable: false,
+            isDraggable: false,
+            parallaxFactor: -0.5,
+        }
+    });
 
 
-    // createSprite(world, scene, assets, {
-    //     imageName: "purpleBlueFlower",
-    //     transform: {
-    //         px: 9,
-    //         py: 0,
-    //         pz: 0,
-    //         rz: -70
-    //     },
-    //     baseHeight: 4,
-    //     interaction: {
-    //         isParallaxed: true,
-    //         isHoverable: false,
-    //         isDraggable: false,
-    //         parallaxFactor: -0.5,
-    //     }
-    // });
+    createSprite(world, scene, assets, {
+        imageName: "purpleBlueFlower",
+        transform: {
+            px: 2,
+            py: 1,
+            pz: 0,
+            rz: -70
+        },
+        baseHeight: 2,
+        interaction: {
+            isParallaxed: true,
+            isHoverable: false,
+            isDraggable: false,
+            parallaxFactor: -0.5,
+        }
+    });
 
     createSprite(world, scene, assets, {
         isMobile: true,
         imageName: "Raposo",
         transform: {
             px: -1,
-            py: 0.5,
+            py: 1.5,
             pz: 0,
         },
-        baseHeight: 11,
+        baseHeight: 6,
         interaction: {
             isParallaxed: true,
             isHoverable: false,
@@ -264,22 +264,22 @@ export function setupHomeMobile(world, scene, assets) {
 
 
 export function setupProjectsMobile(world, scene, assets) {
-    createPostProcessing(world, {
-        pincushion: { 
-            active: true, 
-            strength: -0.9 
-        }
-    });
+    // createPostProcessing(world, {
+    //     pincushion: { 
+    //         active: true, 
+    //         strength: -0.9 
+    //     }
+    // });
 
 
     createSprite(world, scene, assets, {
         imageName: "witImage",
         transform: {
-            px: -1,
+            px: 0,
             py: 0,
             pz: 0,
         },
-        baseHeight: 11,
+        baseHeight: 6,
         interaction: {
             isParallaxed: true,
             isHoverable: false,

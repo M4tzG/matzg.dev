@@ -16,6 +16,7 @@ export default function SceneButton(props) {
             style={{ pointerEvents: 'none' }}
         >
             <MyStuffButtonIcon 
+                textColor={`${props.textColor}`}
                 onClick={handleClick}
                 className={`w-full h-auto ${props.className || ''}`}
             />

@@ -12,12 +12,12 @@ export default function BackButton(props) {
 
     return (
         <button 
-            className="inline-block border-none bg-transparent p-0 "
+            className="inline-block border-none bg-transparent"
             style={{ pointerEvents: 'none' }}
         >
             <BackButtonIcon 
                 onClick={handleClick}
-                className={`w-full h-auto ${props.className || ''}`}
+                className={`${props.className || ''}`}
             />
         </button>
     )
