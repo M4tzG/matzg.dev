@@ -60,8 +60,8 @@ export class GyroParallaxSystem {
 
             const lerpSpeed = 5 * deltaTime;
             
-            transform.position.x += (targetX - transform.position.x) * lerpSpeed;   
-            transform.position.y += (targetY - transform.position.y) * lerpSpeed;
+            transform.position.x += (parallax.targetX - transform.position.x) * lerpSpeed;   
+            transform.position.y += (parallax.targetY - transform.position.y) * lerpSpeed;
             
         }
     }
