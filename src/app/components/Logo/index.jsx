@@ -34,7 +34,7 @@ export default function Logo() {
       <svg style={{ display: 'none' }}>
         <defs>
           <filter id="distorcao">
-            <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" result="noise" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="1" result="noise" />
             {/* Adicionamos a ref aqui! Começa com scale="12" */}
             <feDisplacementMap 
               ref={displacementRef}

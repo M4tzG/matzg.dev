@@ -5,10 +5,12 @@ import { Mesh2D } from "../components/Mesh2D";
 import { ThreeView } from "../components/ThreeView";
 import { MouseInteraction } from "../components/MouseInteraction";
 import { Input } from "../components/Input";
+import { GyroParallax } from '../components/GyroParallax';
 
 
 export function createSprite(world, scene, assets, configs) {
     const {
+        isMobile = false,
         imageName,
         baseHeight = 1,
         transform = {},
@@ -41,7 +43,12 @@ export function createSprite(world, scene, assets, configs) {
 
     world.addComponent(entity, new Input()); 
     world.addComponent(entity, new Transform(transform)); 
-    world.addComponent(entity, new MouseInteraction(interaction));
+    if (isMobile){
+        world.addComponent(entity, new GyroParallax(interaction));
+    } else {
+        world.addComponent(entity, new MouseInteraction(interaction));
+    }
+    
     world.addComponent(entity, new Mesh2D(finalWidth, finalHeight)); 
     world.addComponent(entity, new ThreeView(sprite)); 
 

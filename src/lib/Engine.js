@@ -3,7 +3,8 @@ import * as THREE from "three"
 import { World } from "./ecs/World";
 import { RenderSystem } from "./systems/RenderSystem";
 import { PostProcessingSystem } from "./systems/PostProcessingSystem";
-import { setupHomeScene, setupProjectsScene } from "./run/buildDesktop";
+import { setupHomeDesktop, setupProjectsDesktop } from "./run/buildDesktop";
+import { setupHomeMobile, setupProjectsMobile } from "./run/buildMobile";
 import { loadAssets } from "./run/loadAssets";
 import { InputSystem } from "./systems/InputSystem";
 import { AnimationSystem } from "./systems/AnimationSystem";
@@ -11,6 +12,7 @@ import { EffectSystem } from "./systems/EffectSystem";
 import { PickingSystem } from "./systems/PickingSystem";
 import { ChainRenderSystem } from "./systems/ChainRenderSystem";
 import { VerletPhysicsSystem } from "./systems/VerletPhysicsSystem";
+import { GyroParallaxSystem } from "./systems/GyroParallaxSystem";
 
 export default class Engine {
     constructor (canvas, isMobile = false, webGL = false) {
@@ -80,7 +82,7 @@ export default class Engine {
 
 // ----------------
 
-        // location.reload();
+        
         this.isRunning = true;
         this.lastTime = performance.now();
         this.mainLoop();
@@ -109,7 +111,19 @@ export default class Engine {
 
 // [=============================================================]
 
+
+    // Execução em uma linha:
+    
+
+
+
 loadScene(sceneName) {
+
+        const sceneSetups = {
+            '/': this.isMobile ? setupHomeMobile : setupHomeDesktop,
+            '/projects': this.isMobile ? setupProjectsMobile : setupProjectsDesktop,
+        };
+
         if (this.currentScene) {
             this.currentScene.clear();
         }
@@ -124,6 +138,7 @@ loadScene(sceneName) {
 
         this.currentWorld.addSystem(new InputSystem());
         this.currentWorld.addSystem(new EffectSystem());
+        this.currentWorld.addSystem(new GyroParallaxSystem())
         this.currentWorld.addSystem(new PickingSystem(this.currentScene, this.camera));
         this.currentWorld.addSystem(new AnimationSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new VerletPhysicsSystem());
@@ -131,22 +146,30 @@ loadScene(sceneName) {
         this.currentWorld.addSystem(new RenderSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new PostProcessingSystem(this.renderer, this.currentScene, this.camera));
 
-        
-        if (sceneName === '/') {
-            setupHomeScene(this.currentWorld, this.currentScene, this.assets);
-        } 
-        else if (sceneName === '/projects') {
-            setupProjectsScene(this.currentWorld, this.currentScene, this.assets);
+        const setupFunction = sceneSetups[sceneName];
+
+        if (setupFunction) {
+            setupFunction(this.currentWorld, this.currentScene, this.assets);
         }
     }
 
 // [=============================================================]
 
     onWindowResize(){
+
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
-
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+
+        let lastIsMobile = window.innerWidth <= 1024
+
+        if(this.isMobile !== lastIsMobile){
+            location.reload();
+        }
+
+        lastIsMobile = this.isMobile;
+        
     }
 
 // [=============================================================]

@@ -1,9 +1,9 @@
 'use client'
 
 import { useRouter } from "next/navigation"
-import { MyStuffButtonIcon } from "../Icons/MyStuffButtonIcon"
+import { BackButtonIcon } from "../Icons/BackButtonIcon"
 
-export default function SceneButton(props) {
+export default function BackButton(props) {
     const router = useRouter()
 
     const handleClick = () => {
@@ -15,7 +15,7 @@ export default function SceneButton(props) {
             className="inline-block border-none bg-transparent p-0 "
             style={{ pointerEvents: 'none' }}
         >
-            <MyStuffButtonIcon 
+            <BackButtonIcon 
                 onClick={handleClick}
                 className={`w-full h-auto ${props.className || ''}`}
             />

@@ -6,6 +6,16 @@
     --box-cursor-size: calc(var(--cursor-size) * var(--box-cursor-scale-factor));
 }
 
+@media (hover: none) and (pointer: coarse), (max-width: 1024px) {
+    .cursor,
+    .cursor-center {
+        display: none !important;
+    }
+
+    .cursor-x-mark {
+        --cursor-x-mark-size: 35px; 
+    }
+}
 
 .cursor {
     position: absolute;
@@ -106,6 +116,7 @@
     background: rgba(255, 246, 246, 0.201);
 
     opacity: 0;
+    z-index: 8;
 
     clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
 }

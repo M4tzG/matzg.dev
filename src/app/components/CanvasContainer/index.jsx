@@ -5,6 +5,13 @@ import Engine from "@/lib/Engine";
 import { useEffect, useRef } from "react";
 import { usePathname } from 'next/navigation'
 
+const checkIsMobile = () => {
+    const isSmallScreen = window.innerWidth <= 1024;
+    // const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    return isSmallScreen;
+};
+
 
 
 export default function CanvasContainer () {
@@ -12,12 +19,15 @@ export default function CanvasContainer () {
     const pathname = usePathname();
     const engineRef = useRef(null);
     const isInitializedRef = useRef(false);
+    const isMobile = useRef(false);
 
 
     useEffect ( () => {
         if (!canvasRef.current ) return;
 
-        engineRef.current = new Engine(canvasRef.current, false, true);
+        isMobile.current = checkIsMobile();
+
+        engineRef.current = new Engine(canvasRef.current, isMobile.current, true);
 
         // console.log(pathname)
         engineRef.current.init().then(() => {

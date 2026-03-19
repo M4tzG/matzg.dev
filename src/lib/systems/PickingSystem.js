@@ -3,8 +3,7 @@ import { Query } from "../ecs/Query";
 import { MouseInteraction } from "../components/MouseInteraction";  
 import { Input } from "../components/Input";
 import { ThreeView } from "../components/ThreeView";
-// import { VerletNode } from "../components/IKNode";
-import { Transform } from "../components/Transform";
+import { VerletNode } from "../components/VerletNode";
 
 import * as THREE from "three";
 
@@ -56,32 +55,45 @@ export class PickingSystem extends System {
         const intersects = this.raycaster.intersectObjects(interactableObjects, false);
 
         if (intersects.length > 0) {
-            const firstObjectHit = intersects[0].object; 
-            const entityHit = objectToEntityMap.get(firstObjectHit); 
+            let entityHit = null; 
+            
+            for (let i = 0; i < intersects.length; i++) {
+                const objectHit = intersects[i].object;
+                const tempEntity = objectToEntityMap.get(objectHit);
+                
+                if (tempEntity !== undefined) {
+                    const interaction = world.getComponent(tempEntity, MouseInteraction);
+                    
+                    if (interaction.isHoverable) {
+                        entityHit = tempEntity;
+                        break; 
+                    }
+                }
+            }
+            // faz a graça
+            if (entityHit !== undefined) {
+                const interaction = world.getComponent(entityHit, MouseInteraction);
+                if (interaction) {
+                    interaction.isHovered = true;
+                }
+                const verlet = world.getComponent(entityHit, VerletNode);
+                const input = world.getComponent(entityHit, Input);
 
-            // pega qm esta na frente e faz a graça
+                if (verlet && !verlet.isPinned && interaction.isHoverable) {
+                    // delta da mmovimentaçao do mouse
+                    const moveX = input.mouse.deltaX || 0;
+                    const moveY = input.mouse.deltaY || 0;
 
-            // if (entityHit !== undefined) {
-            //     const interaction = world.getComponent(entityHit, MouseInteraction);
-            //     interaction.isHovered = true;
-            //     const verlet = world.getComponent(entityHit, VerletNode);
-            //     const input = world.getComponent(entityHit, Input);
+                    // console.log(moveY, moveX)
 
-            //     if (verlet && !verlet.isPinned && interaction.isHoverable) {
-            //         // delta da mmovimentaçao do mouse
-            //         const moveX = input.mouse.deltaX || 0;
-            //         const moveY = input.mouse.deltaY || 0;
-
-            //         // console.log(moveY, moveX)
-
-            //         if (Math.abs(moveX) > 0 || Math.abs(moveY) > 0) {
+                    if (Math.abs(moveX) > 0 || Math.abs(moveY) > 0) {
                         
-            //             const pushMultiplier = 0.003; 
-            //             verlet.currentPosition.x += moveX * pushMultiplier;
-            //             verlet.currentPosition.y -= moveY * pushMultiplier; 
-            //         }
-            //     }
-            // }
+                        const pushMultiplier = 0.001; 
+                        verlet.position.x += moveX * pushMultiplier;
+                        verlet.position.y -= moveY * pushMultiplier; 
+                    }
+                }
+            }
         }
         
         

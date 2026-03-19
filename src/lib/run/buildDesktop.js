@@ -9,7 +9,7 @@ import * as THREE from "three";
 const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
 
 
-export function setupHomeScene(world, scene, assets) {
+export function setupHomeDesktop(world, scene, assets) {
 
     createPostProcessing(world, {
         pincushion: { 
@@ -237,7 +237,7 @@ export function setupHomeScene(world, scene, assets) {
         },
         interaction: {
             isParallaxed: false,
-            isHoverable: false,
+            isHoverable: true,
             isDraggable: false,
             parallaxFactor: -1,
         }
@@ -253,7 +253,7 @@ export function setupHomeScene(world, scene, assets) {
         },
         interaction: {
             isParallaxed: false,
-            isHoverable: false,
+            isHoverable: true,
             isDraggable: false,
             parallaxFactor: -1,
         }
@@ -262,7 +262,7 @@ export function setupHomeScene(world, scene, assets) {
 
 
 
-export function setupProjectsScene(world, scene, assets) {
+export function setupProjectsDesktop(world, scene, assets) {
     createPostProcessing(world, {
         pincushion: { 
             active: true, 
@@ -273,9 +273,11 @@ export function setupProjectsScene(world, scene, assets) {
 
     createSprite(world, scene, assets, {
         imageName: "witImage",
-        x: 0,
-        y: 0,
-        z: 0,
+        transform: {
+            px: -1,
+            py: 0,
+            pz: 0,
+        },
         baseHeight: 11,
         interaction: {
             isParallaxed: true,

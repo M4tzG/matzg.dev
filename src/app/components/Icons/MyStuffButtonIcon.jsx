@@ -1,7 +1,7 @@
 // components/Icons/SceneImage.tsx
 'use client'
 
-export const MyStuffButton = (props) => (
+export const MyStuffButtonIcon = (props) => (
     <svg {...props} width="745" height="272" viewBox="0 0 745 272" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g onClick={props.onClick} style={{ pointerEvents: 'visiblePainted'}}>
             <path d="M742.673 97.4678L597.554 81.8657L518.375 73.3529L544.715 56.3201L427.208 63.5512L82.8574 6.6645L90.4034 131.757C62.16 149.264 4.6551 185.29 0.581947 189.334C-3.49121 193.379 139.835 186.648 212.007 182.778L172.163 212.62L308.67 193.17L582.423 222.602L588.828 155.173L742.673 97.4678Z" fill="#1F012E"/>
