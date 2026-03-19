@@ -1,30 +1,24 @@
 'use client'
 
 import { useRouter } from "next/navigation"
-import Image from "next/image"
+import { MyStuffButton } from "../Icons/MyStuffButton"
 
-export default function SceneButton (props){
-    // to, scene, image
-
+export default function SceneButton(props) {
     const router = useRouter()
-    const handleClick = async () =>{
 
-        // await gsap.to('.minha-tela-de-transicao', { duration: 1, x: 100, ... }) 
-
+    const handleClick = () => {
         router.push(props.to)
-
     }
+
     return (
-        <button onClick={handleClick} className="w-full h-full flex items-center justify-center border-none bg-transparent p-0"> 
-            <Image 
-                src={props.image} 
-                width={200} 
-                height={200} 
-                alt="frame"
-                priority={true}
-                unoptimized={true}
-                style={{width: 'auto', height: 'auto'}}
-            />  
+        <button 
+            className="inline-block border-none bg-transparent p-0 "
+            style={{ pointerEvents: 'none' }}
+        >
+            <MyStuffButton 
+                onClick={handleClick}
+                className={`w-full h-auto ${props.className || ''}`}
+            />
         </button>
     )
 }

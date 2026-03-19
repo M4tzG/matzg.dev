@@ -6,17 +6,22 @@ export async function loadAssets() {
     const loadPromises = [
     // [=============================================================]  
         // home
-        assets.loadTexture("backgroundFlower", "/assets/homeAssets/backgroundFlower.png"),
-        assets.loadTexture("backgroundX", "/assets/homeAssets/backgroundX.png"),
         assets.loadTexture("Raposo", "/assets/homeAssets/fox_default.png"),
+        
+        assets.loadTexture("backgroundX", "/assets/homeAssets/backgroundX.png"),
+        
         assets.loadTexture("leftDots", "/assets/homeAssets/leftDots.png"),
-        assets.loadTexture("leftFlower", "/assets/homeAssets/leftFlower.png"),
-        assets.loadTexture("leftRect", "/assets/homeAssets/leftRect.png"),
-        assets.loadTexture("middleRect", "/assets/homeAssets/middleRect.png"),
-        assets.loadTexture("middleFlower", "/assets/homeAssets/middleFlower.png"),
         assets.loadTexture("rightDots", "/assets/homeAssets/rightDots.png"),
-        assets.loadTexture("rightFlower", "/assets/homeAssets/rightFlower.png"),                   
+
+
+        assets.loadTexture("leftRect", "/assets/homeAssets/leftRect.png"),
+        assets.loadTexture("middleRect", "/assets/homeAssets/middleRect.png"),                          
         assets.loadTexture("rightRect", "/assets/homeAssets/rightRect.png"),    
+
+        assets.loadTexture("backgroundFlower", "/assets/homeAssets/backgroundFlower.png"),
+        assets.loadTexture("pinkFlower", "/assets/homeAssets/pinkFlower.png"),
+        assets.loadTexture("purpleBlueFlower", "/assets/homeAssets/purpleBlueFlower.png"), 
+        
         
         
 

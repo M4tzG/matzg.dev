@@ -2,6 +2,8 @@ import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
 import { VerletNode } from "../components/VerletNode";
 import { Constraint } from "../components/Constraint";
+import { Gravity } from "../components/Gravity";
+
 import * as THREE from "three";
 
 export class VerletPhysicsSystem extends System {
@@ -9,7 +11,7 @@ export class VerletPhysicsSystem extends System {
 // [=============================================================]  
     // algoritmo do Verlet, simula cordas correntes e trecidos
     // formula:
-    //      newPosition = currentPosition + (currentPosition - previousPosition) + acceleration * dt²
+    //      newPosition = position + (position - previousPosition) + acceleration * dt²
     // ou seja:
     // 1. calcula movimento (Verlet)
     // 2. aplica gravidade
@@ -18,28 +20,29 @@ export class VerletPhysicsSystem extends System {
 // [=============================================================]  
 
     update(world, deltaTime) {
-        
-        const gravity = new THREE.Vector3(0, -9.8, 0);
 
         const nodes = Query.entitiesWith(world, VerletNode);
         const constraints = Query.entitiesWith(world, Constraint);
 
-
         for (const e of nodes) {
             const node = world.getComponent(e, VerletNode);
+            const gravity = world.getComponent(e, Gravity);
+
             if (node.isPinned) continue;
 
-            const velocity = new THREE.Vector3().subVectors(node.currentPosition, node.oldPosition);
+            const velocity = new THREE.Vector3().subVectors(node.position, node.oldPosition);
             
             velocity.multiplyScalar(0.99); 
             
-            node.oldPosition.copy(node.currentPosition); 
+            node.oldPosition.copy(node.position); 
             
-            const acceleration = gravity.clone().multiplyScalar(deltaTime * deltaTime);
-            node.currentPosition.add(velocity).add(acceleration);
+            // Aplica gravidade baseada no tempo
+            const acceleration = gravity.force.clone().multiplyScalar(deltaTime * deltaTime);
+            node.position.add(velocity).add(acceleration);
         }
 
-        const iterations = 15; 
+
+        const iterations = 25; 
         for (let i = 0; i < iterations; i++) {
             for (const c of constraints) {
                 const constraint = world.getComponent(c, Constraint);
@@ -48,16 +51,23 @@ export class VerletPhysicsSystem extends System {
 
                 if (!nodeA || !nodeB) continue;
 
-                const delta = new THREE.Vector3().subVectors(nodeB.currentPosition, nodeA.currentPosition);
+                const delta = new THREE.Vector3().subVectors(nodeB.position, nodeA.position);
                 const currentDist = delta.length();
                 
                 if (currentDist === 0) continue; 
                 
-                const diff = (currentDist - constraint.targetDistance) / currentDist;
-                const offset = delta.multiplyScalar(diff * 0.5);
 
-                if (!nodeA.isPinned) nodeA.currentPosition.add(offset);
-                if (!nodeB.isPinned) nodeB.currentPosition.sub(offset);
+                const difference = currentDist - constraint.distance;
+                const correction = difference / currentDist / 2;
+
+                const offset = delta.multiplyScalar(correction);
+  
+                if (!nodeA.isPinned) {
+                    nodeA.position.add(offset);
+                }
+                if (!nodeB.isPinned) {
+                    nodeB.position.sub(offset);
+                }
             }
         }
     }

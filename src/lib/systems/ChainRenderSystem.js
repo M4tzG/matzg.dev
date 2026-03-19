@@ -21,10 +21,10 @@ export class ChainRenderSystem extends System {
 
             if (img) {
 
-                img.position.copy(node.currentPosition);
+                img.position.copy(node.position);
 
                 if (node.nextNode) {
-                    img.lookAt(node.nextNode.currentPosition);
+                    img.lookAt(node.nextNode.position);
                 }
                 
                 if (view.isOdd) {

@@ -3,7 +3,7 @@ import { Query } from "../ecs/Query";
 import { MouseInteraction } from "../components/MouseInteraction";  
 import { Input } from "../components/Input";
 import { ThreeView } from "../components/ThreeView";
-import { VerletNode } from "../components/VerletNode";
+// import { VerletNode } from "../components/IKNode";
 import { Transform } from "../components/Transform";
 
 import * as THREE from "three";
@@ -61,27 +61,27 @@ export class PickingSystem extends System {
 
             // pega qm esta na frente e faz a graça
 
-            if (entityHit !== undefined) {
-                const interaction = world.getComponent(entityHit, MouseInteraction);
-                interaction.isHovered = true;
-                const verlet = world.getComponent(entityHit, VerletNode);
-                const input = world.getComponent(entityHit, Input);
+            // if (entityHit !== undefined) {
+            //     const interaction = world.getComponent(entityHit, MouseInteraction);
+            //     interaction.isHovered = true;
+            //     const verlet = world.getComponent(entityHit, VerletNode);
+            //     const input = world.getComponent(entityHit, Input);
 
-                if (verlet && !verlet.isPinned && interaction.isHoverable) {
-                    // delta da mmovimentaçao do mouse
-                    const moveX = input.mouse.deltaX || 0;
-                    const moveY = input.mouse.deltaY || 0;
+            //     if (verlet && !verlet.isPinned && interaction.isHoverable) {
+            //         // delta da mmovimentaçao do mouse
+            //         const moveX = input.mouse.deltaX || 0;
+            //         const moveY = input.mouse.deltaY || 0;
 
-                    // console.log(moveY, moveX)
+            //         // console.log(moveY, moveX)
 
-                    if (Math.abs(moveX) > 0 || Math.abs(moveY) > 0) {
+            //         if (Math.abs(moveX) > 0 || Math.abs(moveY) > 0) {
                         
-                        const pushMultiplier = 0.003; 
-                        verlet.currentPosition.x += moveX * pushMultiplier;
-                        verlet.currentPosition.y -= moveY * pushMultiplier; 
-                    }
-                }
-            }
+            //             const pushMultiplier = 0.003; 
+            //             verlet.currentPosition.x += moveX * pushMultiplier;
+            //             verlet.currentPosition.y -= moveY * pushMultiplier; 
+            //         }
+            //     }
+            // }
         }
         
         

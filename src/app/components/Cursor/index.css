@@ -20,7 +20,7 @@
 
     border-radius: 50%;
     pointer-events: none;
-    z-index: 2;
+    z-index: 12;
 
 }
 
@@ -34,7 +34,7 @@
 
     border-radius: 50%;
     pointer-events: none;
-    z-index: 3;
+    z-index: 13;
 }
 
 /* .cursor::after {
@@ -56,7 +56,7 @@
 
 .cursor::before {
     content: '';
-    z-index: -1;
+    z-index: 9;
 
     position: absolute;
 

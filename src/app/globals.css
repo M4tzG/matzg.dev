@@ -10,6 +10,17 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --text-medium: 2.5rem;
+  --text-medium--line-height: 1.5rem; 
+  --text-medium--letter-spacing: 0.125rem; 
+  --text-medium--font-weight: 500; 
+
+  --text-tiny: 1.5rem;
+  --text-tiny--line-height: 1.5rem; 
+  --text-tiny--letter-spacing: 0.125rem; 
+  --text-tiny--font-weight: 500; 
+
 }
 
 @media (prefers-color-scheme: dark) {

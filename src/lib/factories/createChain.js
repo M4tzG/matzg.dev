@@ -4,6 +4,8 @@ import { MouseInteraction } from "../components/MouseInteraction";
 import { ThreeView } from "../components/ThreeView";
 import { VerletNode } from "../components/VerletNode";
 import { Constraint } from "../components/Constraint";
+import { Gravity } from "../components/Gravity";
+
 
 export function createChain(world, scene, assets, configs) {
     // [=============================================================]
@@ -73,7 +75,8 @@ export function createChain(world, scene, assets, configs) {
     let previousEntity = null;
     let previousNode = null;
     
-    const linkDistance = chainConfig.startPos.distanceTo(chainConfig.endPos) / chainConfig.numLinks; 
+    const totalDistance = chainConfig.startPos.distanceTo(chainConfig.endPos);
+    const linkDistance = totalDistance / chainConfig.numLinks;
 
     // =========================================
     // adiciona separado cada elo da corrente
@@ -110,11 +113,14 @@ export function createChain(world, scene, assets, configs) {
 //      ==-=-=-=-=-== ECS ==-=-=-=-=-==
         const entity = world.createEntity();
 
-
-        const spawnPos = new THREE.Vector3().lerpVectors(chainConfig.startPos, chainConfig.endPos, i / chainConfig.numLinks);
+        const spawnPercent = i / chainConfig.numLinks;
+        const spawnPos = new THREE.Vector3().lerpVectors(chainConfig.startPos, chainConfig.endPos, spawnPercent);
         const isPinned = (i === 0 || i === chainConfig.numLinks - 1);
-        const node = new VerletNode(spawnPos, isPinned);
+
+        const node = new VerletNode(spawnPos.x, spawnPos.y, spawnPos.z, isPinned);
         world.addComponent(entity, node);
+
+        world.addComponent(entity, new Gravity(chainConfig.gravity));
 
 
         const view = new ThreeView(linkVisual);
