@@ -3,27 +3,23 @@
 import Engine from "@/lib/Engine";
 import { useEffect, useRef, useState } from "react"; // <-- Adicionado useState
 import { usePathname } from 'next/navigation'
+import { useIsMobile } from "@/hooks/useIsMobile";
 
-const checkIsMobile = () => {
-    const isSmallScreen = window.innerWidth <= 1024;
-    return isSmallScreen;
-};
 
 export default function CanvasContainer () {
     const canvasRef = useRef(null);
     const pathname = usePathname();
     const engineRef = useRef(null);
     const isInitializedRef = useRef(false);
-    const isMobile = useRef(false);
+    const isMobile = useIsMobile();
     
-    // 1. Criar o estado de carregamento (começa como true)
+    
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect ( () => {
         if (!canvasRef.current ) return;
 
-        isMobile.current = checkIsMobile();
-        engineRef.current = new Engine(canvasRef.current, isMobile.current, true);
+        engineRef.current = new Engine(canvasRef.current, isMobile, true);
 
         engineRef.current.init().then(() => {
             isInitializedRef.current = true;
@@ -36,7 +32,7 @@ export default function CanvasContainer () {
             setIsLoading(false);
         });
         
-    }, [])
+    }, [isMobile]);
 
     useEffect ( () => {
         if (!engineRef.current || !isInitializedRef.current) return;

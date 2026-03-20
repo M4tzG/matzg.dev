@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "meu site",
+  title: "m4tzg.dev",
   description: "meu site",
 };
 
