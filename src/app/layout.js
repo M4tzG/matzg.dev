@@ -1,8 +1,14 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Lacquer } from "next/font/google";
 import Cursor from "./components/Cursor";
 import "./globals.css";
 
 import CanvasContainer from "./components/CanvasContainer";
+
+const lacquer = Lacquer({
+  subsets: ['latin'],
+  variable: "--font-lacquer",
+  weight: '400',
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang={process.env.LOCALE || 'pt-BR'}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex justify-center antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${lacquer.variable} flex justify-center antialiased`}
       >
         <Cursor />
         <CanvasContainer />

@@ -21,7 +21,12 @@ export default function Home() {
 
 
       <div className="flex w-full justify-center pb-20 xl:w-1/2 xl:justify-end">
-        {isMobile ? <SceneButton to="/projects" image="/assets/homeAssets/myStuff.svg" className="md:pr-4" textColor="Black"/> : <SceneButton to="/projects" image="/assets/homeAssets/myStuff.svg" className="md:pr-4" textColor="White"/>}
+        <SceneButton 
+        to="/projects" 
+        image="/assets/homeAssets/myStuff.svg" 
+        className="md:pr-4" 
+        textColor={isMobile ? "Black" : "White"}
+        />
         
       </div>
       

@@ -59,6 +59,8 @@ export default function Cursor() {
         document.addEventListener('mousemove', handleMouseMove)
         document.addEventListener('click', handleClick)
 
+        let animationFrameId;
+
         const update = () => {
 
             const cursorDX =
@@ -102,14 +104,16 @@ export default function Cursor() {
                 sightDY * sightEasingFactor.current +
                 'px'
 
-            requestAnimationFrame(update)
+            animationFrameId = requestAnimationFrame(update);
+
         }
 
         update()
 
         return () => {
-            document.removeEventListener('mousemove', handleMouseMove)
-            document.removeEventListener('click', handleClick)
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('click', handleClick);
+            cancelAnimationFrame(animationFrameId);
         }
 
     }, [])

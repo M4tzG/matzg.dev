@@ -1,13 +1,10 @@
 "use client"; // Necessário no Next.js para usar hooks e GSAP
 
 import { useRef } from 'react';
-import { Lacquer } from 'next/font/google';
-import gsap from 'gsap';
 
-const lacquer = Lacquer({
-  subsets: ['latin'],
-  weight: '400',
-});
+import gsap from 'gsap';
+import "./index.module.css";
+
 
 export default function Logo() {
 
@@ -51,7 +48,7 @@ export default function Logo() {
 
 
       <div 
-        className={`flex items-center gap-2 ${lacquer.className} cursor-pointer [filter:url(#distorcao)]`}
+        className={`flex items-center gap-2 cursor-pointer [filter:url(#distorcao)]`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       > 
