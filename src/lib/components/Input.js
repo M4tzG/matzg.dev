@@ -11,6 +11,10 @@ export class Input extends Component {
             deltaY: 0,
             initialX: undefined,
             initialY: undefined
+        };
+        this.gyro = {
+            gama: 0,
+            beta: 0
         }
     }
 }

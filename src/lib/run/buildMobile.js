@@ -29,6 +29,7 @@ export function setupHomeMobile(world, scene, assets) {
         },
         baseHeight: 15,
         interaction: {
+            isMobile: true,
             isParallaxed: true,
             isHoverable: false,
             parallaxFactor: -0.2,
@@ -45,6 +46,7 @@ export function setupHomeMobile(world, scene, assets) {
         },
         baseHeight: 26,
         interaction: {
+            isMobile: true,
             isParallaxed: true,
             isHoverable: false,
             parallaxFactor: -0.2,
@@ -79,6 +81,7 @@ export function setupHomeMobile(world, scene, assets) {
 
         baseHeight: 12,
         interaction: {
+            isMobile: true,
             isParallaxed: true,
             isHoverable: false,
             parallaxFactor: -0.2,
@@ -96,6 +99,7 @@ export function setupHomeMobile(world, scene, assets) {
 
         baseHeight: 5,
         interaction: {
+            isMobile: true,
             isParallaxed: true,
             isHoverable: false,
             parallaxFactor: 0.4,
@@ -113,6 +117,7 @@ export function setupHomeMobile(world, scene, assets) {
 
         baseHeight: 5,
         interaction: {
+            isMobile: true,
             isParallaxed: true,
             isHoverable: false,
             parallaxFactor: 0.4,
@@ -149,6 +154,7 @@ export function setupHomeMobile(world, scene, assets) {
         },
         baseHeight: 2.5,
         interaction: {
+            isMobile: true,
             isParallaxed: true,
             isHoverable: false,
             isDraggable: false,
@@ -166,6 +172,7 @@ export function setupHomeMobile(world, scene, assets) {
         },
         baseHeight: 1,
         interaction: {
+            isMobile: true,
             isParallaxed: true,
             isHoverable: false,
             isDraggable: false,
@@ -184,6 +191,7 @@ export function setupHomeMobile(world, scene, assets) {
         },
         baseHeight: 2,
         interaction: {
+            isMobile: true,
             isParallaxed: true,
             isHoverable: false,
             isDraggable: false,
@@ -195,12 +203,13 @@ export function setupHomeMobile(world, scene, assets) {
         isMobile: true,
         imageName: "Raposo",
         transform: {
-            px: -1,
+            px: 0,
             py: 1.5,
             pz: 0,
         },
         baseHeight: 6,
         interaction: {
+            isMobile: true,
             isParallaxed: true,
             isHoverable: false,
             isDraggable: false,
@@ -228,33 +237,33 @@ export function setupHomeMobile(world, scene, assets) {
     //     }
     // });
 
-    // createChain(world, scene, assets, {
-    //     chainConfig: {
-    //         startPos: v3(3, 15, -5),
-    //         endPos: v3(25, -12, 0),
-    //         numLinks : 21,
-    //         scale: 3.3,
-    //         gravity: 1
-    //     },
-    //     interaction: {
-    //         isParallaxed: false,
-    //         isHoverable: true,
-    //         isDraggable: false,
-    //         parallaxFactor: -1,
-    //     }
-    // });
+    createChain(world, scene, assets, {
+        chainConfig: {
+            startPos: v3(0, 15, -5),
+            endPos: v3(10, -12, 0),
+            numLinks : 30,
+            scale: 2,
+            gravity: 0.3
+        },
+        interaction: {
+            isParallaxed: false,
+            isHoverable: false,
+            isDraggable: false,
+            parallaxFactor: -1,
+        }
+    });
 
     // createChain(world, scene, assets, {
     //     chainConfig: {  
-    //         startPos: v3(8, 15, -5),
-    //         endPos: v3(28, -9, 0),
-    //         numLinks : 13,
-    //         scale: 5,
+    //         startPos: v3(1, 15, -5),
+    //         endPos: v3(10, -9, 0),
+    //         numLinks : 25,
+    //         scale: 2,
     //         gravity: 1
     //     },
     //     interaction: {
     //         isParallaxed: false,
-    //         isHoverable: true,
+    //         isHoverable: false,
     //         isDraggable: false,
     //         parallaxFactor: -1,
     //     }
@@ -281,6 +290,7 @@ export function setupProjectsMobile(world, scene, assets) {
         },
         baseHeight: 6,
         interaction: {
+            isMobile: true,
             isParallaxed: true,
             isHoverable: false,
             isDraggable: false,

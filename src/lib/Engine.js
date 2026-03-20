@@ -12,7 +12,7 @@ import { EffectSystem } from "./systems/EffectSystem";
 import { PickingSystem } from "./systems/PickingSystem";
 import { ChainRenderSystem } from "./systems/ChainRenderSystem";
 import { VerletPhysicsSystem } from "./systems/VerletPhysicsSystem";
-import { GyroParallaxSystem } from "./systems/GyroParallaxSystem";
+
 
 export default class Engine {
     constructor (canvas, isMobile = false, webGL = false) {
@@ -138,12 +138,6 @@ loadScene(sceneName) {
 
         this.currentWorld.addSystem(new InputSystem());
         this.currentWorld.addSystem(new EffectSystem());
-        
-
-        if (this.isMobile) {
-            this.currentWorld.addSystem(new GyroParallaxSystem());
-        }
-        
         this.currentWorld.addSystem(new PickingSystem(this.currentScene, this.camera));
         this.currentWorld.addSystem(new AnimationSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new VerletPhysicsSystem());

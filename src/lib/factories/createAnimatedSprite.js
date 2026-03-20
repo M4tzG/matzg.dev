@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { Transform } from "../components/Transform";
 import { Mesh2D } from "../components/Mesh2D";
 import { ThreeView } from "../components/ThreeView";
-import { MouseInteraction } from "../components/MouseInteraction";
+import { Interaction } from "../components/Interaction";
 import { Input } from "../components/Input";
 import { SpriteAnimation } from "../components/SpriteAnimation";
 
@@ -46,7 +46,7 @@ export function createAnimatedSprite(world, scene, assets, configs) {
 
     world.addComponent(entity, new Input()); 
     world.addComponent(entity, new Transform(x, y, z)); 
-    world.addComponent(entity, new MouseInteraction(interaction));
+    world.addComponent(entity, new Interaction(interaction));
     world.addComponent(entity, new Mesh2D(finalWidth, finalHeight)); 
     world.addComponent(entity, new ThreeView(sprite)); 
     world.addComponent(entity, new SpriteAnimation(animation)); 

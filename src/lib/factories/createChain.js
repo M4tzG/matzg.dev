@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { Input } from "../components/Input";
-import { MouseInteraction } from "../components/MouseInteraction";
+import { Interaction } from "../components/Interaction";
 import { ThreeView } from "../components/ThreeView";
 import { VerletNode } from "../components/VerletNode";
 import { Constraint } from "../components/Constraint";
@@ -129,7 +129,7 @@ export function createChain(world, scene, assets, configs) {
 
         
         world.addComponent(entity, new Input());
-        world.addComponent(entity, new MouseInteraction(interaction));
+        world.addComponent(entity, new Interaction(interaction));
 
         if (previousEntity !== null) {
             const constraintEntity = world.createEntity();

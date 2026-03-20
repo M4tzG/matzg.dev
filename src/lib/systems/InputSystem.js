@@ -47,7 +47,6 @@ export class InputSystem extends System {
             input.mouse.y = this.mouse.y;
             input.mouse.deltaX = this.mouse.dx;
             input.mouse.deltaY = this.mouse.dy;
-            // use the value stored on the local mouse state
             input.mouse.isDown = this.mouse.isDown;
 
             // console.log(input.mouse.deltaX, input.mouse.deltaY)

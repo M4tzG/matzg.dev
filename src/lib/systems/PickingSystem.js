@@ -1,6 +1,6 @@
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
-import { MouseInteraction } from "../components/MouseInteraction";  
+import { Interaction } from "../components/Interaction";  
 import { Input } from "../components/Input";
 import { ThreeView } from "../components/ThreeView";
 import { VerletNode } from "../components/VerletNode";
@@ -24,7 +24,7 @@ export class PickingSystem extends System {
 
     update(world, deltaTime) {
 
-        const entities = Query.entitiesWith(world, MouseInteraction, Input, ThreeView);
+        const entities = Query.entitiesWith(world, Interaction, Input, ThreeView);
 
         const interactableObjects = [];
         const objectToEntityMap = new Map();
@@ -32,7 +32,7 @@ export class PickingSystem extends System {
 
         for (const e of entities) {
             const threeView = world.getComponent(e, ThreeView);
-            const interaction = world.getComponent(e, MouseInteraction);
+            const interaction = world.getComponent(e, Interaction);
             const input = world.getComponent(e, Input);
             
             if (!mouseInput) mouseInput = input;
@@ -62,7 +62,7 @@ export class PickingSystem extends System {
                 const tempEntity = objectToEntityMap.get(objectHit);
                 
                 if (tempEntity !== undefined) {
-                    const interaction = world.getComponent(tempEntity, MouseInteraction);
+                    const interaction = world.getComponent(tempEntity, Interaction);
                     
                     if (interaction.isHoverable) {
                         entityHit = tempEntity;
@@ -72,7 +72,7 @@ export class PickingSystem extends System {
             }
             // faz a graça
             if (entityHit !== undefined) {
-                const interaction = world.getComponent(entityHit, MouseInteraction);
+                const interaction = world.getComponent(entityHit, Interaction);
                 if (interaction) {
                     interaction.isHovered = true;
                 }
