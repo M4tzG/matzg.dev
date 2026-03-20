@@ -61,7 +61,7 @@ export default function Logo() {
 
           <div className="w-3/5 flex flex-col justify-center ml-5">
             <div className="text-medium font-bold leading-tight">LKD_GG</div>
-            <a className="text-tiny opacity-80 leading-tight">@matzg</a>
+            <a href="https://github.com/M4tzG" target="_blank" rel="noopener noreferrer" className="text-tiny opacity-80 leading-tight">@matzg</a>
           </div>
       </div>
     </>

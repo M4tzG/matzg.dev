@@ -31,6 +31,7 @@ export default class Engine {
 
         this.lastTime = 0;
         this.isRunning = false;
+        this.animationFrameId = null;
     }
 
 // [=============================================================]
@@ -72,11 +73,20 @@ export default class Engine {
 
         document.addEventListener("visibilitychange", () => {
             if (document.hidden) {
-                this.isRunning = false; 
+                this.isRunning = false;
+                // Cancela o loop pendente para não acumular quando voltar
+                if (this.animationFrameId) {
+                    cancelAnimationFrame(this.animationFrameId);
+                    this.animationFrameId = null;
+                }
             } else {
                 this.lastTime = performance.now(); 
-                this.isRunning = true;
-                this.mainLoop();
+                
+                // Garante que só vamos iniciar se realmente estiver parado
+                if (!this.isRunning) {
+                    this.isRunning = true;
+                    this.mainLoop();
+                }
             }
         });
 
@@ -106,7 +116,7 @@ export default class Engine {
             this.currentWorld.update(deltaTime);
         }
         // console.log("askjkjad")
-        requestAnimationFrame(this.mainLoop);
+        this.animationFrameId = requestAnimationFrame(this.mainLoop);
     }
 
 // [=============================================================]
