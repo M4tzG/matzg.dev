@@ -1,4 +1,5 @@
 "use client"
+import styles from './index.module.css';
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from 'next/navigation'
@@ -57,15 +58,11 @@ export default function CanvasContainer () {
     
     return (
         <>
-            <div 
-                className={`fixed inset-0 z-50 flex items-center justify-center bg-[#111] transition-opacity duration-500 ${
-                    isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-            >
-                <div className="w-12 h-12 rounded-full border-4 border-white/20 border-t-white animate-spin"></div>
+            <div className={`${styles.loadingOverlay} ${isLoading ? styles.visible : styles.hidden}`}>
+                <div className={styles.spinner}></div>
             </div>
             
-            <canvas ref={canvasRef} className="fixed inset-0 z-0 object-cover"></canvas>
+            <canvas ref={canvasRef} className="fixed top-0 left-1/2 z-0 w-full h-screen max-w-[2000px] max-h-[1080px] -translate-x-1/2 block"></canvas>
         </>
     )
 }

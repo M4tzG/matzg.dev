@@ -1,22 +1,17 @@
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+// import { MyStuffButton } from "../Icons/MyStuffButton";
 
 export default function NavigationButton({
     to,
-    icon: icon,
-    label,
+    Icon,
     className
  }) {
-    const router = useRouter();
-
-    const handleClick = (e) => {
-        e.preventDefault();
-        router.push(to);
-    }
 
     return (
-        <button>
-            
-        </button>
+        <Link href={to} className={`block ${className} pointer-events-none`}>
+            <Icon />
+        </Link>
     )
 
 }
