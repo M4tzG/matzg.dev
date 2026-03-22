@@ -1,7 +1,7 @@
 import { createSprite } from "../factories/createSprite";
 import { createPostProcessing } from "../factories/createPostProcessing";
 import { createAnimatedSprite } from "../factories/createAnimatedSprite";
-import { createChain } from "../factories/createChain";
+import { ChainBuilder } from "../factories/ChainBuilder";
 
 import * as THREE from "three";
 
@@ -237,21 +237,21 @@ export function setupHomeMobile(world, scene, assets) {
     //     }
     // });
 
-    createChain(world, scene, assets, {
-        chainConfig: {
-            startPos: v3(0, 15, -5),
-            endPos: v3(10, -12, 0),
-            numLinks : 30,
-            scale: 2,
-            gravity: 0.3
-        },
-        interaction: {
-            isParallaxed: false,
-            isHoverable: false,
-            isDraggable: false,
-            parallaxFactor: -1,
-        }
-    });
+    // createChain(world, scene, assets, {
+    //     chainConfig: {
+    //         startPos: v3(0, 15, -5),
+    //         endPos: v3(10, -12, 0),
+    //         numLinks : 30,
+    //         scale: 2,
+    //         gravity: 0.3
+    //     },
+    //     interaction: {
+    //         isParallaxed: false,
+    //         isHoverable: false,
+    //         isDraggable: false,
+    //         parallaxFactor: -1,
+    //     }
+    // });
 
     // createChain(world, scene, assets, {
     //     chainConfig: {  

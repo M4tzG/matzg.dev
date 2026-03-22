@@ -1,7 +1,9 @@
 import { createSprite } from "../factories/createSprite";
 import { createPostProcessing } from "../factories/createPostProcessing";
 import { createAnimatedSprite } from "../factories/createAnimatedSprite";
-import { createChain } from "../factories/createChain";
+// import { createChain } from "../factories/createChain";
+
+import { ChainBuilder } from "../factories/ChainBuilder";
 
 import * as THREE from "three";
 
@@ -208,10 +210,9 @@ export function setupHomeDesktop(world, scene, assets) {
     });
 
 
-
-
-
-    createChain(world, scene, assets, {
+    const createChain = new ChainBuilder(world, scene, assets);
+    
+    createChain.build( {
         chainConfig: {
             startPos: v3(0, 0, -10),
             endPos: v3(-32, -13, 0),
@@ -220,14 +221,11 @@ export function setupHomeDesktop(world, scene, assets) {
             gravity: 0.5
         },
         interaction: {
-            isParallaxed: false,
             isHoverable: false,
-            isDraggable: false,
-            parallaxFactor: -1,
         }
     });
 
-    createChain(world, scene, assets, {
+    createChain.build({
         chainConfig: {
             startPos: v3(3, 15, -5),
             endPos: v3(25, -12, 0),
@@ -236,14 +234,11 @@ export function setupHomeDesktop(world, scene, assets) {
             gravity: 1
         },
         interaction: {
-            isParallaxed: false,
             isHoverable: true,
-            isDraggable: false,
-            parallaxFactor: -1,
         }
     });
 
-    createChain(world, scene, assets, {
+    createChain.build({
         chainConfig: {  
             startPos: v3(8, 15, -5),
             endPos: v3(28, -9, 0),
@@ -252,12 +247,10 @@ export function setupHomeDesktop(world, scene, assets) {
             gravity: 1
         },
         interaction: {
-            isParallaxed: false,
             isHoverable: true,
-            isDraggable: false,
-            parallaxFactor: -1,
         }
     });
+
 }
 
 

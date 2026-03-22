@@ -23,7 +23,7 @@ export default function Logo() {
   const handleMouseLeave = () => {
     gsap.to(displacementRef.current, {
       attr: { scale: 12 },
-      duration: 0.8,
+      duration: 0.6,
       ease: "elastic.out(1, 0.5)",
     });
   };

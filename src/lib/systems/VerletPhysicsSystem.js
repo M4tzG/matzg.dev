@@ -19,6 +19,10 @@ export class VerletPhysicsSystem extends System {
     // 4. corrige distância entre nós
 // [=============================================================]  
 
+    constructor(iterations = 5) {
+        super();
+        this.iterations = iterations;
+    }
     update(world, deltaTime) {
 
         const nodes = Query.entitiesWith(world, VerletNode);
@@ -41,9 +45,7 @@ export class VerletPhysicsSystem extends System {
             node.position.add(velocity).add(acceleration);
         }
 
-
-        const iterations = 25; 
-        for (let i = 0; i < iterations; i++) {
+        for (let i = 0; i < this.iterations; i++) {
             for (const c of constraints) {
                 const constraint = world.getComponent(c, Constraint);
                 const nodeA = world.getComponent(constraint.entityA, VerletNode);

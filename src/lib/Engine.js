@@ -32,6 +32,9 @@ export default class Engine {
         this.lastTime = 0;
         this.isRunning = false;
         this.animationFrameId = null;
+
+
+        this.resizeHandler = () => this.onWindowResize();
     }
 
 // [=============================================================]
@@ -47,7 +50,9 @@ export default class Engine {
 
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
-            antialias: true
+            antialias: !this.isMobile,
+            powerPreference: 'high-performance'
+
         });
 
 // ----------------
@@ -66,9 +71,7 @@ export default class Engine {
 
 // ----------------       
 
-        window.addEventListener("resize", () => {
-            this.onWindowResize();
-        })
+        window.addEventListener("resize", this.resizeHandler);
         
 
         document.addEventListener("visibilitychange", () => {
@@ -139,6 +142,7 @@ loadScene(sceneName) {
         }
         if (this.currentWorld) {
             // inputSystem -> windowListener acumula
+            this.currentWorld.dispose();
             this.currentWorld = null; 
         }
 
@@ -198,5 +202,28 @@ loadScene(sceneName) {
         `;
         
         document.body.appendChild(warningDiv);
+    }
+
+    dispose() {
+
+        if (this.currentWorld) {
+            this.currentWorld.dispose();
+        }
+
+        if (this.currentScene) {
+            this.currentScene.clear();
+        }
+
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
+
+        if (this.renderer) {
+            this.renderer.dispose();
+        }
+
+        this.isRunning = false;
+        window.removeEventListener("resize", this.resizeHandler);
     }
 }
