@@ -21,19 +21,30 @@ export class InputSystem extends System {
             dy: 0
         };
 
+        this.handlers = {};
+
         this.initListeners();
     }
     initListeners() {
-        window.addEventListener('mousemove', (e) => {
-
+        this.handlers.mousemove = (e) => {
             this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
             this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-            this.mouse.dx = e.movementX; 
+            this.mouse.dx = e.movementX;
             this.mouse.dy = e.movementY;
-        });
+        };
 
-        window.addEventListener('mousedown', () => this.mouse.isDown = true);
-        window.addEventListener('mouseup', () => this.mouse.isDown = false);
+        this.handlers.mousedown = () => this.mouse.isDown = true;
+        this.handlers.mouseup = () => this.mouse.isDown = false;
+
+        window.addEventListener('mousemove', this.handlers.mousemove);
+        window.addEventListener('mousedown', this.handlers.mousedown);
+        window.addEventListener('mouseup', this.handlers.mouseup);
+    }
+
+    dispose() {
+        window.removeEventListener('mousemove', this.handlers.mousemove);
+        window.removeEventListener('mousedown', this.handlers.mousedown);
+        window.removeEventListener('mouseup', this.handlers.mouseup);
     }
 
 

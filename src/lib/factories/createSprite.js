@@ -14,9 +14,14 @@ export function createSprite(world, scene, assets, configs) {
         transform = {},
         interaction = {}
     } = configs;
-
     
     const texture = assets.getTexture(imageName);
+
+    if (!texture) {
+        console.error(`createSprite: "${imageName}" not found`);
+        return null;
+    }
+
     texture.premultiplyAlpha = true;
 
 

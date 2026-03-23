@@ -17,7 +17,7 @@ export class PickingSystem extends System {
         super();
         this.scene = scene;
         this.camera = camera;
-        this.raycaster = new THREE.Raycaster(); // verifica hover (ajustar dps, ta fraco)
+        this.raycaster = new THREE.Raycaster(); // verifica hover (ajustar dps)
         this.mouseVector = new THREE.Vector2();
         
     }

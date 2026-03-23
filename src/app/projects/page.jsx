@@ -1,12 +1,13 @@
-import BackButton from "../components/BackButton"
+import NavigationButton from "../components/NavigationButton";
+import { BackButtonIcon } from "../components/Icons/BackButtonIcon";
 
 export default function Projects() {
   return (
-      <div className="absolute top-0 left-0 z-10 p-4 xl:p-10">
-          <BackButton 
+      <div className="absolute top-0 left-0 z-10 p-10 md:p-20 xl:p-10">
+          <NavigationButton 
             to="/" 
-            image="/assets/projectsAssets/backButton.svg" 
-            className="w-50 h-50 p-5 xl:w-100 xl:h-100  md:p-1" 
+            Icon={BackButtonIcon}
+            className="w-2/4 md:w-9/10" 
           />
       </div>
   );

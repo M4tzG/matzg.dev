@@ -1,59 +1,68 @@
 "use client"
+import styles from './index.module.css';
 
-import Engine from "@/lib/Engine";
-import { useEffect, useRef, useState } from "react"; // <-- Adicionado useState
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from 'next/navigation'
+import { useIsMobile } from "@/hooks/useIsMobile";
+import Engine from "@/lib/Engine";
 
-const checkIsMobile = () => {
-    const isSmallScreen = window.innerWidth <= 1024;
-    return isSmallScreen;
-};
 
 export default function CanvasContainer () {
     const canvasRef = useRef(null);
     const pathname = usePathname();
     const engineRef = useRef(null);
     const isInitializedRef = useRef(false);
-    const isMobile = useRef(false);
+    const isMobile = useIsMobile();
     
-    // 1. Criar o estado de carregamento (começa como true)
+    
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect ( () => {
+    useEffect (() => {
         if (!canvasRef.current ) return;
 
-        isMobile.current = checkIsMobile();
-        engineRef.current = new Engine(canvasRef.current, isMobile.current, true);
+        let isCleanedUp = false;
 
-        engineRef.current.init().then(() => {
-            isInitializedRef.current = true;
-            engineRef.current.loadScene(pathname);
-            
-            setIsLoading(false);
-            
-        }).catch((error) => {
-            console.error("erro inicializacao:", error);
-            setIsLoading(false);
-        });
-        
-    }, [])
+        const initEngine = async () => {
+            try {
+                engineRef.current = new Engine(canvasRef.current, isMobile, true);
+
+                await engineRef.current.init();
+
+                if(!isCleanedUp) {
+                    isInitializedRef.current = true;
+                    engineRef.current.loadScene(pathname);
+                    setIsLoading(false);
+                }
+            } catch (error){
+                console.error("erro inicializacao:", error);
+                if (!isCleanedUp) setIsLoading(false);
+            }
+        };
+
+        initEngine();
+
+        return () => {
+            isCleanedUp = true;
+            if (engineRef.current?.dispose){
+                engineRef.current.dispose();
+            }
+        }
+    }, [isMobile]);
+
 
     useEffect ( () => {
         if (!engineRef.current || !isInitializedRef.current) return;
         engineRef.current.loadScene(pathname);
     }, [pathname])
 
+    
     return (
         <>
-            <div 
-                className={`fixed inset-0 z-50 flex items-center justify-center bg-[#111] transition-opacity duration-500 ${
-                    isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-            >
-                <div className="w-12 h-12 rounded-full border-4 border-white/20 border-t-white animate-spin"></div>
+            <div className={`${styles.loadingOverlay} ${isLoading ? styles.visible : styles.hidden}`}>
+                <div className={styles.spinner}></div>
             </div>
             
-            <canvas ref={canvasRef} className="fixed inset-0 z-0 object-cover"></canvas>
+            <canvas ref={canvasRef} className="absolute inset-0 z-0 w-full h-full block"></canvas>
         </>
     )
 }

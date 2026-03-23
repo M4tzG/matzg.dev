@@ -23,8 +23,6 @@ export async function loadAssets() {
         assets.loadTexture("purpleBlueFlower", "/assets/homeAssets/purpleBlueFlower.png"), 
         
         
-        
-
 
         // chain - home
         assets.loadTexture("chainLinkEvenFull", "/assets/homeAssets/chain/chainLinkEvenFull.png"),

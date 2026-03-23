@@ -1,9 +1,9 @@
 import { Component } from "../ecs/Component";
 
 export class Mesh2D extends Component {
-    constructor(widht, height){
+    constructor(width, height){
         super();
-        this.width =  widht;
+        this.width = width;
         this.height = height;
     }
 }

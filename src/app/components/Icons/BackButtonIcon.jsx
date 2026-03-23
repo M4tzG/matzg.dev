@@ -1,9 +1,8 @@
 'use client'
 
-export const BackButtonIcon = (props) => (
-
-    <svg {...props} width="421" height="226" viewBox="0 0 421 226" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g onClick={props.onClick} style={{ pointerEvents: 'visiblePainted'}}>
+export const BackButtonIcon = () => (
+    <svg className="w-full h-auto" viewBox="0 0 421 226" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g style={{ pointerEvents: 'visiblePainted'}}>
             <path d="M421 20.7001L220.403 39.1317L1.60933e-05 0L53.3233 226L220.403 188.57L397.639 168.153V85.9197L421 20.7001Z" fill="white"/>
             <path d="M401 36.2196L220.891 51.5521L23 19L70.877 207L220.891 175.863L380.025 158.88V90.473L401 36.2196Z" fill="black"/>
             <path d="M380 54.1895L222.762 65.9335L50 41L91.7973 185L222.762 161.151L361.689 148.142V95.7453L380 54.1895Z" fill="white"/>

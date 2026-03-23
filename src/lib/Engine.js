@@ -32,6 +32,9 @@ export default class Engine {
         this.lastTime = 0;
         this.isRunning = false;
         this.animationFrameId = null;
+
+
+        this.resizeHandler = () => this.onWindowResize();
     }
 
 // [=============================================================]
@@ -47,13 +50,15 @@ export default class Engine {
 
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
-            antialias: true
+            antialias: !this.isMobile,
+            powerPreference: 'high-performance'
+
         });
 
 // ----------------
 
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setSize(window.innerWidth, window.innerHeight, false);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         this.renderer.shadowMap.enabled = true;
 
         this.renderer.setClearColor(0x000000, 0);
@@ -66,9 +71,7 @@ export default class Engine {
 
 // ----------------       
 
-        window.addEventListener("resize", () => {
-            this.onWindowResize();
-        })
+        window.addEventListener("resize", this.resizeHandler);
         
 
         document.addEventListener("visibilitychange", () => {
@@ -139,6 +142,7 @@ loadScene(sceneName) {
         }
         if (this.currentWorld) {
             // inputSystem -> windowListener acumula
+            this.currentWorld.dispose();
             this.currentWorld = null; 
         }
 
@@ -168,16 +172,16 @@ loadScene(sceneName) {
 
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setSize(window.innerWidth, window.innerHeight, false);
 
 
-        let lastIsMobile = window.innerWidth <= 768
+        // let lastIsMobile = window.innerWidth <= 768
 
-        if(this.isMobile !== lastIsMobile){
-            location.reload();
-        }
+        // if(this.isMobile !== lastIsMobile){
+        //     location.reload();
+        // }
 
-        lastIsMobile = this.isMobile;
+        // lastIsMobile = this.isMobile;
         
     }
 
@@ -198,5 +202,28 @@ loadScene(sceneName) {
         `;
         
         document.body.appendChild(warningDiv);
+    }
+
+    dispose() {
+
+        if (this.currentWorld) {
+            this.currentWorld.dispose();
+        }
+
+        if (this.currentScene) {
+            this.currentScene.clear();
+        }
+
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
+
+        if (this.renderer) {
+            this.renderer.dispose();
+        }
+
+        this.isRunning = false;
+        window.removeEventListener("resize", this.resizeHandler);
     }
 }
