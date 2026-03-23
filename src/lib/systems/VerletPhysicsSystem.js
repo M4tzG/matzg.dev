@@ -19,7 +19,7 @@ export class VerletPhysicsSystem extends System {
     // 4. corrige distância entre nós
 // [=============================================================]  
 
-    constructor(iterations = 5) {
+    constructor(iterations = 27) {
         super();
         this.iterations = iterations;
     }

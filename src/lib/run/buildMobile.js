@@ -218,67 +218,27 @@ export function setupHomeMobile(world, scene, assets) {
     });
 
 
+    const createChain = new ChainBuilder(world, scene, assets);
 
 
 
-    // createChain(world, scene, assets, {
-    //     chainConfig: {
-    //         startPos: v3(0, 0, -10),
-    //         endPos: v3(-32, -13, 0),
-    //         numLinks : 6,
-    //         scale: 12,
-    //         gravity: 0.5
-    //     },
-    //     interaction: {
-    //         isParallaxed: false,
-    //         isHoverable: false,
-    //         isDraggable: false,
-    //         parallaxFactor: -1,
-    //     }
-    // });
-
-    // createChain(world, scene, assets, {
-    //     chainConfig: {
-    //         startPos: v3(0, 15, -5),
-    //         endPos: v3(10, -12, 0),
-    //         numLinks : 30,
-    //         scale: 2,
-    //         gravity: 0.3
-    //     },
-    //     interaction: {
-    //         isParallaxed: false,
-    //         isHoverable: false,
-    //         isDraggable: false,
-    //         parallaxFactor: -1,
-    //     }
-    // });
-
-    // createChain(world, scene, assets, {
-    //     chainConfig: {  
-    //         startPos: v3(1, 15, -5),
-    //         endPos: v3(10, -9, 0),
-    //         numLinks : 25,
-    //         scale: 2,
-    //         gravity: 1
-    //     },
-    //     interaction: {
-    //         isParallaxed: false,
-    //         isHoverable: false,
-    //         isDraggable: false,
-    //         parallaxFactor: -1,
-    //     }
-    // });
+    createChain.build({
+        chainConfig: {
+            startPos: v3(-2, 15, -5),
+            endPos: v3(12, -12, 0),
+            numLinks : 21,
+            scale: 3.4,
+            gravity: 0.5
+        },
+        interaction: {
+            isHoverable: true,
+        }
+    });
 }
 
 
 
 export function setupProjectsMobile(world, scene, assets) {
-    // createPostProcessing(world, {
-    //     pincushion: { 
-    //         active: true, 
-    //         strength: -0.9 
-    //     }
-    // });
 
 
     createSprite(world, scene, assets, {

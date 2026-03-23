@@ -227,10 +227,10 @@ export function setupHomeDesktop(world, scene, assets) {
 
     createChain.build({
         chainConfig: {
-            startPos: v3(3, 15, -5),
+            startPos: v3(2, 15, -5),
             endPos: v3(25, -12, 0),
             numLinks : 21,
-            scale: 3.3,
+            scale: 3.4,
             gravity: 1
         },
         interaction: {
