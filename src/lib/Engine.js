@@ -57,8 +57,8 @@ export default class Engine {
 
 // ----------------
 
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setSize(window.innerWidth, window.innerHeight, false);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         this.renderer.shadowMap.enabled = true;
 
         this.renderer.setClearColor(0x000000, 0);
@@ -172,16 +172,16 @@ loadScene(sceneName) {
 
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setSize(window.innerWidth, window.innerHeight, false);
 
 
-        let lastIsMobile = window.innerWidth <= 768
+        // let lastIsMobile = window.innerWidth <= 768
 
-        if(this.isMobile !== lastIsMobile){
-            location.reload();
-        }
+        // if(this.isMobile !== lastIsMobile){
+        //     location.reload();
+        // }
 
-        lastIsMobile = this.isMobile;
+        // lastIsMobile = this.isMobile;
         
     }
 

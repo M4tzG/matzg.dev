@@ -28,10 +28,11 @@ export default function RootLayout({ children }) {
         className={`${lacquer.variable} ${geistSans.variable} flex flex-col justify-center items-center min-h-screen antialiased font-lacquer text-foreground bg-gradient-to-br from-[#070806] to-[#1A1623]`}
       >
         <Cursor />
-        <CanvasContainer />
+        
 
 
-        <main className="w-full relative z-10 flex-grow">
+        <main className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none">
+          <CanvasContainer />
           {children}
         </main>
 

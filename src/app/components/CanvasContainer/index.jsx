@@ -62,7 +62,7 @@ export default function CanvasContainer () {
                 <div className={styles.spinner}></div>
             </div>
             
-            <canvas ref={canvasRef} className="fixed top-0 left-1/2 z-0 w-full h-screen max-w-[2000px] max-h-[1080px] -translate-x-1/2 block"></canvas>
+            <canvas ref={canvasRef} className="absolute inset-0 z-0 w-full h-full block"></canvas>
         </>
     )
 }
