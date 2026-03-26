@@ -17,6 +17,13 @@ export function setupHomeDesktop(world, scene, assets) {
         pincushion: { 
             active: true, 
             strength: -0.4
+        },
+        crt: {
+            active: true,
+            scanlineIntensity: 0.08,
+            scanlineCount: 800.0,
+            vignetteDarkness: 1.0,
+            aberrationAmount: 0.003,
         }
     });
 

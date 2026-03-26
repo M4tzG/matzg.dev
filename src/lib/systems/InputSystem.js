@@ -39,6 +39,8 @@ export class InputSystem extends System {
         window.addEventListener('mousemove', this.handlers.mousemove);
         window.addEventListener('mousedown', this.handlers.mousedown);
         window.addEventListener('mouseup', this.handlers.mouseup);
+
+        
     }
 
     dispose() {

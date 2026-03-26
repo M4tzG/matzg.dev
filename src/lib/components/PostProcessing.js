@@ -8,6 +8,14 @@ export class PostProcessing extends System {
             strength: config.pincushion?.strength ?? -0.5
         };
 
+        this.crt = {
+            active: config.crt?.active ?? false, 
+            scanlineIntensity: config.crt?.scanlineIntensity ?? 0.08,
+            scanlineCount: config.crt?.scanlineCount ?? 800.0,
+            vignetteDarkness: config.crt?.vignetteDarkness ?? 1.0,
+            aberrationAmount: config.crt?.aberrationAmount ?? 0.003,
+        };
+
         this.bloom = {
             active: config.bloom?.active ?? false,
             strength: config.bloom?.strength ?? 1.5,

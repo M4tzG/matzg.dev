@@ -54,7 +54,7 @@ export default function Logo() {
 
 
       <div 
-        className={`hidden lg:flex items-center gap-4 [filter:url(#distorcao)]`}
+        className={`hidden text-white lg:flex items-center gap-4 [filter:url(#distorcao)]`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       > 

@@ -39,6 +39,55 @@ const SHADERS = {
                 }
             }
         `
+    },
+    crt: {
+        uniforms: {
+            "tDiffuse": { value: null },
+            "time": { value: 0.0 },
+            "scanlineIntensity": { value: 0.08 },
+            "scanlineCount": { value: 800.0 },
+            "vignetteDarkness": { value: 1.0 },
+            "aberrationAmount": { value: 0.01 },
+
+        },
+        vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `,
+        fragmentShader: `
+            uniform sampler2D tDiffuse;
+            uniform float time;
+            uniform float scanlineIntensity;
+            uniform float scanlineCount;
+            uniform float vignetteDarkness;
+            uniform float aberrationAmount;
+            
+            varying vec2 vUv;
+
+            void main() {
+                // --- CHROMATIC ABERRATION ---
+                float r = texture2D(tDiffuse, vec2(vUv.x + aberrationAmount, vUv.y)).r;
+                float g = texture2D(tDiffuse, vUv).g; // O verde fica no lugar certo
+                float b = texture2D(tDiffuse, vec2(vUv.x - aberrationAmount, vUv.y)).b;
+                
+                vec4 color = vec4(r, g, b, 1.0);
+
+                // --- SCANLINES ---
+                float wave = sin(vUv.y * scanlineCount - time * 10.0);
+                float scanline = (wave * 0.5 + 0.5) * scanlineIntensity;
+                color.rgb -= scanline;
+
+                // --- VIGNETTE ---
+                vec2 centerDist = vUv - 0.5;
+                float vignette = length(centerDist);
+                color.rgb *= 1.0 - smoothstep(0.4, 0.8, vignette) * vignetteDarkness;
+
+                gl_FragColor = color;
+            }
+        `
     }
 }
 
@@ -59,13 +108,20 @@ export class PostProcessingSystem extends System {
         this.pincushionPass = new ShaderPass(SHADERS.pincushion);
         this.composer.addPass(this.pincushionPass);
 
+        this.crtPass = new ShaderPass(SHADERS.crt);
+        this.composer.addPass(this.crtPass);
+
         const outputPass = new OutputPass();
         this.composer.addPass(outputPass);
+
+        this.elapsedTime = 0;
     }
 
 
 
     update(world, deltaTime) {
+
+        this.elapsedTime += deltaTime;
 
         if (!this.cachedEntity) {
             const entities = Query.entitiesWith(world, PostProcessing);
@@ -90,9 +146,15 @@ export class PostProcessingSystem extends System {
 
         // para n deixar as figuras com uma borda estranha branca
         this.pincushionPass.enabled = config.pincushion.active; 
-
         // aplica todos os tipos de pos-processamento, se nao tiver nenhum ativo, usa o render normal, sem composer
         this.pincushionPass.uniforms["strength"].value = config.pincushion.strength;
+
+        this.crtPass.enabled = config.crt.active;
+        this.crtPass.uniforms["time"].value = this.elapsedTime;
+        this.crtPass.uniforms["scanlineIntensity"].value = config.crt.scanlineIntensity;
+        this.crtPass.uniforms["scanlineCount"].value = config.crt.scanlineCount;
+        this.crtPass.uniforms["vignetteDarkness"].value = config.crt.vignetteDarkness;
+        this.crtPass.uniforms["aberrationAmount"].value = config.crt.aberrationAmount;
 
         this.composer.render();
     }
