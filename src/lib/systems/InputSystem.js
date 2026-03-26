@@ -44,18 +44,17 @@ export class InputSystem extends System {
     }
 
     startDeviceOrientation() {
-        if (this.handlers.deviceorientation) return; // Não liga 2 vezes
+        if (this.handlers.deviceorientation) return;
 
         this.handlers.deviceorientation = (e) => {
             let gamma = e.gamma || 0; // Esquerda/Direita (-90 a 90)
             let beta = e.beta || 0;   // Frente/Trás (-180 a 180)
 
-            // Converte os graus para uma escala de -1 a 1 (dividindo por 45 graus como limite)
             let normX = Math.max(-1, Math.min(1, gamma / 45));
             let normY = Math.max(-1, Math.min(1, (beta - 45) / 45));
 
             this.gyro.x = normX;
-            this.gyro.y = -normY; // Y invertido para casar com a lógica de tela
+            this.gyro.y = -normY;
         };
 
         window.addEventListener('deviceorientation', this.handlers.deviceorientation);

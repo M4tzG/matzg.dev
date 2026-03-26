@@ -9,7 +9,7 @@ import GyroButton from '../GyroButton';
 
 
 export default function CanvasContainer () {
-    const handleAtivarGyro = () => {
+    const handleActivateGyro = () => {
         if (engineRef.current && typeof engineRef.current.enableGyroscope === 'function') {
             engineRef.current.enableGyroscope();
         }
@@ -77,12 +77,12 @@ export default function CanvasContainer () {
             
             <canvas ref={canvasRef} className="absolute inset-0 z-0 w-full h-full block"></canvas>
 
-            <div className="fixed top-0 left-0 z-[100] bg-black/50 text-green-400 text-[10px] p-2 pointer-events-none font-mono">
+            {/* <div className="fixed top-0 left-0 z-[100] bg-black/50 text-green-400 text-[10px] p-2 pointer-events-none font-mono">
                 Gyro X: {engineRef.current?.inputSystem?.gyro.x.toFixed(2)} <br/>
                 Gyro Y: {engineRef.current?.inputSystem?.gyro.y.toFixed(2)} <br/>
                 IsMobile: {isMobile ? "YES" : "NO"}
-            </div>
-            <GyroButton onAtivarGyro={handleAtivarGyro} />
+            </div> */} 
+            <GyroButton onAtivarGyro={handleActivateGyro} />
         </>
     )
 }

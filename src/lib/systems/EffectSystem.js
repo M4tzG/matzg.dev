@@ -23,16 +23,13 @@ export class EffectSystem extends System {
             const transform = world.getComponent(e, Transform);
             const input = world.getComponent(e, Input);
 
-            // MUDANÇA: Tirei o !interaction.isMobile para permitir que rode no celular
             if (interaction.isParallaxed) { 
                 
-                // Mudei initialX para o transform, que faz mais sentido estruturalmente
                 if (transform.initialX === undefined) {
                     transform.initialX = transform.position.x;
                     transform.initialY = transform.position.y;
                 }
 
-                // ADIÇÃO: A grande sacada. Se for mobile, usa o gyro. Se não, usa o mouse.
                 const inputX = interaction.isMobile ? input.gyro.x : input.mouse.x;
                 const inputY = interaction.isMobile ? input.gyro.y : input.mouse.y;
 
