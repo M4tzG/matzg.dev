@@ -20,7 +20,7 @@ export class InputSystem extends System {
             dx: 0,
             dy: 0
         };
-
+        this.gyro = { x: 0, y: 0 }
         this.handlers = {};
 
         this.initListeners();
@@ -43,10 +43,31 @@ export class InputSystem extends System {
         
     }
 
+    startDeviceOrientation() {
+        if (this.handlers.deviceorientation) return; // Não liga 2 vezes
+
+        this.handlers.deviceorientation = (e) => {
+            let gamma = e.gamma || 0; // Esquerda/Direita (-90 a 90)
+            let beta = e.beta || 0;   // Frente/Trás (-180 a 180)
+
+            // Converte os graus para uma escala de -1 a 1 (dividindo por 45 graus como limite)
+            let normX = Math.max(-1, Math.min(1, gamma / 45));
+            let normY = Math.max(-1, Math.min(1, (beta - 45) / 45));
+
+            this.gyro.x = normX;
+            this.gyro.y = -normY; // Y invertido para casar com a lógica de tela
+        };
+
+        window.addEventListener('deviceorientation', this.handlers.deviceorientation);
+    }
+
     dispose() {
         window.removeEventListener('mousemove', this.handlers.mousemove);
         window.removeEventListener('mousedown', this.handlers.mousedown);
         window.removeEventListener('mouseup', this.handlers.mouseup);
+        if (this.handlers.deviceorientation) {
+            window.removeEventListener('deviceorientation', this.handlers.deviceorientation);
+        }
     }
 
 
@@ -63,7 +84,8 @@ export class InputSystem extends System {
             input.mouse.isDown = this.mouse.isDown;
 
             // console.log(input.mouse.deltaX, input.mouse.deltaY)
-
+            input.gyro.x = this.gyro.x;
+            input.gyro.y = this.gyro.y;
         }
     }
 }

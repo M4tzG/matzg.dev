@@ -23,19 +23,23 @@ export class EffectSystem extends System {
             const transform = world.getComponent(e, Transform);
             const input = world.getComponent(e, Input);
 
-            if (interaction.isParallaxed && !interaction.isMobile) {
-                // em determinado ponto, será a posiao inicial do objeto + uma distancia
-
-                if (input.mouse.initialX === undefined) {
-                    input.mouse.initialX = transform.position.x;
-                    input.mouse.initialY = transform.position.y;
+            // MUDANÇA: Tirei o !interaction.isMobile para permitir que rode no celular
+            if (interaction.isParallaxed) { 
+                
+                // Mudei initialX para o transform, que faz mais sentido estruturalmente
+                if (transform.initialX === undefined) {
+                    transform.initialX = transform.position.x;
+                    transform.initialY = transform.position.y;
                 }
 
-                const targetX = input.mouse.initialX + (input.mouse.x * interaction.parallaxFactor);
-                const targetY = input.mouse.initialY + (input.mouse.y * interaction.parallaxFactor);
+                // ADIÇÃO: A grande sacada. Se for mobile, usa o gyro. Se não, usa o mouse.
+                const inputX = interaction.isMobile ? input.gyro.x : input.mouse.x;
+                const inputY = interaction.isMobile ? input.gyro.y : input.mouse.y;
 
-                const lerpSpeed = 5 * deltaTime; // 5 pq sim...
+                const targetX = transform.initialX + (inputX * interaction.parallaxFactor);
+                const targetY = transform.initialY + (inputY * interaction.parallaxFactor);
 
+                const lerpSpeed = 5 * deltaTime; 
 
                 transform.position.x += (targetX - transform.position.x) * lerpSpeed;   
                 transform.position.y += (targetY - transform.position.y) * lerpSpeed;

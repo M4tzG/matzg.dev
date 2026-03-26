@@ -29,6 +29,8 @@ export default class Engine {
         this.currentScene = null;
         this.currentWorld = null;
 
+        this.inputSystem = null;
+
         this.lastTime = 0;
         this.isRunning = false;
         this.animationFrameId = null;
@@ -148,9 +150,10 @@ loadScene(sceneName) {
 
         this.currentScene = new THREE.Scene();
         this.currentWorld = new World();
+        this.inputSystem = new InputSystem();
 
 
-        this.currentWorld.addSystem(new InputSystem());
+        this.currentWorld.addSystem(this.inputSystem);
         this.currentWorld.addSystem(new EffectSystem());
         this.currentWorld.addSystem(new PickingSystem(this.currentScene, this.camera));
         this.currentWorld.addSystem(new AnimationSystem(this.renderer, this.currentScene, this.camera));
@@ -163,6 +166,12 @@ loadScene(sceneName) {
 
         if (setupFunction) {
             setupFunction(this.currentWorld, this.currentScene, this.assets);
+        }
+    }
+
+    enableGyroscope() {
+        if (this.inputSystem && this.inputSystem.startDeviceOrientation) {
+            this.inputSystem.startDeviceOrientation();
         }
     }
 
