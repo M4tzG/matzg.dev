@@ -13,8 +13,8 @@ export class Input extends Component {
             initialY: undefined
         };
         this.gyro = {
-            gama: 0,
-            beta: 0
-        }
+            x: 0,
+            y: 0
+        };
     }
 }

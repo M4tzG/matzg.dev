@@ -4,7 +4,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const basePath = isProd ? '/matzg.dev' : '';
 
 const nextConfig = {
-  output: 'export',
+  output: isProd ? 'export' : undefined,
   reactCompiler: true,
 
   basePath: basePath,

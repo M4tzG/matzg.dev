@@ -15,6 +15,13 @@ export function setupHomeMobile(world, scene, assets) {
         pincushion: { 
             active: true, 
             strength: -0.4
+        },
+        crt: {
+            active: true,
+            scanlineIntensity: 0.08,
+            scanlineCount: 800.0,
+            vignetteDarkness: 1.0,
+            aberrationAmount: 0.003,
         }
     });
 
@@ -92,12 +99,12 @@ export function setupHomeMobile(world, scene, assets) {
     createSprite(world, scene, assets, {
         imageName: "leftRect",
         transform: {
-            px: -1,
-            py: 1,
+            px: -1.3,
+            py: 0,
             pz: 0,
         },
 
-        baseHeight: 5,
+        baseHeight: 6,
         interaction: {
             isMobile: true,
             isParallaxed: true,
@@ -110,12 +117,12 @@ export function setupHomeMobile(world, scene, assets) {
     createSprite(world, scene, assets, {
         imageName: "middleRect",
         transform: {
-            px: 1.7,
-            py: -1,
+            px: 2,
+            py: -1.5,
             pz: 0,
         },
 
-        baseHeight: 5,
+        baseHeight: 6,
         interaction: {
             isMobile: true,
             isParallaxed: true,
@@ -148,7 +155,7 @@ export function setupHomeMobile(world, scene, assets) {
         imageName: "purpleBlueFlower",
         transform: {
             px: -2,
-            py: -2,
+            py: -3,
             pz: 0,
             rz: 70
         },
@@ -167,7 +174,7 @@ export function setupHomeMobile(world, scene, assets) {
         imageName: "pinkFlower",
         transform: {
             px: 1,
-            py: 3,
+            py: 2,
             pz: 0,
         },
         baseHeight: 1,
@@ -185,7 +192,7 @@ export function setupHomeMobile(world, scene, assets) {
         imageName: "purpleBlueFlower",
         transform: {
             px: 2,
-            py: 1,
+            py: 0,
             pz: 0,
             rz: -70
         },
@@ -204,7 +211,7 @@ export function setupHomeMobile(world, scene, assets) {
         imageName: "Raposo",
         transform: {
             px: 0,
-            py: 1.5,
+            py: -0.5,
             pz: 0,
         },
         baseHeight: 6,
