@@ -1,13 +1,12 @@
 import { Component } from "../ecs/Component";
 import * as THREE from "three"
 
-export class VerletNode extends Component {
-    constructor(x, y, z, isPinned = false) {
+export class PhysicsNode extends Component {
+    constructor(x, y, z, mass = 0, acceleration) {
         super();
-        this.isPinned = isPinned;
+        this.mass = mass;
         this.position = new THREE.Vector3(x, y, z);
         this.oldPosition = new THREE.Vector3(x, y, z);
-        
-        this.nextNode = null; 
+        this.acceleration = acceleration;
     }
 }

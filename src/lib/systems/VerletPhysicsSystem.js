@@ -1,6 +1,6 @@
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
-import { VerletNode } from "../components/VerletNode";
+import { VerletNode } from "../components/PhysicsNode";
 import { Constraint } from "../components/Constraint";
 import { Gravity } from "../components/Gravity";
 

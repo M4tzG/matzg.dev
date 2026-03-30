@@ -3,7 +3,7 @@ import { createPostProcessing } from "../factories/createPostProcessing";
 import { createAnimatedSprite } from "../factories/createAnimatedSprite";
 // import { createChain } from "../factories/createChain";
 
-import { ChainBuilder } from "../factories/ChainBuilder";
+// import { ChainBuilder } from "../factories/ChainBuilder";
 
 import * as THREE from "three";
 
@@ -217,46 +217,46 @@ export function setupHomeDesktop(world, scene, assets) {
     });
 
 
-    const createChain = new ChainBuilder(world, scene, assets);
+    // const createChain = new ChainBuilder(world, scene, assets);
     
-    createChain.build( {
-        chainConfig: {
-            startPos: v3(0, 0, -10),
-            endPos: v3(-32, -13, 0),
-            numLinks : 6,
-            scale: 12,
-            gravity: 0.5
-        },
-        interaction: {
-            isHoverable: false,
-        }
-    });
+    // createChain.build( {
+    //     chainConfig: {
+    //         startPos: v3(0, 0, -10),
+    //         endPos: v3(-32, -13, 0),
+    //         numLinks : 6,
+    //         scale: 12,
+    //         gravity: 0.5
+    //     },
+    //     interaction: {
+    //         isHoverable: false,
+    //     }
+    // });
 
-    createChain.build({
-        chainConfig: {
-            startPos: v3(2, 15, -5),
-            endPos: v3(25, -12, 0),
-            numLinks : 21,
-            scale: 3.4,
-            gravity: 1
-        },
-        interaction: {
-            isHoverable: true,
-        }
-    });
+    // createChain.build({
+    //     chainConfig: {
+    //         startPos: v3(2, 15, -5),
+    //         endPos: v3(25, -12, 0),
+    //         numLinks : 21,
+    //         scale: 3.4,
+    //         gravity: 1
+    //     },
+    //     interaction: {
+    //         isHoverable: true,
+    //     }
+    // });
 
-    createChain.build({
-        chainConfig: {  
-            startPos: v3(8, 15, -5),
-            endPos: v3(28, -9, 0),
-            numLinks : 13,
-            scale: 5,
-            gravity: 1
-        },
-        interaction: {
-            isHoverable: true,
-        }
-    });
+    // createChain.build({
+    //     chainConfig: {  
+    //         startPos: v3(8, 15, -5),
+    //         endPos: v3(28, -9, 0),
+    //         numLinks : 13,
+    //         scale: 5,
+    //         gravity: 1
+    //     },
+    //     interaction: {
+    //         isHoverable: true,
+    //     }
+    // });
 
 }
 

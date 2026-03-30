@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { Input } from "../components/Input";
 import { Interaction } from "../components/Interaction";
 import { ThreeView } from "../components/ThreeView";
-import { VerletNode } from "../components/VerletNode";
+import { VerletNode } from "../components/PhysicsNode";
 import { Constraint } from "../components/Constraint";
 import { Gravity } from "../components/Gravity";
 

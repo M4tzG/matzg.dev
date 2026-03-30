@@ -1,7 +1,7 @@
 import { createSprite } from "../factories/createSprite";
 import { createPostProcessing } from "../factories/createPostProcessing";
 import { createAnimatedSprite } from "../factories/createAnimatedSprite";
-import { ChainBuilder } from "../factories/ChainBuilder";
+// import { ChainBuilder } from "../factories/ChainBuilder";
 
 import * as THREE from "three";
 
