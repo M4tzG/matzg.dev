@@ -1,6 +1,6 @@
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
-import { VerletNode } from "../components/PhysicsNode";
+import { VerletNode } from "../components/VerletNode";
 import { Constraint } from "../components/Constraint";
 import { Gravity } from "../components/Gravity";
 
@@ -19,11 +19,10 @@ export class VerletPhysicsSystem extends System {
     // 4. corrige distância entre nós
 // [=============================================================]  
 
-    constructor(iterations = 20) {
+    constructor(iterations = 5) {
         super();
-        this.iterations = iterations; // reduzido de 27 para melhor performance
-        
-        // Reutilizar vetores para não criar novo a cada frame
+        this.iterations = iterations;
+
         this._velocity = new THREE.Vector3();
         this._acceleration = new THREE.Vector3();
         this._delta = new THREE.Vector3();

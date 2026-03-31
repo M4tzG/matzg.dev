@@ -1,6 +1,6 @@
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
-import { VerletNode } from "../components/PhysicsNode";
+import { VerletNode } from "../components/VerletNode";
 import { ThreeView } from "../components/ThreeView";
 
 export class ChainRenderSystem extends System {

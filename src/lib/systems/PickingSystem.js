@@ -3,7 +3,7 @@ import { Query } from "../ecs/Query";
 import { Interaction } from "../components/Interaction";  
 import { Input } from "../components/Input";
 import { ThreeView } from "../components/ThreeView";
-import { VerletNode } from "../components/PhysicsNode";
+import { VerletNode } from "../components/VerletNode";
 
 import * as THREE from "three";
 
@@ -71,29 +71,29 @@ export class PickingSystem extends System {
                 }
             }
             // faz a graça
-            // if (entityHit !== undefined) {
-            //     const interaction = world.getComponent(entityHit, Interaction);
-            //     if (interaction) {
-            //         interaction.isHovered = true;
-            //     }
-            //     const verlet = world.getComponent(entityHit, VerletNode);
-            //     const input = world.getComponent(entityHit, Input);
+            if (entityHit !== undefined) {
+                const interaction = world.getComponent(entityHit, Interaction);
+                if (interaction) {
+                    interaction.isHovered = true;
+                }
+                const verlet = world.getComponent(entityHit, VerletNode);
+                const input = world.getComponent(entityHit, Input);
 
-            //     if (verlet && !verlet.isPinned && interaction.isHoverable) {
-            //         // delta da mmovimentaçao do mouse
-            //         const moveX = input.mouse.deltaX || 0;
-            //         const moveY = input.mouse.deltaY || 0;
+                if (verlet && !verlet.isPinned && interaction.isHoverable) {
+                    // delta da mmovimentaçao do mouse
+                    const moveX = input.mouse.deltaX || 0;
+                    const moveY = input.mouse.deltaY || 0;
 
-            //         // console.log(moveY, moveX)
+                    // console.log(moveY, moveX)
 
-            //         if (Math.abs(moveX) > 0 || Math.abs(moveY) > 0) {
+                    if (Math.abs(moveX) > 0 || Math.abs(moveY) > 0) {
                         
-            //             const pushMultiplier = 0.001; 
-            //             verlet.position.x += moveX * pushMultiplier;
-            //             verlet.position.y -= moveY * pushMultiplier; 
-            //         }
-            //     }
-            // }
+                        const pushMultiplier = 0.001; 
+                        verlet.position.x += moveX * pushMultiplier;
+                        verlet.position.y -= moveY * pushMultiplier; 
+                    }
+                }
+            }
         }
         
         
