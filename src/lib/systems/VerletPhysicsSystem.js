@@ -19,12 +19,18 @@ export class VerletPhysicsSystem extends System {
     // 4. corrige distância entre nós
 // [=============================================================]  
 
-    constructor(iterations = 27) {
+    constructor(iterations = 20) {
         super();
-        this.iterations = iterations;
+        this.iterations = iterations; // reduzido de 27 para melhor performance
+        
+        // Reutilizar vetores para não criar novo a cada frame
+        this._velocity = new THREE.Vector3();
+        this._acceleration = new THREE.Vector3();
+        this._delta = new THREE.Vector3();
+        this._offset = new THREE.Vector3();
     }
-    update(world, deltaTime) {
 
+    update(world, deltaTime) {
         const nodes = Query.entitiesWith(world, VerletNode);
         const constraints = Query.entitiesWith(world, Constraint);
 
@@ -34,15 +40,13 @@ export class VerletPhysicsSystem extends System {
 
             if (node.isPinned) continue;
 
-            const velocity = new THREE.Vector3().subVectors(node.position, node.oldPosition);
+            this._velocity.subVectors(node.position, node.oldPosition);
+            this._velocity.multiplyScalar(0.99);
             
-            velocity.multiplyScalar(0.99); 
+            node.oldPosition.copy(node.position);
             
-            node.oldPosition.copy(node.position); 
-            
-            // Aplica gravidade baseada no tempo
-            const acceleration = gravity.force.clone().multiplyScalar(deltaTime * deltaTime);
-            node.position.add(velocity).add(acceleration);
+            this._acceleration.copy(gravity.force).multiplyScalar(deltaTime * deltaTime);
+            node.position.add(this._velocity).add(this._acceleration);
         }
 
         for (let i = 0; i < this.iterations; i++) {
@@ -53,22 +57,21 @@ export class VerletPhysicsSystem extends System {
 
                 if (!nodeA || !nodeB) continue;
 
-                const delta = new THREE.Vector3().subVectors(nodeB.position, nodeA.position);
-                const currentDist = delta.length();
+                this._delta.subVectors(nodeB.position, nodeA.position);
+                const currentDist = this._delta.length();
                 
-                if (currentDist === 0) continue; 
-                
+                if (currentDist === 0) continue;
 
                 const difference = currentDist - constraint.distance;
                 const correction = difference / currentDist / 2;
 
-                const offset = delta.multiplyScalar(correction);
-  
+                this._offset.copy(this._delta).multiplyScalar(correction);
+
                 if (!nodeA.isPinned) {
-                    nodeA.position.add(offset);
+                    nodeA.position.add(this._offset);
                 }
                 if (!nodeB.isPinned) {
-                    nodeB.position.sub(offset);
+                    nodeB.position.sub(this._offset);
                 }
             }
         }

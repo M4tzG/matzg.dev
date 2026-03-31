@@ -126,12 +126,6 @@ export default class Engine {
 
 // [=============================================================]
 
-
-    // Execução em uma linha:
-    
-
-
-
 loadScene(sceneName) {
 
         const sceneSetups = {

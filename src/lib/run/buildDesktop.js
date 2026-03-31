@@ -1,12 +1,21 @@
 import { createSprite } from "../factories/createSprite";
 import { createPostProcessing } from "../factories/createPostProcessing";
 import { createAnimatedSprite } from "../factories/createAnimatedSprite";
-// import { createChain } from "../factories/createChain";
+import { createChain } from "../factories/createChain";
 
-import { ChainBuilder } from "../factories/ChainBuilder";
 
 import * as THREE from "three";
 
+
+
+
+
+
+//  to do:
+// create keychan (chaveiro != corrente), da p fazer personalizado
+// estuda direito isso caba
+// performance
+//  
 
 const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
 
@@ -217,9 +226,8 @@ export function setupHomeDesktop(world, scene, assets) {
     });
 
 
-    const createChain = new ChainBuilder(world, scene, assets);
     
-    createChain.build( {
+    createChain(world, scene, assets, {
         chainConfig: {
             startPos: v3(0, 0, -10),
             endPos: v3(-32, -13, 0),
@@ -232,7 +240,7 @@ export function setupHomeDesktop(world, scene, assets) {
         }
     });
 
-    createChain.build({
+    createChain(world, scene, assets, {
         chainConfig: {
             startPos: v3(2, 15, -5),
             endPos: v3(25, -12, 0),
@@ -245,7 +253,7 @@ export function setupHomeDesktop(world, scene, assets) {
         }
     });
 
-    createChain.build({
+    createChain(world, scene, assets,{
         chainConfig: {  
             startPos: v3(8, 15, -5),
             endPos: v3(28, -9, 0),
