@@ -26,13 +26,14 @@ export class ChainRenderSystem extends System {
                 if (node.nextNode) {
                     img.lookAt(node.nextNode.position);
                 }
+                img.rotateY(Math.PI / 2);
                 
-                if (view.isOdd) {
-                    img.rotateZ(Math.PI);
-                    img.rotateY(Math.PI / 2);
-                } else {
-                    img.rotateY(Math.PI / 2);
-                }
+                // if (view.isOdd) {
+                //     img.rotateZ(Math.PI);
+                //     img.rotateY(Math.PI / 2);
+                // } else {
+                    
+                // }
                 
             }
         }
