@@ -246,32 +246,3 @@ export function setupHomeDesktop(world, scene, assets) {
     HOME_CHAINS.forEach(config => createChain(world, scene, assets, config));
 
 }
-
-
-
-export function setupProjectsDesktop(world, scene, assets) {
-    createPostProcessing(world, {
-        pincushion: { 
-            active: true, 
-            strength: -0.9 
-        }
-    });
-
-
-    createSprite(world, scene, assets, {
-        imageName: "witImage",
-        transform: {
-            px: -1,
-            py: 0,
-            pz: 0,
-        },
-        baseHeight: 11,
-        interaction: {
-            isParallaxed: true,
-            isHoverable: false,
-            isDraggable: false,
-            parallaxFactor: 1,
-        }
-    });
-    
-}

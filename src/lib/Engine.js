@@ -1,10 +1,11 @@
 import * as THREE from "three"
 
+import { Transition } from "./components/Transition";
 import { World } from "./ecs/World";
 import { RenderSystem } from "./systems/RenderSystem";
 import { PostProcessingSystem } from "./systems/PostProcessingSystem";
-import { setupHomeDesktop, setupProjectsDesktop } from "./run/buildDesktop";
-import { setupHomeMobile, setupProjectsMobile } from "./run/buildMobile";
+import { setupHomeDesktop } from "./run/buildDesktop";
+import { setupHomeMobile } from "./run/buildMobile";
 import { loadAssets } from "./run/loadAssets";
 import { InputSystem } from "./systems/InputSystem";
 import { AnimationSystem } from "./systems/AnimationSystem";
@@ -13,6 +14,7 @@ import { PickingSystem } from "./systems/PickingSystem";
 import { ChainRenderSystem } from "./systems/ChainRenderSystem";
 import { VerletPhysicsSystem } from "./systems/VerletPhysicsSystem";
 import { ConstraintSystem } from "./systems/ConstraintsSystem";
+import { TransitionSystem } from "./systems/TransitionSystem";
 
 
 export default class Engine {
@@ -127,11 +129,10 @@ export default class Engine {
 
 // [=============================================================]
 
-loadScene(sceneName) {
+    initScene(sceneName) {
 
         const sceneSetups = {
             '/': this.isMobile ? setupHomeMobile : setupHomeDesktop,
-            '/projects': this.isMobile ? setupProjectsMobile : setupProjectsDesktop,
         };
 
         if (this.currentScene) {
@@ -154,6 +155,7 @@ loadScene(sceneName) {
         this.currentWorld.addSystem(new AnimationSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new VerletPhysicsSystem());
         this.currentWorld.addSystem(new ConstraintSystem());
+        this.currentWorld.addSystem(new TransitionSystem());
         this.currentWorld.addSystem(new ChainRenderSystem());
         this.currentWorld.addSystem(new RenderSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new PostProcessingSystem(this.renderer, this.currentScene, this.camera));
@@ -163,6 +165,28 @@ loadScene(sceneName) {
         if (setupFunction) {
             setupFunction(this.currentWorld, this.currentScene, this.assets);
         }
+    }
+
+    triggerTransition() {
+        return new Promise((resolve) => {
+            if (!this.currentWorld) {
+                resolve();
+                return;
+            }
+
+            const entities = this.currentWorld.entities; 
+            let duration = 2000; 
+
+            entities.forEach(entity => {
+                if (this.currentWorld.hasComponent(entity, Transition)) {
+                    const transition = this.currentWorld.getComponent(entity, Transition);
+                    transition.isActive = true; // Aciona o gatilho!
+                }
+            });
+            setTimeout(() => {
+                resolve();
+            }, duration);
+        });
     }
 
     enableGyroscope() {
@@ -207,6 +231,25 @@ loadScene(sceneName) {
         `;
         
         document.body.appendChild(warningDiv);
+    }
+
+    sleep() {
+        this.isRunning = false;
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
+        if (this.currentScene) {
+            this.currentScene.clear();
+        }
+    }
+
+    wake() {
+        if (!this.isRunning) {
+            this.isRunning = true;
+            this.lastTime = performance.now();
+            this.mainLoop();
+        }
     }
 
     dispose() {

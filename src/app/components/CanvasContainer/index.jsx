@@ -1,4 +1,5 @@
 "use client"
+
 import styles from './index.module.css';
 
 import { useEffect, useRef, useState } from "react";
@@ -24,6 +25,22 @@ export default function CanvasContainer () {
     
     
     const [isLoading, setIsLoading] = useState(true);
+    const [isCanvasVisible, setIsCanvasVisible] = useState(pathname === '/');
+
+
+    useEffect ( () => {
+        if (!engineRef.current || !isInitializedRef.current) return;
+
+        if (pathname === '/projects') {
+            engineRef.current.sleep();
+            setIsCanvasVisible(false);
+        } 
+        else if (pathname === '/') {
+            setIsCanvasVisible(true);
+            engineRef.current.wake();
+            engineRef.current.initScene(pathname); 
+        }
+    }, [pathname]);
 
     useEffect (() => {
         if (!canvasRef.current ) return;
@@ -38,7 +55,7 @@ export default function CanvasContainer () {
 
                 if(!isCleanedUp) {
                     isInitializedRef.current = true;
-                    engineRef.current.loadScene(pathname);
+                    engineRef.current.initScene(pathname);
                     setIsLoading(false);
                     if (isMobile && (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission !== 'function')) {
                         engineRef.current.enableGyroscope();
@@ -61,12 +78,21 @@ export default function CanvasContainer () {
     }, [isMobile]);
 
 
-    useEffect ( () => {
-        if (!engineRef.current || !isInitializedRef.current) return;
-        engineRef.current.loadScene(pathname);
-    }, [pathname])
+    useEffect(() => {
+        const handleTransitionEvent = async (e) => {
+            if (!engineRef.current) return;
 
-    
+            await engineRef.current.triggerTransition();
+
+            if (e.detail && typeof e.detail.onComplete === 'function') {
+                e.detail.onComplete();
+            }
+        };
+
+        window.addEventListener('start-canvas-transition', handleTransitionEvent);
+        return () => window.removeEventListener('start-canvas-transition', handleTransitionEvent);
+    }, []);
+        
     return (
         <>
             <div className={`${styles.loadingOverlay} ${isLoading ? styles.visible : styles.hidden}`}>
@@ -75,7 +101,9 @@ export default function CanvasContainer () {
 
 
             
-            <canvas ref={canvasRef} className="absolute inset-0 z-0 w-full h-full block"></canvas>
+            <canvas ref={canvasRef} className={`absolute inset-0 z-0 w-full h-full block transition-opacity duration-500 ${
+                    isCanvasVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                }`}></canvas>
 
             {/* <div className="fixed top-0 left-0 z-[100] bg-black/50 text-green-400 text-[10px] p-2 pointer-events-none font-mono">
                 Gyro X: {engineRef.current?.inputSystem?.gyro.x.toFixed(2)} <br/>

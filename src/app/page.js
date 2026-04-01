@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation';
 import NavigationButton from "./components/NavigationButton";
 import Logo from "./components/Logo";
 
@@ -7,6 +8,20 @@ import { MyStuffButton } from "./components/Icons/MyStuffButton";
 
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleMyStuffClick = (e) => {
+    e.preventDefault(); 
+
+    window.dispatchEvent(new CustomEvent('start-canvas-transition', {
+      detail: {
+        onComplete: () => {
+          router.push('/projects');
+        }
+      }
+    }));
+  };
+  
   return (
     <section className="fixed inset-0 z-10 pointer-events-none">
       
@@ -17,10 +32,11 @@ export default function Home() {
 
           <div className="flex justify-center w-full lg:w-4/10 lg:justify-end">
             <NavigationButton 
-              to="https://github.com/M4tzG" 
+              to="/projects" 
               Icon={MyStuffButton}
               className="w-full text-black lg:text-white"
-              openInNewTab={true}
+              openInNewTab={false}
+              onClick={handleMyStuffClick}
             />
           </div>
       </div>

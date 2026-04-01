@@ -5,6 +5,7 @@ import { Mesh2D } from "../components/Mesh2D";
 import { ThreeView } from "../components/ThreeView";
 import { Interaction } from "../components/Interaction";
 import { Input } from "../components/Input";
+import { Transition } from "../components/Transition";
 
 
 export function createSprite(world, scene, assets, configs) {
@@ -12,7 +13,12 @@ export function createSprite(world, scene, assets, configs) {
         imageName,
         baseHeight = 1,
         transform = {},
-        interaction = {}
+        interaction = {},
+        transition = {
+                velocity: 2, 
+                acceleration: 1.03, 
+                direction: { x: (Math.random() - 0.5), y: -1 }
+            },
     } = configs;
     
     const texture = assets.getTexture(imageName);
@@ -44,6 +50,7 @@ export function createSprite(world, scene, assets, configs) {
 //  ==-=-=-=-=-== ECS ==-=-=-=-=-==
     const entity = world.createEntity();
 
+    world.addComponent(entity, new Transition(transition));
     world.addComponent(entity, new Input()); 
     world.addComponent(entity, new Transform(transform)); 
     world.addComponent(entity, new Interaction(interaction));
