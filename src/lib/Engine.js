@@ -4,8 +4,7 @@ import { Transition } from "./components/Transition";
 import { World } from "./ecs/World";
 import { RenderSystem } from "./systems/RenderSystem";
 import { PostProcessingSystem } from "./systems/PostProcessingSystem";
-import { setupHomeDesktop } from "./run/buildDesktop";
-import { setupHomeMobile } from "./run/buildMobile";
+import { runScene } from "./run/runScene";
 import { loadAssets } from "./run/loadAssets";
 import { InputSystem } from "./systems/InputSystem";
 import { AnimationSystem } from "./systems/AnimationSystem";
@@ -44,14 +43,14 @@ export default class Engine {
 
 // [=============================================================]
 
-    async init() {
+    async init(assets) {
 
         if (!this.webGL) {
             this.showNoWebGLFallback();
             return;
         }
 
-        this.assets = await loadAssets();
+        this.assets = await loadAssets(assets);
 
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
@@ -89,8 +88,6 @@ export default class Engine {
                 }
             } else {
                 this.lastTime = performance.now(); 
-                
-                // Garante que só vamos iniciar se realmente estiver parado
                 if (!this.isRunning) {
                     this.isRunning = true;
                     this.mainLoop();
@@ -129,11 +126,11 @@ export default class Engine {
 
 // [=============================================================]
 
-    initScene(sceneName) {
+    initScene(data) {
 
-        const sceneSetups = {
-            '/': this.isMobile ? setupHomeMobile : setupHomeDesktop,
-        };
+        // const sceneSetups = {
+        //     '/': this.isMobile ? setupHomeMobile : setupHomeDesktop,
+        // };
 
         if (this.currentScene) {
             this.currentScene.clear();
@@ -160,14 +157,14 @@ export default class Engine {
         this.currentWorld.addSystem(new RenderSystem(this.renderer, this.currentScene, this.camera));
         this.currentWorld.addSystem(new PostProcessingSystem(this.renderer, this.currentScene, this.camera));
 
-        const setupFunction = sceneSetups[sceneName];
+        // const setupFunction = sceneSetups[sceneName];
 
-        if (setupFunction) {
-            setupFunction(this.currentWorld, this.currentScene, this.assets);
+        if (data) {
+            runScene(this.currentWorld, this.currentScene, this.assets, data);
         }
     }
 
-    triggerTransition() {
+    triggerTransition(timer = 2000) {
         return new Promise((resolve) => {
             if (!this.currentWorld) {
                 resolve();
@@ -175,12 +172,12 @@ export default class Engine {
             }
 
             const entities = this.currentWorld.entities; 
-            let duration = 2000; 
+            let duration = timer; 
 
             entities.forEach(entity => {
                 if (this.currentWorld.hasComponent(entity, Transition)) {
                     const transition = this.currentWorld.getComponent(entity, Transition);
-                    transition.isActive = true; // Aciona o gatilho!
+                    transition.isActive = true;
                 }
             });
             setTimeout(() => {

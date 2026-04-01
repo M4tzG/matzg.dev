@@ -14,11 +14,7 @@ export function createSprite(world, scene, assets, configs) {
         baseHeight = 1,
         transform = {},
         interaction = {},
-        transition = {
-                velocity: 2, 
-                acceleration: 1.03, 
-                direction: { x: (Math.random() - 0.5), y: -1 }
-            },
+        transition = {},
     } = configs;
     
     const texture = assets.getTexture(imageName);

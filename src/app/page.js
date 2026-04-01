@@ -1,15 +1,14 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
 import NavigationButton from "./components/NavigationButton";
 import Logo from "./components/Logo";
-
 import { MyStuffButton } from "./components/Icons/MyStuffButton";
+import { useRouter } from 'next/navigation';
 
 
 export default function Home() {
-  const router = useRouter();
 
+  const router = useRouter();
   const handleMyStuffClick = (e) => {
     e.preventDefault(); 
 
@@ -22,6 +21,7 @@ export default function Home() {
     }));
   };
   
+
   return (
     <section className="fixed inset-0 z-10 pointer-events-none">
       
