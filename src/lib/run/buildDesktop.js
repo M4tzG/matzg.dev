@@ -2,7 +2,7 @@ import { createSprite } from "../factories/createSprite";
 import { createPostProcessing } from "../factories/createPostProcessing";
 import { createAnimatedSprite } from "../factories/createAnimatedSprite";
 import { createChain } from "../factories/createChain";
-import { createKeychain } from "../factories/createKeychain";
+
 
 
 import * as THREE from "three";
@@ -241,12 +241,6 @@ export function setupHomeDesktop(world, scene, assets) {
         }
     });
 
-    // createKeychain(world, scene, assets, {
-    //     anchorPos  : new THREE.Vector3(0, 0, 0),
-    //     linkDistance: 1,
-    //     gravity    : 2,
-    //     scale      : 1,
-    // });
 
     HOME_SPRITES.forEach(config => createSprite(world, scene, assets, config));
     HOME_CHAINS.forEach(config => createChain(world, scene, assets, config));

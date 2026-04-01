@@ -3,18 +3,18 @@ import { VerletNode } from "../components/VerletNode";
 import { Query } from "../ecs/Query";
 import { System } from "../ecs/System";
 
-import * as THREE from "three";
+import * as THREE from 'three';
 
 export class ConstraintSystem extends System {
-// [=============================================================]  
-    // corrige distância entre nós
-// [=============================================================]  
-    constructor(iterations = 8) {
+    constructor(iterations = 3, stiffness = 1) {
         super();
         this.iterations = iterations;
         this._delta  = new THREE.Vector3();
         this._offset = new THREE.Vector3();
         this._cachedConstraints = null;
+        
+        // valors muito alto exprod
+        this.stiffness = 1.5; 
     }
 
     update(world, deltaTime) {
@@ -36,8 +36,18 @@ export class ConstraintSystem extends System {
                 this._delta.subVectors(nodeB.position, nodeA.position);
                 const currentDist = this._delta.length();
                 if (currentDist === 0) continue;
-                const correction = (currentDist - distance) / currentDist / 2;
-                this._offset.copy(this._delta).multiplyScalar(correction);
+
+                const wA = nodeA.isPinned ? 0 : 1;
+                const wB = nodeB.isPinned ? 0 : 1;
+                const wSum = wA + wB;
+
+                if (wSum === 0) continue; 
+
+                const error = currentDist - distance;
+                const correction = (error / currentDist) * this.stiffness;
+
+                this._offset.copy(this._delta).multiplyScalar(correction / wSum);
+
                 if (!nodeA.isPinned) nodeA.position.add(this._offset);
                 if (!nodeB.isPinned) nodeB.position.sub(this._offset);
             }
