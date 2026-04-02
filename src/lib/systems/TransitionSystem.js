@@ -7,6 +7,7 @@ export class TransitionSystem extends System {
     constructor() {
         super();
     }
+    
     update(world, deltaTime) {
         const entities = Query.entitiesWith(world, Transition, Transform);
 
@@ -15,7 +16,14 @@ export class TransitionSystem extends System {
             const transform = world.getComponent(e, Transform);
 
             if (transition.isActive) {
+                
+                if (transition.currentDelay > 0) {
+                    transition.currentDelay -= deltaTime;
+                    continue; 
+                }
+
                 transition.velocity *= transition.acceleration;
+                
                 transform.position.x -= transition.direction.x * transition.velocity * deltaTime;
                 transform.position.y -= transition.direction.y * transition.velocity * deltaTime;
             }

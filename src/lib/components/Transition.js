@@ -7,5 +7,8 @@ export class Transition extends Component {
         this.acceleration = configs.acceleration || 1.1;
         this.direction = configs.direction || { x: 0, y: -1 };
         this.isActive = false;
+
+        this.delay = configs.delay || 0;
+        this.currentDelay = this.delay; 
     }
 }

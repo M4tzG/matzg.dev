@@ -89,7 +89,7 @@ export const useCanvasEngine = () => {
         const handleTransitionEvent = async (e) => {
             if (!engineRef.current) return;
 
-            await engineRef.current.triggerTransition(800);
+            await engineRef.current.triggerTransition(2000);
 
             if (e.detail && typeof e.detail.onComplete === 'function') {
                 e.detail.onComplete();
