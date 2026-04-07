@@ -1,5 +1,57 @@
 import * as THREE from "three";
 
+/**
+ * @typedef {Object} TransformConfig
+ * @property {number} px - Posição em X
+ * @property {number} py - Posição em Y
+ * @property {number} pz - Posição em Z
+ * @property {number} [rx] - Rotação em X 
+ * @property {number} [ry] - Rotação em Y 
+ * @property {number} [rz] - Rotação em Z 
+ */
+
+/**
+ * @typedef {Object} InteractionConfig
+ * @property {boolean} [isParallaxed]
+ * @property {boolean} [isHoverable]
+ * @property {boolean} [isDraggable]
+ * @property {number} [parallaxFactor]
+ */
+
+/**
+ * @typedef {Object} TransitionConfig
+ * @property {number} velocity
+ * @property {number} acceleration
+ * @property {{x: number, y: number}} direction
+ * @property {number} delay
+ */
+
+/**
+ * @typedef {Object} SpriteConfig
+ * @property {string} imageName - Nome da imagem carregada nos assets
+ * @property {TransformConfig} transform
+ * @property {number} baseHeight
+ * @property {InteractionConfig} [interaction]
+ * @property {TransitionConfig} [transition]
+ */
+
+/**
+ * @typedef {Object} ChainSystemConfig
+ * @property {THREE.Vector3} startPos
+ * @property {THREE.Vector3} endPos
+ * @property {number} numLinks
+ * @property {number} scale
+ * @property {number} gravity
+ */
+
+/**
+ * @typedef {Object} SceneData
+ * @property {Object} [postProcessing] - Configurações de filtros visuais
+ * @property {SpriteConfig[]} sprites - Lista de sprites estáticos
+ * @property {SpriteConfig[]} [animatedSprites] - Lista de sprites animados
+ * @property {Array<{chainConfig: ChainSystemConfig, interaction: InteractionConfig}>} [chains] - Lista de correntes com física
+ */
+
 const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
 
 export const desktopData = {

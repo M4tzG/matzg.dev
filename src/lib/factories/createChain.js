@@ -1,11 +1,14 @@
 import * as THREE from "three";
-import { Input } from "../components/Input";
-import { Interaction } from "../components/Interaction";
-import { ThreeView } from "../components/ThreeView";
-import { VerletNode } from "../components/VerletNode";
-import { Constraint } from "../components/Constraint";
-import { Gravity } from "../components/Gravity";
-import { Transform } from "../components/Transform";
+
+import {
+    Transform,
+    VerletNode,
+    Constraint,
+    ThreeView,
+    Interaction,
+    Input,
+    Gravity,
+} from "../components/index"
 
 
 

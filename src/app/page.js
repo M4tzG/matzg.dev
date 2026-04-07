@@ -8,19 +8,6 @@ import { useRouter } from 'next/navigation';
 
 export default function Home() {
 
-  const router = useRouter();
-  const handleMyStuffClick = (e) => {
-    e.preventDefault(); 
-
-    window.dispatchEvent(new CustomEvent('start-canvas-transition', {
-      detail: {
-        onComplete: () => {
-          router.push('/projects');
-        }
-      }
-    }));
-  };
-  
 
   return (
     <section className="fixed inset-0 z-10 pointer-events-none">
@@ -36,7 +23,6 @@ export default function Home() {
               Icon={MyStuffButton}
               className="w-full text-black lg:text-white"
               openInNewTab={false}
-              onClick={handleMyStuffClick}
             />
           </div>
       </div>

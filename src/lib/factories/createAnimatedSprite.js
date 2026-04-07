@@ -1,11 +1,14 @@
 import * as THREE from "three";
 
-import { Transform } from "../components/Transform";
-import { Mesh2D } from "../components/Mesh2D";
-import { ThreeView } from "../components/ThreeView";
-import { Interaction } from "../components/Interaction";
-import { Input } from "../components/Input";
-import { SpriteAnimation } from "../components/SpriteAnimation";
+import {
+    Transform,
+    Mesh2D,
+    ThreeView,
+    Interaction,
+    Input,
+    SpriteAnimation,
+} from "../components/index"
+
 
 export function createAnimatedSprite(world, scene, assets, configs) {
     const { 

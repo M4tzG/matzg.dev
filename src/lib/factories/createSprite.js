@@ -1,11 +1,12 @@
 import * as THREE from "three";
 
-import { Transform } from "../components/Transform";
-import { Mesh2D } from "../components/Mesh2D";
-import { ThreeView } from "../components/ThreeView";
-import { Interaction } from "../components/Interaction";
-import { Input } from "../components/Input";
-import { Transition } from "../components/Transition";
+import {
+    Transform,
+    Mesh2D,
+    ThreeView,
+    Interaction,
+    Input,
+} from "../components/index"
 
 
 export function createSprite(world, scene, assets, configs) {
@@ -46,7 +47,6 @@ export function createSprite(world, scene, assets, configs) {
 //  ==-=-=-=-=-== ECS ==-=-=-=-=-==
     const entity = world.createEntity();
 
-    world.addComponent(entity, new Transition(transition));
     world.addComponent(entity, new Input()); 
     world.addComponent(entity, new Transform(transform)); 
     world.addComponent(entity, new Interaction(interaction));

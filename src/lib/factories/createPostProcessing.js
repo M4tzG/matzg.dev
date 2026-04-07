@@ -1,4 +1,5 @@
-import { PostProcessing } from "../components/PostProcessing";
+import { PostProcessing } from "../components/index"
+
 
 export function createPostProcessing(world, config = {}) {
 
