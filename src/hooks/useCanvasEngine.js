@@ -39,7 +39,8 @@ export const useCanvasEngine = () => {
 
         const initEngine = async () => {
             try {
-                engineRef.current = new Engine(canvasRef.current, {isMobile: isMobile});
+                
+                engineRef.current = new Engine(canvasRef.current, {device: {isMobile: isMobile}});
 
                 await engineRef.current.init(assets());
 

@@ -59,7 +59,7 @@ export default class Engine {
 
         this.config = {
             device: {
-                isMobile: options.device?.isMobile ?? false,
+                isMobile: options.device?.isMobile,
             },
             renderer: {
                 antialias: options.renderer?.antialias ?? !(options.device?.isMobile ?? false),
