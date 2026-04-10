@@ -2,7 +2,18 @@ import * as THREE from "three";
 
 const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
 
-export const mobileData = {
+export const mobileData = (aspect) => ({
+    camera: [
+        {
+            type: "perspective",
+            fov: 75,
+            aspect: aspect,
+            near: 0.1,
+            far: 1000,
+            x: 0, y: 0, z: 10,
+            lookAt: { x: 0, y: 0, z: 0 }
+        }
+    ],
     postProcessing: {
         pincushion: { 
             active: true, 
@@ -91,4 +102,4 @@ export const mobileData = {
         }
         */
     ]
-};
+});

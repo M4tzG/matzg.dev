@@ -2,12 +2,13 @@ import * as THREE from "three";
 
 /**
  * @typedef {Object} TransformConfig
- * @property {number} px - Posição em X
- * @property {number} py - Posição em Y
- * @property {number} pz - Posição em Z
- * @property {number} [rx] - Rotação em X 
- * @property {number} [ry] - Rotação em Y 
- * @property {number} [rz] - Rotação em Z 
+ * @property {number} px 
+ * @property {number} py 
+ * @property {number} pz 
+ * @property {number} [rx] 
+ * @property {number} [ry]
+ * @property {number} [rz]
+ * @property {number} [scale]
  */
 
 /**
@@ -28,7 +29,7 @@ import * as THREE from "three";
 
 /**
  * @typedef {Object} SpriteConfig
- * @property {string} imageName - Nome da imagem carregada nos assets
+ * @property {string} imageName 
  * @property {TransformConfig} transform
  * @property {number} baseHeight
  * @property {InteractionConfig} [interaction]
@@ -46,15 +47,26 @@ import * as THREE from "three";
 
 /**
  * @typedef {Object} SceneData
- * @property {Object} [postProcessing] - Configurações de filtros visuais
- * @property {SpriteConfig[]} sprites - Lista de sprites estáticos
- * @property {SpriteConfig[]} [animatedSprites] - Lista de sprites animados
- * @property {Array<{chainConfig: ChainSystemConfig, interaction: InteractionConfig}>} [chains] - Lista de correntes com física
+ * @property {Object} [postProcessing] 
+ * @property {SpriteConfig[]} sprites 
+ * @property {SpriteConfig[]} [animatedSprites]
+ * @property {Array<{chainConfig: ChainSystemConfig, interaction: InteractionConfig}>} [chains]
  */
 
 const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
 
-export const desktopData = {
+export const desktopData = (aspect) => ({
+    camera: [
+        {
+            type: "perspective",
+            fov: 75,
+            aspect: aspect,
+            near: 0.1,
+            far: 1000,
+            transform: { px: 0, py: 0, pz: 10 },
+            lookAt: { x: 0, y: 0, z: 0 }
+        }
+    ],
     postProcessing: {
         pincushion: { 
             active: true, 
@@ -161,5 +173,5 @@ export const desktopData = {
             chainConfig: { startPos: v3(8, 15, -5), endPos: v3(28, -9, 0), numLinks : 13, scale: 5, gravity: 2 },
             interaction: { isHoverable: true }
         }
-    ]
-};
+    ]   
+});

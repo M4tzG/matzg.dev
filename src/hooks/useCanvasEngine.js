@@ -46,7 +46,7 @@ export const useCanvasEngine = () => {
 
                 if(!isCleanedUp) {
                     isInitializedRef.current = true;
-                    engineRef.current.initScene(isMobile ? mobileData : desktopData);
+                    engineRef.current.initScene(isMobile ? mobileData(window.innerWidth / window.innerHeight) : desktopData(window.innerWidth / window.innerHeight));
                     setIsLoading(false);
                     if (isMobile && (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission !== 'function')) {
                         engineRef.current.enableGyroscope();
@@ -75,8 +75,10 @@ export const useCanvasEngine = () => {
         if (!engineRef.current || !isInitializedRef.current) return;
         if (pathname === '/') {
             setIsCanvasVisible(true);
-            engineRef.current.wake();
-            engineRef.current.initScene(isMobile ? mobileData : desktopData); 
+            if (!engineRef.current.currentScene){
+                engineRef.current.initScene(isMobile ? mobileData : desktopData); 
+            } else engineRef.current.wake();
+            
         } else {             
             engineRef.current.sleep();
             setIsCanvasVisible(false);

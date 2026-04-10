@@ -13,17 +13,17 @@ export class PickingSystem extends System {
     // interaçao do mouse com determinado componente
 // [=============================================================]  
 
-    constructor(scene, camera) {
+    constructor(scene) {
         super();
         this.scene = scene;
-        this.camera = camera;
+        this.camera = null;
         this.raycaster = new THREE.Raycaster(); // verifica hover (ajustar dps)
         this.mouseVector = new THREE.Vector2();
         
     }
 
     update(world, deltaTime) {
-
+        this.camera = world.mainCamera;
         const entities = Query.entitiesWith(world, Interaction, Input, ThreeView);
 
         const interactableObjects = [];

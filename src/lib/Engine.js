@@ -10,6 +10,7 @@ import {
     ConstraintSystem,
     RenderSystem,
     PostProcessingSystem,
+    CameraSystem
 } from "./systems/index";
 
 import { World } from "./ecs/World";
@@ -21,33 +22,33 @@ import { showNoWebGLFallback } from "./ui/fallbacks";
 /**
  * WebGLRenderer:
  * @typedef {Object} RendererOptions
- * @property {boolean} [antialias] - Antialiasing. Padrao: inverso do mibile
- * @property {'high-performance' | 'low-power' | 'default'} [powerPreference] - Uso da GPU no navegador
- * @property {boolean} [shadows] - Mapa de sombras. Padrao: true
- * @property {number} [clearColor] - Cor do fundo do canvas (ex: 0x000000)
- * @property {number} [clearAlpha] - Opacidade do fundo (0 a 1). Padrão: 0
- * @property {number} [pixelRatio] - Proporcao de pixels da tela
+ * @property {boolean} [antialias] 
+ * @property {'high-performance' | 'low-power' | 'default'} [powerPreference]
+ * @property {boolean} [shadows] 
+ * @property {number} [clearColor] 
+ * @property {number} [clearAlpha]
+ * @property {number} [pixelRatio] 
  */
 
 /**
  * Config Engine
  * @typedef {Object} EngineCoreOptions
- * @property {number} [maxDeltaTime] - Limite maximo entre frames. Padrao: 0.5
+ * @property {number} [maxDeltaTime]
  */
 
 /**
  * Inicializacao Engine
  * @typedef {Object} EngineOptions
- * @property {Object} [device] - Dispositivo.
- * @property {boolean} [device.isMobile] - Consigs otimizadas para o mobile
- * @property {RendererOptions} [renderer] - Configuracoes visuais e de renderizacao 
- * @property {EngineCoreOptions} [engine] - Comportamento interno
+ * @property {Object} [device] 
+ * @property {boolean} [device.isMobile] 
+ * @property {RendererOptions} [renderer]
+ * @property {EngineCoreOptions} [engine]
  */
 
 export default class Engine {
     // ----------------
     /**
-     * @param {HTMLCanvasElement} canvas - <canvas> do DOM 
+     * @param {HTMLCanvasElement} canvas 
      * @param {EngineOptions} [options={}] - Configuracoes opcionais
      */
     // ----------------
@@ -76,7 +77,7 @@ export default class Engine {
 
     // ----------------
 
-        this.camera = null;
+        this.mainCamera = null;
         this.renderer = null;
         this.assets = null;
         this.currentScene = null;
@@ -133,9 +134,9 @@ export default class Engine {
 
 // ----------------
 
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);   
-        this.camera.position.z = 10;  
-        this.camera.lookAt(0, 0, 0);
+        // this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);   
+        // this.camera.position.z = 10;  
+        // this.camera.lookAt(0, 0, 0);
 
 // ----------------       
 
@@ -167,17 +168,18 @@ export default class Engine {
 // ----------------
         this.currentWorld.addSystem(this.inputSystem);
         this.currentWorld.addSystem(new EffectSystem());
+        this.currentWorld.addSystem(new CameraSystem());
 
 // ----------------
         const needsPicking = data.sprites?.some(s => s.interaction?.isHoverable || s.interaction?.isDraggable) || 
                              data.chains?.some(c => c.interaction?.isHoverable);
         if (needsPicking) {
-             this.currentWorld.addSystem(new PickingSystem(this.currentScene, this.camera));
+             this.currentWorld.addSystem(new PickingSystem(this.currentScene));
         }
 
 // ----------------
         if (data.animatedSprites && data.animatedSprites.length > 0) {
-            this.currentWorld.addSystem(new AnimationSystem(this.renderer, this.currentScene, this.camera));
+            this.currentWorld.addSystem(new AnimationSystem(this.renderer, this.currentScene));
         }
 
 // ----------------
@@ -188,7 +190,7 @@ export default class Engine {
         }
 
 // ----------------
-        this.currentWorld.addSystem(new RenderSystem(this.renderer, this.currentScene, this.camera));
+        this.currentWorld.addSystem(new RenderSystem(this.renderer, this.currentScene));
 
 // ----------------
         if (data.postProcessing) {
@@ -230,11 +232,16 @@ export default class Engine {
 
 // [=============================================================]
     onWindowResize(){
-        this.camera.aspect = window.innerWidth / window.innerHeight;
-        this.camera.updateProjectionMatrix();
-        this.renderer.setSize(window.innerWidth, window.innerHeight, false);
-        
+
+    if (this.currentWorld && this.currentWorld.mainCamera) {
+        const cam = this.currentWorld.mainCamera;
+        if (cam.isPerspectiveCamera) { 
+            cam.aspect = window.innerWidth / window.innerHeight;
+            cam.updateProjectionMatrix();
+        }
     }
+    this.renderer.setSize(window.innerWidth, window.innerHeight, false);
+}
 
     onWindowChange(){
         console.log("visibility change");
@@ -258,9 +265,6 @@ export default class Engine {
         if (this.animationFrameId) {
             cancelAnimationFrame(this.animationFrameId);
             this.animationFrameId = null;
-        }
-        if (this.currentScene) {
-            this.currentScene.clear();
         }
     }
 

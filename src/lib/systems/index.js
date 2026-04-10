@@ -8,3 +8,4 @@ export { ConstraintSystem } from "./ConstraintsSystem";
 export { TransitionSystem } from "./TransitionSystem";
 export { RenderSystem } from "./RenderSystem";
 export { PostProcessingSystem } from "./PostProcessingSystem";
+export { CameraSystem } from "./CameraSystem";

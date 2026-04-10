@@ -8,3 +8,4 @@ export { VerletNode } from "./VerletNode";
 export { Constraint } from "./Constraint";
 export { Gravity } from "./Gravity";
 export { PostProcessing } from "./PostProcessing";
+export { Camera } from "./Camera";

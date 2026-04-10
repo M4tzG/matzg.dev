@@ -6,15 +6,16 @@ import { Mesh2D } from "../components/Mesh2D";
 import { ThreeView } from "../components/ThreeView";
 
 export class RenderSystem extends System {
-    constructor(renderer, scene, camera){
+    constructor(renderer, scene){
         super();
         this.renderer = renderer;
         this.scene = scene;
-        this.camera = camera;
+        this.camera = null;
     }
 
 
     update(world, deltaTime){
+        this.camera = world.mainCamera;
         const entities = Query.entitiesWith(world, Transform, Mesh2D, ThreeView);
 
         for (const e of entities){
