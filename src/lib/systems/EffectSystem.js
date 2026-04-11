@@ -13,6 +13,7 @@ export class EffectSystem extends System {
 
     constructor() {
         super();
+        this._cachedData = null;
     }
 
     /**
@@ -20,13 +21,18 @@ export class EffectSystem extends System {
      * @param {number} deltaTime
      */
     update(world, deltaTime) {
-        const entities = Query.entitiesWith(world, Interaction, Transform, Input);
+        if (!this._cachedData) {
+            const entities = Query.entitiesWith(world, Interaction, Transform, Input);
+            this._cachedData = [];
+            for (const e of entities) {
+                const interaction = world.getComponent(e, Interaction);
+                const transform = world.getComponent(e, Transform);
+                const input = world.getComponent(e, Input);
+                this._cachedData.push({ interaction, transform, input });
+            }
+        }
 
-        for (const e of entities) {
-            const interaction = world.getComponent(e, Interaction);
-            const transform = world.getComponent(e, Transform);
-            const input = world.getComponent(e, Input);
-
+        for (const { interaction, transform, input } of this._cachedData) {
             if (interaction.isParallaxed) { 
                 
                 if (transform.initialX === undefined) {

@@ -15,6 +15,7 @@ export class RenderSystem extends System {
         this.renderer = renderer;
         this.scene = scene;
         this.camera = null;
+        this._cachedData = null;
     }
 
     /**
@@ -23,13 +24,18 @@ export class RenderSystem extends System {
      */
     update(world, deltaTime){
         this.camera = world.mainCamera;
-        const entities = Query.entitiesWith(world, Transform, Mesh2D, ThreeView);
+        if (!this._cachedData) {
+            const entities = Query.entitiesWith(world, Transform, Mesh2D, ThreeView);
+            this._cachedData = [];
+            for (const e of entities) {
+                const transform = world.getComponent(e, Transform);
+                const mesh = world.getComponent(e, Mesh2D);
+                const view = world.getComponent(e, ThreeView);
+                this._cachedData.push({ transform, mesh, view });
+            }
+        }
 
-        for (const e of entities){
-            const transform = world.getComponent(e, Transform);
-            const mesh = world.getComponent(e, Mesh2D);
-            const view = world.getComponent(e, ThreeView);
-
+        for (const { transform, mesh, view } of this._cachedData){
             const sprite = view.obj;
 
             sprite.position.set(

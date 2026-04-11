@@ -20,6 +20,7 @@ export class AnimationSystem extends System {
         this.camera = null;
 
         this.timer = 0;
+        this._cachedData = null;
     }
 
     /**
@@ -28,12 +29,17 @@ export class AnimationSystem extends System {
      */
     update(world, deltaTime) {
         this.camera = world.mainCamera;
-        const entities = Query.entitiesWith(world, SpriteAnimation, ThreeView);
+        if (!this._cachedData) {
+            const entities = Query.entitiesWith(world, SpriteAnimation, ThreeView);
+            this._cachedData = [];
+            for (const e of entities) {
+                const anim = world.getComponent(e, SpriteAnimation);
+                const view = world.getComponent(e, ThreeView);
+                this._cachedData.push({ anim, view });
+            }
+        }
 
-        for (const e of entities) {
-            const anim = world.getComponent(e, SpriteAnimation);
-            const view = world.getComponent(e, ThreeView);
-
+        for (const { anim, view } of this._cachedData) {
             anim.timer += deltaTime;
         
             if (anim.timer >= anim.frameTime){

@@ -5,6 +5,7 @@ import { Camera, Transform } from "../components/index";
 export class CameraSystem extends System {
     constructor() {
         super();
+        this._cachedData = null;
     }
 
     /**
@@ -12,12 +13,17 @@ export class CameraSystem extends System {
      * @param {number} delta
      */
     update(world, delta) {
-        const entities = Query.entitiesWith(world, Camera, Transform);
+        if (!this._cachedData) {
+            const entities = Query.entitiesWith(world, Camera, Transform);
+            this._cachedData = [];
+            for (const entity of entities) {
+                const cameraComp = world.getComponent(entity, Camera);
+                const transform = world.getComponent(entity, Transform);
+                this._cachedData.push({ cameraComp, transform });
+            }
+        }
 
-        for (const entity of entities) {
-            const cameraComp = world.getComponent(entity, Camera);
-            const transform = world.getComponent(entity, Transform);
-
+        for (const { cameraComp, transform } of this._cachedData) {
             
             if (cameraComp.isActive) {
                 cameraComp.camera.position.z = transform.position.z;
