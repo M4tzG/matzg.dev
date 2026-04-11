@@ -4,6 +4,12 @@ import { createAnimatedSprite } from "../factories/createAnimatedSprite";
 import { createChain } from "../factories/createChain";
 import { createCamera } from "../factories/createCamera";
 
+/**
+ * @param {World} world 
+ * @param {THREE.Scene} scene 
+ * @param {Object} assets 
+ * @param {SceneData} data 
+ */
 export function runScene(world, scene, assets, data)  {
     
     if (data.postProcessing) {

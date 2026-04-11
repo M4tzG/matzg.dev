@@ -2,6 +2,9 @@ import { Component } from "../ecs/Component";
 import * as THREE from "three";
 
 export class Transform extends Component {
+    /**
+     * @param {TransformConfig} configs 
+     */
     constructor(configs = {}) {
         super();
 

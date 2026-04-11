@@ -9,6 +9,9 @@ export class InputSystem extends System {
     // pega os inputs do mouse, um delta para interaçao e click
 // [=============================================================]   
 
+    /**
+     * @param {THREE.Camera} camera 
+     */
     constructor(camera) {
         super();
         this.camera = camera;
@@ -69,7 +72,10 @@ export class InputSystem extends System {
         }
     }
 
-
+    /**
+     * @param {World} world 
+     * @param {number} deltaTime
+     */
     update(world, deltaTime) {
         const entities = Query.entitiesWith(world, Input);
 

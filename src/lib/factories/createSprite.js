@@ -9,6 +9,13 @@ import {
 } from "../components/index"
 
 
+/**
+ * @param {World} world 
+ * @param {THREE.Scene} scene 
+ * @param {AssetsManager} assets 
+ * @param {SpriteConfig} configs 
+ * @returns {number}
+ */
 export function createSprite(world, scene, assets, configs) {
     const {
         imageName,

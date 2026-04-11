@@ -9,6 +9,10 @@ export class AnimationSystem extends System {
     // conta o timer, quando der o tempo, troca de frame
 // [=============================================================]  
  
+    /**
+     * @param {THREE.WebGLRenderer} renderer 
+     * @param {THREE.Scene} scene
+     */
     constructor(renderer, scene){
         super();
         this.renderer = renderer;
@@ -18,6 +22,10 @@ export class AnimationSystem extends System {
         this.timer = 0;
     }
 
+    /**
+     * @param {World} world 
+     * @param {number} deltaTime
+     */
     update(world, deltaTime) {
         this.camera = world.mainCamera;
         const entities = Query.entitiesWith(world, SpriteAnimation, ThreeView);

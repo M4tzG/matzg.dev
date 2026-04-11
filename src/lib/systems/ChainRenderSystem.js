@@ -11,6 +11,10 @@ export class ChainRenderSystem extends System {
     // ajusta rotaçao
 // [=============================================================]  
 
+    /**
+     * @param {World} world
+     * @param {number} deltaTime 
+     */
     update(world, deltaTime) {
         const entities = Query.entitiesWith(world, VerletNode, ThreeView);
 

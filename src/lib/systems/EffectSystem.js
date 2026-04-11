@@ -15,6 +15,10 @@ export class EffectSystem extends System {
         super();
     }
 
+    /**
+     * @param {World} world
+     * @param {number} deltaTime
+     */
     update(world, deltaTime) {
         const entities = Query.entitiesWith(world, Interaction, Transform, Input);
 

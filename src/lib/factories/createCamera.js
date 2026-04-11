@@ -2,10 +2,13 @@
 import * as THREE from 'three';
 import { Transform, Camera } from '../components/index';
 
-
+/**
+ * @param {World} world
+ * @param {CameraConfig} configs 
+ * @returns {number} 
+ */
 export function createCamera(world, configs) {
     const { 
-        lookAt = {},
         transform = {},
     } = configs;
 
@@ -22,7 +25,7 @@ export function createCamera(world, configs) {
 
     const entity = world.createEntity();
     
-    const cameraComp = new Camera(threeCamera, lookAt);
+    const cameraComp = new Camera(threeCamera, configs.lookAt);
     world.addComponent(entity, cameraComp);
     world.addComponent(entity, new Transform(transform));
 

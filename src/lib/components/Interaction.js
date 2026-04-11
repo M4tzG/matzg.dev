@@ -1,6 +1,10 @@
 import { Component } from "../ecs/Component";
 
+
 export class Interaction extends Component {
+    /**
+     * @param {InteractionConfig} configs 
+     */
     constructor(configs = {}) {
         super();
         // onHold

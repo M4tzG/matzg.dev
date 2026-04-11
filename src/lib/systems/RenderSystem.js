@@ -6,6 +6,10 @@ import { Mesh2D } from "../components/Mesh2D";
 import { ThreeView } from "../components/ThreeView";
 
 export class RenderSystem extends System {
+    /**
+     * @param {THREE.WebGLRenderer} renderer
+     * @param {THREE.Scene} scene
+     */
     constructor(renderer, scene){
         super();
         this.renderer = renderer;
@@ -13,7 +17,10 @@ export class RenderSystem extends System {
         this.camera = null;
     }
 
-
+    /**
+     * @param {World} world 
+     * @param {number} deltaTime 
+     */
     update(world, deltaTime){
         this.camera = world.mainCamera;
         const entities = Query.entitiesWith(world, Transform, Mesh2D, ThreeView);

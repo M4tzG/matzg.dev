@@ -7,6 +7,10 @@ export class CameraSystem extends System {
         super();
     }
 
+    /**
+     * @param {World} world
+     * @param {number} delta
+     */
     update(world, delta) {
         const entities = Query.entitiesWith(world, Camera, Transform);
 

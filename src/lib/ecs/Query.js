@@ -1,5 +1,9 @@
 export class Query {
-
+    /**
+     * @param {World} world 
+     * @param  {...any} componentClasses 
+     * @returns 
+     */
     static entitiesWith(world, ...componentClasses) {
         const key = componentClasses.map(c => c.name).join(',');
 

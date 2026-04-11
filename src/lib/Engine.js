@@ -19,32 +19,6 @@ import { loadAssets } from "./run/loadAssets";
 import { showNoWebGLFallback } from "./ui/fallbacks";
 
 
-/**
- * WebGLRenderer:
- * @typedef {Object} RendererOptions
- * @property {boolean} [antialias] 
- * @property {'high-performance' | 'low-power' | 'default'} [powerPreference]
- * @property {boolean} [shadows] 
- * @property {number} [clearColor] 
- * @property {number} [clearAlpha]
- * @property {number} [pixelRatio] 
- */
-
-/**
- * Config Engine
- * @typedef {Object} EngineCoreOptions
- * @property {number} [maxDeltaTime]
- */
-
-/**
- * Inicializacao Engine
- * @typedef {Object} EngineOptions
- * @property {Object} [device] 
- * @property {boolean} [device.isMobile] 
- * @property {RendererOptions} [renderer]
- * @property {EngineCoreOptions} [engine]
- */
-
 export default class Engine {
     // ----------------
     /**
@@ -151,6 +125,9 @@ export default class Engine {
     }
 
 // [=============================================================]
+    /**
+     * @param {SceneData} data 
+     */
     initScene(data) {
         if (this.currentScene) {
             this.currentScene.clear();

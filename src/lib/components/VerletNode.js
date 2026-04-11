@@ -2,6 +2,12 @@ import { Component } from "../ecs/Component";
 import * as THREE from "three"
 
 export class VerletNode extends Component {
+    /**
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} z 
+     * @param {boolean} isPinned 
+     */
     constructor(x, y, z, isPinned = false) {
         super();
         this.isPinned = isPinned;

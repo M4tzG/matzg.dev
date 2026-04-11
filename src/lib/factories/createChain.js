@@ -123,6 +123,16 @@ function createLinkMesh(isOdd, oddVisual, evenVisual, scale) {
     return linkVisual;
 }
 
+/**
+ * @param {World} world 
+ * @param {THREE.Scene} scene 
+ * @param {AssetsManager} assets 
+ * @param {Object} configs 
+ * @param {number} [configs.baseHeight=1] 
+ * @param {TransformConfig} [configs.transform={}] 
+ * @param {InteractionConfig} [configs.interaction={}] 
+ * @param {ChainSystemConfig} configs.chainConfig 
+ */
 export function createChain (world, scene, assets, configs) {
     const {
         baseHeight = 1,

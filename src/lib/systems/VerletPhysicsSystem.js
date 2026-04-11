@@ -17,6 +17,10 @@ export class VerletPhysicsSystem extends System {
         this._cachedNodes = null;
     }
 
+    /**
+     * @param {World} world 
+     * @param {number} deltaTime
+     */
     update(world, deltaTime) {
         const dt = Math.min(deltaTime, 0.16);
         if (!this._cachedNodes) {
