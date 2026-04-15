@@ -5,10 +5,12 @@ import { Query } from "../ecs/Query";
 
 
 export class RenderSystem extends System {
+    // --------------------------------
     /**
      * @param {THREE.WebGLRenderer} renderer
      * @param {THREE.Scene} scene
      */
+    // --------------------------------
     constructor(renderer, scene){
         super();
         this.renderer = renderer;
@@ -17,10 +19,12 @@ export class RenderSystem extends System {
         this._cachedData = null;
     }
 
+    // --------------------------------
     /**
      * @param {World} world 
      * @param {number} deltaTime 
      */
+    // --------------------------------
     update(world, deltaTime){
         this.camera = world.mainCamera;
         if (!this._cachedData) {

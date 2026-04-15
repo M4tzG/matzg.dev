@@ -15,10 +15,11 @@ export class PickingSystem extends System {
 // [=============================================================]  
     // interaçao do mouse com determinado componente
 // [=============================================================]  
-
+    // --------------------------------
     /**
      * @param {THREE.Scene} scene
      */
+    // --------------------------------
     constructor(scene) {
         super();
         this.scene = scene;
@@ -29,10 +30,12 @@ export class PickingSystem extends System {
         
     }
 
+    // --------------------------------
     /**
      * @param {World} world
      * @param {number} deltaTime
      */
+    // --------------------------------
     update(world, deltaTime) {
         this.camera = world.mainCamera;
         if (!this._cachedData) {

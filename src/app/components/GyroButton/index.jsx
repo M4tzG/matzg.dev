@@ -38,7 +38,7 @@ export default function GyroButton({ onActivateGyro }) {
                         onClick={requestAccess}
                         className="rounded bg-green-500 px-3 py-1.5 font-bold text-white hover:bg-green-600"
                     >
-                        Allow
+                        Activate
                     </button>
                 </>
             )}

@@ -93,10 +93,12 @@ const SHADERS = {
 
 
 export class PostProcessingSystem extends System {
+    // --------------------------------
     /**
      * @param {THREE.WebGLRenderer} renderer 
      * @param {THREE.Scene} scene
      */
+    // --------------------------------
     constructor(renderer, scene) {
         super();
         this.renderer = renderer;
@@ -122,10 +124,12 @@ export class PostProcessingSystem extends System {
         this.elapsedTime = 0;
     }
 
+    // --------------------------------
     /**
      * @param {World} world
      * @param {number} deltaTime
      */
+    // --------------------------------
     update(world, deltaTime) {
         this.camera = world.mainCamera;
 

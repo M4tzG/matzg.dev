@@ -19,11 +19,12 @@ export class EffectSystem extends System {
         super();
         this._cachedData = null;
     }
-
+    // --------------------------------
     /**
      * @param {World} world
      * @param {number} deltaTime
      */
+    // --------------------------------
     update(world, deltaTime) {
         if (!this._cachedData) {
             const entities = Query.entitiesWith(world, Interaction, Transform, Input);

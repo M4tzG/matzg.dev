@@ -6,10 +6,12 @@ import { System } from "../ecs/System";
 import * as THREE from 'three';
 
 export class ConstraintSystem extends System {
+    // --------------------------------
     /**
      * @param {number} [iterations=3] 
      * @param {number} [stiffness=1.5] 
      */
+    // --------------------------------
     constructor(iterations = 3, stiffness = 1.5) {
         super();
         this.iterations = iterations;
@@ -21,10 +23,12 @@ export class ConstraintSystem extends System {
         this.stiffness = stiffness; 
     }
 
+    // --------------------------------
     /**
      * @param {World} world 
      * @param {number} deltaTime
      */
+    // --------------------------------
     update(world, deltaTime) {
         if (!this._cachedConstraints) {
             const entities = Query.entitiesWith(world, Constraint);

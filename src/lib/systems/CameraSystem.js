@@ -10,10 +10,12 @@ export class CameraSystem extends System {
         this._cachedData = null;
     }
 
+    // --------------------------------
     /**
      * @param {World} world
      * @param {number} delta
      */
+    // --------------------------------
     update(world, delta) {
         if (!this._cachedData) {
             const entities = Query.entitiesWith(world, Camera, Transform);
@@ -29,7 +31,6 @@ export class CameraSystem extends System {
             
             if (cameraComp.isActive) {
                 cameraComp.camera.position.z = transform.position.z;
-                console.log("Camera position:", cameraComp.camera.position);
                 cameraComp.camera.lookAt(cameraComp.lookAt.x, cameraComp.lookAt.y, cameraComp.lookAt.z);
 
                 world.mainCamera = cameraComp.camera; 
