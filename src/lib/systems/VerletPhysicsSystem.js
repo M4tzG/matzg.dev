@@ -1,9 +1,10 @@
+import { VerletNode, Gravity } from "../components/index";
+
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
-import { VerletNode } from "../components/VerletNode";
-import { Gravity } from "../components/Gravity";
 
 import * as THREE from "three";
+
 
 export class VerletPhysicsSystem extends System {
 

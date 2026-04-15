@@ -107,7 +107,7 @@ export default class Engine {
         this.renderer.setClearColor(this.config.renderer.clearColor, this.config.renderer.clearAlpha);
 
 // ----------------
-
+        // componente criado
         // this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);   
         // this.camera.position.z = 10;  
         // this.camera.lookAt(0, 0, 0);

@@ -1,9 +1,12 @@
+import { Interaction, 
+        Input, 
+        ThreeView, 
+        VerletNode } from "../components/index";  
+
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
-import { Interaction } from "../components/Interaction";  
-import { Input } from "../components/Input";
-import { ThreeView } from "../components/ThreeView";
-import { VerletNode } from "../components/VerletNode";
+
+
 
 import * as THREE from "three";
 

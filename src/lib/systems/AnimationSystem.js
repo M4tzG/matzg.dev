@@ -1,5 +1,5 @@
-import { SpriteAnimation } from "../components/SpriteAnimation";
-import { ThreeView } from "../components/ThreeView";
+import { SpriteAnimation, ThreeView } from "../components/index";
+
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
 

@@ -1,6 +1,7 @@
+import { Input } from "../components/Input";
+
 import { System } from "../ecs/System"; 
 import { Query } from "../ecs/Query";   
-import { Input } from "../components/Input";
 
 
 export class InputSystem extends System {

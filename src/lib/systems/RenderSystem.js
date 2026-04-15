@@ -1,9 +1,8 @@
+import { Transform, Mesh2D, ThreeView } from "../components/index";
+
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
 
-import { Transform } from "../components/Transform";
-import { Mesh2D } from "../components/Mesh2D";
-import { ThreeView } from "../components/ThreeView";
 
 export class RenderSystem extends System {
     /**

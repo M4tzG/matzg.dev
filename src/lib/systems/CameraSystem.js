@@ -1,6 +1,8 @@
+import { Camera, Transform } from "../components/index";
+
 import { System } from "../ecs/System"; 
 import { Query } from "../ecs/Query";
-import { Camera, Transform } from "../components/index";
+
 
 export class CameraSystem extends System {
     constructor() {

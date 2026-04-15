@@ -1,7 +1,7 @@
-import { System } from "../ecs/System";
-import { Query } from "../ecs/Query";
 import { PostProcessing } from "../components/PostProcessing";
 
+import { System } from "../ecs/System";
+import { Query } from "../ecs/Query";
 
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';

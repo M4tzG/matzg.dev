@@ -1,8 +1,12 @@
+import { Interaction, 
+        Transform, 
+        Input } from "../components/index";  
+
 import { System } from "../ecs/System"; 
-import { Query } from "../ecs/Query";   
-import { Interaction } from "../components/Interaction";  
-import { Transform } from "../components/Transform";
-import { Input } from "../components/Input";
+import { Query } from "../ecs/Query";  
+
+
+
 
 
 export class EffectSystem extends System {

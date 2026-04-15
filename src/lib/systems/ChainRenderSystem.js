@@ -1,7 +1,8 @@
+import { VerletNode, ThreeView } from "../components/index";
+
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
-import { VerletNode } from "../components/VerletNode";
-import { ThreeView } from "../components/ThreeView";
+
 
 export class ChainRenderSystem extends System {
     
