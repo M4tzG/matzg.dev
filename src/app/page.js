@@ -19,10 +19,10 @@ export default function Home() {
 
           <div className="flex justify-center w-full lg:w-4/10 lg:justify-end">
             <NavigationButton 
-              to="/projects" 
+              to="https://github.com/M4tzG" 
               Icon={MyStuffButton}
               className="w-full text-black lg:text-white"
-              openInNewTab={false}
+              openInNewTab={true}
             />
           </div>
       </div>
