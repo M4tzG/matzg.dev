@@ -1,9 +1,11 @@
 import { Component } from "../ecs/Component";
 
 export class ThreeView extends Component {
-    constructor(obj, isOdd = false) {
+    /**
+     * @param {THREE.Object3D} obj 
+     */
+    constructor(obj) {
         super();
         this.obj = obj;
-        this.isOdd = isOdd;
     }
 }

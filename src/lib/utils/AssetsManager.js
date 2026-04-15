@@ -10,6 +10,11 @@ export default class AssetsManager {
         this.gltfLoader = new GLTFLoader();
     }
 
+    /**
+     * @param {string} name
+     * @param {string} path
+     * @returns {Promise<THREE.Object3D>}
+     */
     load3Dmodel(name, path) {
         return new Promise((resolve, reject) => {
             this.gltfLoader.load(
@@ -25,6 +30,11 @@ export default class AssetsManager {
         });
     }
 
+    /**
+     * @param {string} name 
+     * @param {string} url 
+     * @returns {Promise<THREE.Texture>} 
+     */
     loadTexture(name, url) {
         return new Promise((resolve, reject) => {
 
@@ -45,10 +55,18 @@ export default class AssetsManager {
         });
     }
 
+    /**
+     * @param {string} name 
+     * @returns {THREE.Texture|undefined} 
+     */
     getTexture(name) {
         return this.textures[name];
     }
 
+    /**
+     * @param {string} name
+     * @returns {THREE.Object3D|undefined} 
+     */
     getModel(name) {
         return this.models[name];
     }

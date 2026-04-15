@@ -1,6 +1,10 @@
 import { Component } from "../ecs/Component";
+import * as THREE from "three";
 
 export class Transform extends Component {
+    /**
+     * @param {TransformConfig} configs 
+     */
     constructor(configs = {}) {
         super();
 
@@ -9,17 +13,17 @@ export class Transform extends Component {
             configs = {};
         }
 
-        this.position = {
-            x: Number.isFinite(configs.px) ? configs.px : 0,
-            y: Number.isFinite(configs.py) ? configs.py : 0,
-            z: Number.isFinite(configs.pz) ? configs.pz : 0
-        };
-
-        this.rotation = {
-            x: Number.isFinite(configs.rx) ? configs.rx : 0,
-            y: Number.isFinite(configs.ry) ? configs.ry : 0,
-            z: Number.isFinite(configs.rz) ? configs.rz : 0
-        };
+        this.position = new THREE.Vector3(
+            Number.isFinite(configs.px) ? configs.px : 0,
+            Number.isFinite(configs.py) ? configs.py : 0,
+            Number.isFinite(configs.pz) ? configs.pz : 0
+        );
+        // THREE.Euler
+        this.rotation = new THREE.Vector3(
+            Number.isFinite(configs.rx) ? configs.rx : 0,
+            Number.isFinite(configs.ry) ? configs.ry : 0,
+            Number.isFinite(configs.rz) ? configs.rz : 0
+        );
 
         this.scale = Number.isFinite(configs.scale) ? configs.scale : 1;
     }

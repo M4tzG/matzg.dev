@@ -1,5 +1,5 @@
-import { SpriteAnimation } from "../components/SpriteAnimation";
-import { ThreeView } from "../components/ThreeView";
+import { SpriteAnimation, ThreeView } from "../components/index";
+
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
 
@@ -9,22 +9,41 @@ export class AnimationSystem extends System {
     // conta o timer, quando der o tempo, troca de frame
 // [=============================================================]  
  
-    constructor(renderer, scene, camera){
+    // --------------------------------
+    /**
+     * @param {THREE.WebGLRenderer} renderer 
+     * @param {THREE.Scene} scene
+     */
+    // --------------------------------
+    constructor(renderer, scene){
         super();
         this.renderer = renderer;
         this.scene = scene;
-        this.camera = camera;
+        this.camera = null;
 
         this.timer = 0;
+        this._cachedData = null;
     }
-
+    
+    // --------------------------------
+    /**
+     * @param {World} world 
+     * @param {number} deltaTime
+     */
+    // --------------------------------
     update(world, deltaTime) {
-        const entities = Query.entitiesWith(world, SpriteAnimation, ThreeView);
+        this.camera = world.mainCamera;
+        if (!this._cachedData) {
+            const entities = Query.entitiesWith(world, SpriteAnimation, ThreeView);
+            this._cachedData = [];
+            for (const e of entities) {
+                const anim = world.getComponent(e, SpriteAnimation);
+                const view = world.getComponent(e, ThreeView);
+                this._cachedData.push({ anim, view });
+            }
+        }
 
-        for (const e of entities) {
-            const anim = world.getComponent(e, SpriteAnimation);
-            const view = world.getComponent(e, ThreeView);
-
+        for (const { anim, view } of this._cachedData) {
             anim.timer += deltaTime;
         
             if (anim.timer >= anim.frameTime){

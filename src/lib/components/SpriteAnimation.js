@@ -1,6 +1,10 @@
 import { Component } from "../ecs/Component";
 
+
 export class SpriteAnimation extends Component {
+    /**
+     * @param {SpriteAnimationConfig} animConfig 
+     */
     constructor(animConfig = {}) {
         super();
         this.rows = animConfig.rows;

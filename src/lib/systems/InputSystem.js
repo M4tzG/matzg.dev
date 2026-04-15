@@ -1,6 +1,7 @@
+import { Input } from "../components/Input";
+
 import { System } from "../ecs/System"; 
 import { Query } from "../ecs/Query";   
-import { Input } from "../components/Input";
 
 
 export class InputSystem extends System {
@@ -9,6 +10,11 @@ export class InputSystem extends System {
     // pega os inputs do mouse, um delta para interaçao e click
 // [=============================================================]   
 
+    // --------------------------------
+    /**
+     * @param {THREE.Camera} camera 
+     */
+    // --------------------------------
     constructor(camera) {
         super();
         this.camera = camera;
@@ -22,6 +28,7 @@ export class InputSystem extends System {
         };
         this.gyro = { x: 0, y: 0 }
         this.handlers = {};
+        this._cachedData = null;
 
         this.initListeners();
     }
@@ -68,14 +75,23 @@ export class InputSystem extends System {
             window.removeEventListener('deviceorientation', this.handlers.deviceorientation);
         }
     }
-
-
+    // --------------------------------
+    /**
+     * @param {World} world 
+     * @param {number} deltaTime
+     */
+    // --------------------------------
     update(world, deltaTime) {
-        const entities = Query.entitiesWith(world, Input);
+        if (!this._cachedData) {
+            const entities = Query.entitiesWith(world, Input);
+            this._cachedData = [];
+            for (const e of entities) {
+                const input = world.getComponent(e, Input);
+                this._cachedData.push({ input });
+            }
+        }
 
-        for (const e of entities) {
-            const input = world.getComponent(e, Input);
-
+        for (const { input } of this._cachedData) {
             input.mouse.x = this.mouse.x;
             input.mouse.y = this.mouse.y;
             input.mouse.deltaX = this.mouse.dx;

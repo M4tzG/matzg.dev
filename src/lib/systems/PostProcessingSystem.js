@@ -1,7 +1,7 @@
-import { System } from "../ecs/System";
-import { Query } from "../ecs/Query";
 import { PostProcessing } from "../components/PostProcessing";
 
+import { System } from "../ecs/System";
+import { Query } from "../ecs/Query";
 
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
@@ -92,18 +92,25 @@ const SHADERS = {
 }
 
 
-
 export class PostProcessingSystem extends System {
-    constructor(renderer, scene, camera) {
+    // --------------------------------
+    /**
+     * @param {THREE.WebGLRenderer} renderer 
+     * @param {THREE.Scene} scene
+     */
+    // --------------------------------
+    constructor(renderer, scene) {
         super();
         this.renderer = renderer;
         this.scene = scene;
-        this.camera = camera;
+        this.camera = null;
 
         this.cachedEntity = null;
         
         this.composer = new EffectComposer(this.renderer);
-        this.composer.addPass(new RenderPass(this.scene, this.camera));
+
+        this.renderPass = new RenderPass(this.scene, this.camera);
+        this.composer.addPass(this.renderPass);
         
         this.pincushionPass = new ShaderPass(SHADERS.pincushion);
         this.composer.addPass(this.pincushionPass);
@@ -117,9 +124,18 @@ export class PostProcessingSystem extends System {
         this.elapsedTime = 0;
     }
 
-
-
+    // --------------------------------
+    /**
+     * @param {World} world
+     * @param {number} deltaTime
+     */
+    // --------------------------------
     update(world, deltaTime) {
+        this.camera = world.mainCamera;
+
+        if (!this.camera) return;
+
+        this.renderPass.camera = this.camera;
 
         this.elapsedTime += deltaTime;
 

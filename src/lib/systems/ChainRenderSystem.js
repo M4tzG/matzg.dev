@@ -1,7 +1,8 @@
+import { VerletNode, ThreeView } from "../components/index";
+
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
-import { VerletNode } from "../components/VerletNode";
-import { ThreeView } from "../components/ThreeView";
+
 
 export class ChainRenderSystem extends System {
     
@@ -11,12 +12,29 @@ export class ChainRenderSystem extends System {
     // ajusta rotaçao
 // [=============================================================]  
 
-    update(world, deltaTime) {
-        const entities = Query.entitiesWith(world, VerletNode, ThreeView);
+    constructor() {
+        super();
+        this._cachedData = null;
+    }
 
-        for (const e of entities) {
-            const node = world.getComponent(e, VerletNode);
-            const view = world.getComponent(e, ThreeView);
+    // --------------------------------
+    /**
+     * @param {World} world
+     * @param {number} deltaTime 
+     */
+    // --------------------------------
+    update(world, deltaTime) {
+        if (!this._cachedData) {
+            const entities = Query.entitiesWith(world, VerletNode, ThreeView);
+            this._cachedData = [];
+            for (const e of entities) {
+                const node = world.getComponent(e, VerletNode);
+                const view = world.getComponent(e, ThreeView);
+                this._cachedData.push({ node, view });
+            }
+        }
+
+        for (const { node, view } of this._cachedData) {
             const img = view.obj;
 
             if (img) {
@@ -26,13 +44,14 @@ export class ChainRenderSystem extends System {
                 if (node.nextNode) {
                     img.lookAt(node.nextNode.position);
                 }
+                img.rotateY(Math.PI / 2);
                 
-                if (view.isOdd) {
-                    img.rotateZ(Math.PI);
-                    img.rotateY(Math.PI / 2);
-                } else {
-                    img.rotateY(Math.PI / 2);
-                }
+                // if (view.isOdd) {
+                //     img.rotateZ(Math.PI);
+                //     img.rotateY(Math.PI / 2);
+                // } else {
+                    
+                // }
                 
             }
         }

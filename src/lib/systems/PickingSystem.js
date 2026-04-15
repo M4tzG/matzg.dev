@@ -1,9 +1,12 @@
+import { Interaction, 
+        Input, 
+        ThreeView, 
+        VerletNode } from "../components/index";  
+
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
-import { Interaction } from "../components/Interaction";  
-import { Input } from "../components/Input";
-import { ThreeView } from "../components/ThreeView";
-import { VerletNode } from "../components/VerletNode";
+
+
 
 import * as THREE from "three";
 
@@ -12,28 +15,46 @@ export class PickingSystem extends System {
 // [=============================================================]  
     // interaçao do mouse com determinado componente
 // [=============================================================]  
-
-    constructor(scene, camera) {
+    // --------------------------------
+    /**
+     * @param {THREE.Scene} scene
+     */
+    // --------------------------------
+    constructor(scene) {
         super();
         this.scene = scene;
-        this.camera = camera;
+        this.camera = null;
         this.raycaster = new THREE.Raycaster(); // verifica hover (ajustar dps)
         this.mouseVector = new THREE.Vector2();
+        this._cachedData = null;
         
     }
 
+    // --------------------------------
+    /**
+     * @param {World} world
+     * @param {number} deltaTime
+     */
+    // --------------------------------
     update(world, deltaTime) {
-
-        const entities = Query.entitiesWith(world, Interaction, Input, ThreeView);
+        this.camera = world.mainCamera;
+        if (!this._cachedData) {
+            const entities = Query.entitiesWith(world, Interaction, Input, ThreeView);
+            this._cachedData = [];
+            for (const e of entities) {
+                const threeView = world.getComponent(e, ThreeView);
+                const interaction = world.getComponent(e, Interaction);
+                const input = world.getComponent(e, Input);
+                const verlet = world.getComponent(e, VerletNode);
+                this._cachedData.push({ threeView, interaction, input, verlet, entity: e });
+            }
+        }
 
         const interactableObjects = [];
         const objectToEntityMap = new Map();
         let mouseInput = null;
 
-        for (const e of entities) {
-            const threeView = world.getComponent(e, ThreeView);
-            const interaction = world.getComponent(e, Interaction);
-            const input = world.getComponent(e, Input);
+        for (const { threeView, interaction, input, entity } of this._cachedData) {
             
             if (!mouseInput) mouseInput = input;
 
@@ -42,7 +63,7 @@ export class PickingSystem extends System {
 
             if (threeView.obj) {
                 interactableObjects.push(threeView.obj);
-                objectToEntityMap.set(threeView.obj, e); 
+                objectToEntityMap.set(threeView.obj, entity); 
             }
         }
 
@@ -62,9 +83,9 @@ export class PickingSystem extends System {
                 const tempEntity = objectToEntityMap.get(objectHit);
                 
                 if (tempEntity !== undefined) {
-                    const interaction = world.getComponent(tempEntity, Interaction);
-                    
-                    if (interaction.isHoverable) {
+                    // Find the interaction from cached data
+                    const cachedItem = this._cachedData.find(item => item.entity === tempEntity);
+                    if (cachedItem && cachedItem.interaction.isHoverable) {
                         entityHit = tempEntity;
                         break; 
                     }
@@ -72,25 +93,22 @@ export class PickingSystem extends System {
             }
             // faz a graça
             if (entityHit !== undefined) {
-                const interaction = world.getComponent(entityHit, Interaction);
-                if (interaction) {
-                    interaction.isHovered = true;
-                }
-                const verlet = world.getComponent(entityHit, VerletNode);
-                const input = world.getComponent(entityHit, Input);
+                const cachedItem = this._cachedData.find(item => item.entity === entityHit);
+                if (cachedItem) {
+                    cachedItem.interaction.isHovered = true;
+                    if (cachedItem.verlet && !cachedItem.verlet.isPinned && cachedItem.interaction.isHoverable) {
+                        // delta da mmovimentaçao do mouse
+                        const moveX = cachedItem.input.mouse.deltaX || 0;
+                        const moveY = cachedItem.input.mouse.deltaY || 0;
 
-                if (verlet && !verlet.isPinned && interaction.isHoverable) {
-                    // delta da mmovimentaçao do mouse
-                    const moveX = input.mouse.deltaX || 0;
-                    const moveY = input.mouse.deltaY || 0;
+                        // console.log(moveY, moveX)
 
-                    // console.log(moveY, moveX)
-
-                    if (Math.abs(moveX) > 0 || Math.abs(moveY) > 0) {
-                        
-                        const pushMultiplier = 0.001; 
-                        verlet.position.x += moveX * pushMultiplier;
-                        verlet.position.y -= moveY * pushMultiplier; 
+                        if (Math.abs(moveX) > 0 || Math.abs(moveY) > 0) {
+                            
+                            const pushMultiplier = 0.001; 
+                            cachedItem.verlet.position.x += moveX * pushMultiplier;
+                            cachedItem.verlet.position.y -= moveY * pushMultiplier; 
+                        }
                     }
                 }
             }

@@ -1,18 +1,27 @@
 import * as THREE from "three";
 
-import { Transform } from "../components/Transform";
-import { Mesh2D } from "../components/Mesh2D";
-import { ThreeView } from "../components/ThreeView";
-import { Interaction } from "../components/Interaction";
-import { Input } from "../components/Input";
+import {
+    Transform,
+    Mesh2D,
+    ThreeView,
+    Interaction,
+    Input,
+} from "../components/index"
 
 
+/**
+ * @param {World} world 
+ * @param {THREE.Scene} scene 
+ * @param {AssetsManager} assets 
+ * @param {SpriteConfig} configs 
+ * @returns {number}
+ */
 export function createSprite(world, scene, assets, configs) {
     const {
         imageName,
         baseHeight = 1,
         transform = {},
-        interaction = {}
+        interaction = {},
     } = configs;
     
     const texture = assets.getTexture(imageName);
