@@ -1,8 +1,20 @@
 import * as THREE from "three";
 
+
 const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
 
-export const desktopData = {
+export const desktopData = (aspect) => ({
+    camera: [
+        {
+            type: "perspective",
+            fov: 75,
+            aspect: aspect,
+            near: 0.1,
+            far: 1000,
+            transform: { px: 0, py: 0, pz: 10 },
+            lookAt: v3(0, 0, 0),
+        }
+    ],
     postProcessing: {
         pincushion: { 
             active: true, 
@@ -109,5 +121,5 @@ export const desktopData = {
             chainConfig: { startPos: v3(8, 15, -5), endPos: v3(28, -9, 0), numLinks : 13, scale: 5, gravity: 2 },
             interaction: { isHoverable: true }
         }
-    ]
-};
+    ]   
+});

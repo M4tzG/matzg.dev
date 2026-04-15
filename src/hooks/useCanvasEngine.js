@@ -25,7 +25,7 @@ export const useCanvasEngine = () => {
 
     // ==============================================================
     const handleActivateGyro = () => {
-        if (engineRef.current && typeof engineRef.current.enableGyroscope === 'function') {
+        if (engineRef.current) {
             engineRef.current.enableGyroscope();
         }
     };
@@ -39,13 +39,14 @@ export const useCanvasEngine = () => {
 
         const initEngine = async () => {
             try {
-                engineRef.current = new Engine(canvasRef.current, isMobile, true);
+                
+                engineRef.current = new Engine(canvasRef.current, {device: {isMobile: isMobile}});
 
                 await engineRef.current.init(assets());
 
                 if(!isCleanedUp) {
                     isInitializedRef.current = true;
-                    engineRef.current.initScene(isMobile ? mobileData : desktopData);
+                    engineRef.current.initScene(isMobile ? mobileData(window.innerWidth / window.innerHeight) : desktopData(window.innerWidth / window.innerHeight));
                     setIsLoading(false);
                     if (isMobile && (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission !== 'function')) {
                         engineRef.current.enableGyroscope();
@@ -65,41 +66,24 @@ export const useCanvasEngine = () => {
                 engineRef.current.dispose();
             }
         }
-    }, [isMobile]);
-
-
-    // ==============================================================
-    useEffect ( () => {
-        if (!engineRef.current || !isInitializedRef.current) return;
-
-        if (pathname === '/projects') {
-            engineRef.current.sleep();
-            setIsCanvasVisible(false);
-        } 
-        else if (pathname === '/') {
-            setIsCanvasVisible(true);
-            engineRef.current.wake();
-            engineRef.current.initScene(isMobile ? mobileData : desktopData); 
-        }
-    }, [pathname]);
-
-
-    // ==============================================================
-    useEffect(() => {
-        const handleTransitionEvent = async (e) => {
-            if (!engineRef.current) return;
-
-            await engineRef.current.triggerTransition(2000);
-
-            if (e.detail && typeof e.detail.onComplete === 'function') {
-                e.detail.onComplete();
-            }
-        };
-
-        window.addEventListener('start-canvas-transition', handleTransitionEvent);
-        return () => window.removeEventListener('start-canvas-transition', handleTransitionEvent);
     }, []);
 
+
+    // ==============================================================
+
+    useEffect ( () => {
+        if (!engineRef.current || !isInitializedRef.current) return;
+        if (pathname === '/') {
+            setIsCanvasVisible(true);
+            if (!engineRef.current.currentScene){
+                engineRef.current.initScene(isMobile ? mobileData : desktopData); 
+            } else engineRef.current.wake();
+            
+        } else {             
+            engineRef.current.sleep();
+            setIsCanvasVisible(false);
+        }
+    }, [pathname]);
 
     // ==============================================================
     return {

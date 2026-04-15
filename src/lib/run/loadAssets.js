@@ -1,5 +1,9 @@
 import AssetsManager from "../utils/AssetsManager";
 
+/**
+ * @param {Array<[string, string]>} assetsToLoad 
+ * @returns {Promise<AssetsManager>}
+ */
 export async function loadAssets(assetsToLoad) {
     const assets = new AssetsManager();
 

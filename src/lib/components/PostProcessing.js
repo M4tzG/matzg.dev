@@ -1,6 +1,11 @@
 import { System } from "../ecs/System";
 
+
+
 export class PostProcessing extends System {
+    /**
+     * @param {PostProcessingConfig} config 
+     */
     constructor(config = {}) {
         super();
         this.pincushion = {

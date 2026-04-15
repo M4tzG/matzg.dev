@@ -1,12 +1,16 @@
-import { Constraint } from "../components/Constraint";
-import { VerletNode } from "../components/VerletNode";
+import { Constraint, VerletNode } from "../components/index";
+
 import { Query } from "../ecs/Query";
 import { System } from "../ecs/System";
 
 import * as THREE from 'three';
 
 export class ConstraintSystem extends System {
-    constructor(iterations = 3, stiffness = 1) {
+    /**
+     * @param {number} [iterations=3] 
+     * @param {number} [stiffness=1.5] 
+     */
+    constructor(iterations = 3, stiffness = 1.5) {
         super();
         this.iterations = iterations;
         this._delta  = new THREE.Vector3();
@@ -14,9 +18,13 @@ export class ConstraintSystem extends System {
         this._cachedConstraints = null;
         
         // valors muito alto exprod
-        this.stiffness = 1.5; 
+        this.stiffness = stiffness; 
     }
 
+    /**
+     * @param {World} world 
+     * @param {number} deltaTime
+     */
     update(world, deltaTime) {
         if (!this._cachedConstraints) {
             const entities = Query.entitiesWith(world, Constraint);

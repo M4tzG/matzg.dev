@@ -1,9 +1,10 @@
+import { VerletNode, Gravity } from "../components/index";
+
 import { System } from "../ecs/System";
 import { Query } from "../ecs/Query";
-import { VerletNode } from "../components/VerletNode";
-import { Gravity } from "../components/Gravity";
 
 import * as THREE from "three";
+
 
 export class VerletPhysicsSystem extends System {
 
@@ -17,6 +18,10 @@ export class VerletPhysicsSystem extends System {
         this._cachedNodes = null;
     }
 
+    /**
+     * @param {World} world 
+     * @param {number} deltaTime
+     */
     update(world, deltaTime) {
         const dt = Math.min(deltaTime, 0.16);
         if (!this._cachedNodes) {

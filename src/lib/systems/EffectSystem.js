@@ -1,8 +1,12 @@
+import { Interaction, 
+        Transform, 
+        Input } from "../components/index";  
+
 import { System } from "../ecs/System"; 
-import { Query } from "../ecs/Query";   
-import { Interaction } from "../components/Interaction";  
-import { Transform } from "../components/Transform";
-import { Input } from "../components/Input";
+import { Query } from "../ecs/Query";  
+
+
+
 
 
 export class EffectSystem extends System {
@@ -13,16 +17,26 @@ export class EffectSystem extends System {
 
     constructor() {
         super();
+        this._cachedData = null;
     }
 
+    /**
+     * @param {World} world
+     * @param {number} deltaTime
+     */
     update(world, deltaTime) {
-        const entities = Query.entitiesWith(world, Interaction, Transform, Input);
+        if (!this._cachedData) {
+            const entities = Query.entitiesWith(world, Interaction, Transform, Input);
+            this._cachedData = [];
+            for (const e of entities) {
+                const interaction = world.getComponent(e, Interaction);
+                const transform = world.getComponent(e, Transform);
+                const input = world.getComponent(e, Input);
+                this._cachedData.push({ interaction, transform, input });
+            }
+        }
 
-        for (const e of entities) {
-            const interaction = world.getComponent(e, Interaction);
-            const transform = world.getComponent(e, Transform);
-            const input = world.getComponent(e, Input);
-
+        for (const { interaction, transform, input } of this._cachedData) {
             if (interaction.isParallaxed) { 
                 
                 if (transform.initialX === undefined) {

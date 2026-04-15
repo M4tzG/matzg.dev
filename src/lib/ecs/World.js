@@ -10,10 +10,75 @@ export class World {
         this.systems = [];
     }
 
+    /**
+     * @returns {number}
+     */
     createEntity() {
         const id = this.nextEntityId++;
         this.entities.add(id);
         return id;
+    }
+    
+    /**
+     * @param {number} entity 
+     * @param {Component} component 
+     */
+    addComponent(entity, component) {
+        const type = component.constructor;
+        if (!this.components.has(type)){
+            this.components.set(type, new Map());
+        }
+        this.components.get(type).set(entity, component);
+
+        Query.invalidateCache(this);
+    }
+
+    /**
+     * @param {number} entity
+     * @param {Function} componentType
+     */
+    removeComponent(entity, componentType) {
+        const componentMap = this.components.get(componentType);
+        if (componentMap) {
+            componentMap.delete(entity);
+            Query.invalidateCache(this); 
+        }
+    }
+    
+    /**
+     * @param {number} entity
+     * @param {Function} componentType 
+     * @returns {Component|undefined}
+     */
+    getComponent(entity, componentType) {
+        const componentMap = this.components.get(componentType);
+        return componentMap ? componentMap.get(entity) : undefined;
+    }
+
+    /**
+     * @param {number} entity
+     * @param {Function} componentType
+     * @returns {boolean}
+     */
+    hasComponent(entity, componentType) {
+        const componentMap = this.components.get(componentType);
+        return componentMap ? componentMap.has(entity) : false
+    }
+
+    /**
+     * @param {System} system
+     */
+    addSystem(system){
+        this.systems.push(system);
+    }
+
+    /**
+     * @param {number} deltaTime
+     */
+    update(deltaTime){
+        for (const system of this.systems) {
+            system.update(this, deltaTime);
+        }
     }
 
     dispose() {
@@ -43,43 +108,5 @@ export class World {
         }
 
         this.entities.delete(entity);
-    }
-
-    addComponent(entity, component) {
-        const type = component.constructor;
-        if (!this.components.has(type)){
-            this.components.set(type, new Map());
-        }
-        this.components.get(type).set(entity, component);
-
-        Query.invalidateCache(this);
-    }
-
-    removeComponent(entity, componentType) {
-        const componentMap = this.components.get(componentType);
-        if (componentMap) {
-            componentMap.delete(entity);
-            Query.invalidateCache(this); 
-        }
-    }
-
-    getComponent(entity, componentType) {
-        const componentMap = this.components.get(componentType);
-        return componentMap ? componentMap.get(entity) : undefined;
-    }
-
-    hasComponent(entity, componentType) {
-        const componentMap = this.components.get(componentType);
-        return componentMap ? componentMap.has(entity) : false
-    }
-
-    addSystem(system){
-        this.systems.push(system);
-    }
-
-    update(deltaTime){
-        for (const system of this.systems) {
-            system.update(this, deltaTime);
-        }
     }
 }

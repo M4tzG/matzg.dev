@@ -1,11 +1,14 @@
 import * as THREE from "three";
-import { Input } from "../components/Input";
-import { Interaction } from "../components/Interaction";
-import { ThreeView } from "../components/ThreeView";
-import { VerletNode } from "../components/VerletNode";
-import { Constraint } from "../components/Constraint";
-import { Gravity } from "../components/Gravity";
-import { Transform } from "../components/Transform";
+
+import {
+    Transform,
+    VerletNode,
+    Constraint,
+    ThreeView,
+    Interaction,
+    Input,
+    Gravity,
+} from "../components/index"
 
 
 
@@ -120,6 +123,16 @@ function createLinkMesh(isOdd, oddVisual, evenVisual, scale) {
     return linkVisual;
 }
 
+/**
+ * @param {World} world 
+ * @param {THREE.Scene} scene 
+ * @param {AssetsManager} assets 
+ * @param {Object} configs 
+ * @param {number} [configs.baseHeight=1] 
+ * @param {TransformConfig} [configs.transform={}] 
+ * @param {InteractionConfig} [configs.interaction={}] 
+ * @param {ChainSystemConfig} configs.chainConfig 
+ */
 export function createChain (world, scene, assets, configs) {
     const {
         baseHeight = 1,
