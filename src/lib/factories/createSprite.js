@@ -31,6 +31,8 @@ export function createSprite(world, scene, assets, configs) {
         return null;
     }
 
+    // console.log(`Creating sprite: ${imageName}`, texture);
+
     texture.premultiplyAlpha = true;
 
 
