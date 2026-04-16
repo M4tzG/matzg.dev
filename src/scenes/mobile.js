@@ -10,13 +10,13 @@ export const mobileData = (aspect) => ({
             aspect: aspect,
             near: 0.1,
             far: 1000,
-            x: 0, y: 0, z: 10,
-            lookAt: { x: 0, y: 0, z: 0 }
+            transform: { px: 0, py: 0, pz: 10 },
+            lookAt: v3(0, 0, 0), 
         }
     ],
     postProcessing: {
         pincushion: { 
-            active: true, 
+            active: false, 
             strength: -0.4
         },
         crt: {
@@ -85,7 +85,6 @@ export const mobileData = (aspect) => ({
             transition: { velocity: 2, acceleration: 1.03, direction: { x: 0, y: -1 } },
         },
         {
-            isMobile: true,
             imageName: "Raposo",
             transform: { px: 0, py: -0.5, pz: 0 },
             baseHeight: 6,
@@ -95,11 +94,11 @@ export const mobileData = (aspect) => ({
     ],
     animatedSprites: [],
     chains: [
-        /* 
-        {
-            chainConfig: { startPos: v3(-2, 15, -5), endPos: v3(12, -12, 0), numLinks : 21, scale: 3.4, gravity: 0.5 },
-            interaction: { isHoverable: true }
-        }
-        */
+        
+        // {
+        //     chainConfig: { startPos: v3(-2, 15, -5), endPos: v3(12, -12, 0), numLinks : 21, scale: 3.4, gravity: 0.5 },
+        //     interaction: { isHoverable: true }
+        // }
+        
     ]
 });
