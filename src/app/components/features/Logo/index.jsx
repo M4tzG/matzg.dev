@@ -2,8 +2,8 @@
 
 import { useRef } from 'react';
 
-import { LogoMobile } from '../Icons/LogoMobile';
-import { LogoIcon } from '../Icons/LogoIcon';
+import { LogoMobile } from '../../ui/Icons/LogoMobile';
+import { LogoIcon } from '../../ui/Icons/LogoIcon';
 
 import gsap from 'gsap';
 

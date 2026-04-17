@@ -1,9 +1,8 @@
 'use client'
 
-import NavigationButton from "./components/NavigationButton";
-import Logo from "./components/Logo";
-import { MyStuffButton } from "./components/Icons/MyStuffButton";
-import { useRouter } from 'next/navigation';
+import NavigationButton from "@ui/NavigationButton";
+import Logo from "@/app/components/features/Logo";
+import { MyStuffButton } from "@ui/Icons/MyStuffButton";
 
 
 export default function Home() {
@@ -19,10 +18,10 @@ export default function Home() {
 
           <div className="flex justify-center w-full lg:w-4/10 lg:justify-end">
             <NavigationButton 
-              to="https://github.com/M4tzG" 
+              to="/projects" 
               Icon={MyStuffButton}
               className="w-full text-black lg:text-white"
-              openInNewTab={true}
+              openInNewTab={false}
             />
           </div>
       </div>

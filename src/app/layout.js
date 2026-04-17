@@ -1,8 +1,10 @@
-import { Geist, Lacquer } from "next/font/google";
-import Cursor from "./components/Cursor";
 import "./globals.css";
 
-import CanvasContainer from "./components/CanvasContainer";
+import { Geist, Lacquer } from "next/font/google";
+
+import CanvasContainer from "@canvas/CanvasContainer";
+import Cursor from "@features/Cursor";
+
 
 const lacquer = Lacquer({
   variable: "--font-lacquer",

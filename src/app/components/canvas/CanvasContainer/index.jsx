@@ -1,8 +1,8 @@
 "use client"
 
 import { useCanvasEngine } from '@/hooks/useCanvasEngine';
-import SpinnerLoading from '../SpinnerLoading';
 import GyroButton from '../GyroButton';
+import SpinnerLoading from '@components/features/SpinnerLoading';
 
 
 export default function CanvasContainer () {

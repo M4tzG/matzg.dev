@@ -1,15 +1,28 @@
-import NavigationButton from "../components/NavigationButton";
-import { BackButtonIcon } from "../components/Icons/BackButtonIcon";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import ProjectsUI from '@features/ProjectsUI'; 
 
-export default function Projects() {
-  return (
-      <section className="absolute top-0 left-0 z-10 p-10 md:p-20 xl:p-10">
-          <NavigationButton 
-            to="/" 
-            Icon={BackButtonIcon}
-            className="w-2/4 md:w-9/10" 
-          />
-          
-      </section>
-  );
+export default function ProjectsPage() {
+
+  const contentDir = path.join(process.cwd(), 'src/content');
+
+  const files = fs.readdirSync(contentDir);
+
+  const projects = files
+    .filter(filename => filename.endsWith('.md'))
+    .map(filename => {
+      const filePath = path.join(contentDir, filename);
+      const fileContent = fs.readFileSync(filePath, 'utf-8');
+
+      const { data, content } = matter(fileContent);
+
+      return {
+        ...data, 
+        content,
+      };
+    })
+    .sort((a, b) => a.id - b.id);
+
+  return <ProjectsUI projects={projects} />;
 }
