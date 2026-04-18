@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import NavigationButton from "@ui/NavigationButton";
+import Carousel from "../Carousel";
 import { BackButtonIcon } from "@ui/Icons/BackButtonIcon";
 
 export default function ProjectsUI({ projects: projects }) {
@@ -73,8 +74,14 @@ export default function ProjectsUI({ projects: projects }) {
 
       {/* --- LADO DIREITO: ROLETA --- */}
       <div className="relative flex flex-col items-center justify-center w-full h-1/5 border-t border-gray-700 bg-green-900/20 md:w-[25%] md:h-full md:border-t-0">
-        <div className="flex items-center justify-center w-full h-full bg-gray-700/50 shadow-lg md:h-4/5 md:w-4/5 md:rounded-lg">
-          <p className="text-gray-400 text-sm">Navegaremos pela roleta aqui depois</p>
+        <div className="flex items-center justify-center w-full h-full bg-gray-700/50 shadow-lg md:h-4/5 md:w-4/5 md:rounded-lg overflow-hidden">
+          
+          <Carousel 
+            projects={projects} 
+            activeIndex={activeProject} 
+            onChangeProject={(index) => setActiveProject(index)} 
+          />
+
         </div>
         
         <button className="hidden md:block mt-5 bg-yellow-400 px-7 py-3 font-bold text-black shadow-[4px_4px_0px_white] transition-transform rotate-3 hover:scale-110">
